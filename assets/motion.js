@@ -307,21 +307,87 @@
   });
 
   /* ---------- Class 8–10: cards flip from session to build ---------- */
-  document.querySelectorAll(".flips").forEach((grid) => {
-    const cards = [...grid.querySelectorAll(".flip")];
-    cards.forEach((c) => c.classList.add("is-front"));
-    ScrollTrigger.create({
-      ...once(grid, "top 65%"),
-      onEnter: () => cards.forEach((c, i) => setTimeout(() => c.classList.remove("is-front"), 300 + i * 170)),
+  document.querySelectorAll("[data-month]").forEach((deck) => {
+    const cards = [...deck.querySelectorAll(".flip")];
+    const n = cards.length;
+    const whenEl = deck.querySelector("[data-month-when]");
+    const builtEl = deck.querySelector("[data-month-built]");
+    const dots = [...deck.querySelectorAll(".month-dots i")];
+
+    // Tablets and laptops: the grid flips over, one card after another
+    mm.add("(min-width: 768px)", () => {
+      cards.forEach((c) => c.classList.add("is-front"));
+      ScrollTrigger.create({
+        ...once(deck, "top 65%"),
+        onEnter: () => cards.forEach((c, i) => setTimeout(() => c.classList.remove("is-front"), 300 + i * 170)),
+      });
+      return () => cards.forEach((c) => c.classList.remove("is-front"));
     });
+
+    // Phones: a pinned deck. Each session rises in, flips to show what they built,
+    // then steps back into the pile; at the end the whole month fans out.
+    mm.add("(max-width: 767px)", () => {
+      deck.classList.add("is-pinned");
+      const tilt = (i) => (i % 2 ? 2.5 : -2.5);
+      // Waiting cards sit solid below the screen edge (the deck clips them) and rise up in turn
+      gsap.set(cards, { xPercent: -50, yPercent: -50, y: () => window.innerHeight * 0.7, rotation: (i) => (i % 2 ? 10 : -10), autoAlpha: 1 });
+      gsap.set(cards[0], { y: 0, rotation: tilt(0), autoAlpha: 1 });
+
+      let shownStep = -1;
+      const FLIP_AT = 0.55; // how far into its turn a card flips over
+      const update = (t) => {
+        const i = Math.max(0, Math.min(n - 1, Math.floor(t)));
+        const flipped = (k) => k < i || (k === i && t - i >= FLIP_AT);
+        cards.forEach((c, k) => c.classList.toggle("is-front", !flipped(k)));
+        builtEl.textContent = cards.filter((c, k) => flipped(k)).length;
+        if (i === shownStep) return;
+        shownStep = i;
+        whenEl.textContent = `Session ${i + 1}`;
+        dots.forEach((d, k) => d.classList.toggle("on", k === i));
+      };
+
+      const tl = gsap.timeline({
+        defaults: { ease: "power3.out" },
+        onUpdate() { update(this.time()); },
+        scrollTrigger: {
+          trigger: deck, start: "top top", end: () => `+=${window.innerHeight * n * 0.55}`,
+          pin: true, scrub: 0.8, invalidateOnRefresh: true,
+        },
+      });
+      for (let i = 1; i < n; i++) {
+        // The cards already played step back and up into a pile
+        tl.to(cards.slice(0, i), {
+          y: (k) => -(i - k) * 14, scale: (k) => 1 - (i - k) * 0.05,
+          autoAlpha: (k) => (i - k > 3 ? 0 : 1), duration: 0.6,
+        }, i)
+          .to(cards[i], { y: 0, rotation: tilt(i), autoAlpha: 1, duration: 0.7 }, i);
+      }
+      // The whole month fans out: eight things they built
+      tl.to(cards, {
+        y: 0, autoAlpha: 1, scale: 0.56,
+        xPercent: (k) => -50 + (k - (n - 1) / 2) * 7,
+        yPercent: (k) => -50 + Math.abs(k - (n - 1) / 2) * 5,
+        rotation: (k) => (k - (n - 1) / 2) * 4,
+        duration: 1.2, ease: "power2.inOut",
+      }, n + 0.2);
+      tl.to({}, { duration: 0.6 });
+      update(0);
+
+      return () => {
+        deck.classList.remove("is-pinned");
+        gsap.set(cards, { clearProps: "all" });
+        cards.forEach((c) => c.classList.remove("is-front"));
+      };
+    });
+
+    // Laptops: hover a card to see the session. Tablets: tap to flip it.
     if (finePointer) {
       cards.forEach((c) => {
-        c.addEventListener("pointerenter", () => c.classList.add("is-front"));
-        c.addEventListener("pointerleave", () => c.classList.remove("is-front"));
+        c.addEventListener("pointerenter", () => { if (!deck.classList.contains("is-pinned")) c.classList.add("is-front"); });
+        c.addEventListener("pointerleave", () => { if (!deck.classList.contains("is-pinned")) c.classList.remove("is-front"); });
       });
     } else {
-      // On touch screens, tap a card to flip it over
-      cards.forEach((c) => c.addEventListener("click", () => c.classList.toggle("is-front")));
+      cards.forEach((c) => c.addEventListener("click", () => { if (!deck.classList.contains("is-pinned")) c.classList.toggle("is-front"); }));
     }
   });
 
@@ -333,8 +399,22 @@
       gsap.from(bars, { scaleY: 0, duration: 1.3, ease: "expo.out", stagger: 0.12, scrollTrigger: once(list, "top 75%") });
       gsap.from(labels, { y: 24, opacity: 0, duration: 0.9, ease: "power3.out", stagger: 0.12, delay: 0.25, scrollTrigger: once(list, "top 75%") });
     });
+    // Phones and tablets: each step lights up and its bar grows as you scroll past it;
+    // Demo Day glows once you reach the top
     mm.add("(max-width: 900px)", () => {
-      gsap.from(bars, { scaleX: 0, duration: 1.2, ease: "expo.out", stagger: 0.1, scrollTrigger: once(list, "top 80%") });
+      const steps = [...list.children];
+      steps.forEach((li) => {
+        gsap.timeline({ scrollTrigger: { trigger: li, start: "top 90%", end: "top 55%", scrub: 0.6 } })
+          .fromTo(li, { opacity: 0.25 }, { opacity: 1, ease: "none" }, 0)
+          .fromTo(li.querySelector(".climb-bar"), { scaleX: 0 }, { scaleX: 1, ease: "none" }, 0);
+      });
+      const top = steps[steps.length - 1];
+      ScrollTrigger.create({
+        trigger: top, start: "top 55%",
+        onEnter: () => top.classList.add("is-reached"),
+        onLeaveBack: () => top.classList.remove("is-reached"),
+      });
+      return () => top.classList.remove("is-reached");
     });
   });
 

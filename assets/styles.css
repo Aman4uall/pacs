@@ -155,6 +155,10 @@ h3 { font-size: 1.3rem; font-weight: 700; line-height: 1.3; letter-spacing: -.02
 .cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(32px, 4vw, 56px); }
 @media (max-width: 860px) { .cols-3 { grid-template-columns: minmax(0, 1fr); } }
 @media (max-width: 760px) { .cols-2 { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 760px) {
+  .stack-cards > .card { position: sticky; top: 88px; box-shadow: 0 -18px 40px -28px rgb(17 17 17 / .45); }
+  .stack-cards > .card + .card { top: 104px; }
+}
 
 .split { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(32px, 6vw, 96px); align-items: start; }
 .split > .head { margin-bottom: 0; }
@@ -631,6 +635,27 @@ h3 { font-size: 1.3rem; font-weight: 700; line-height: 1.3; letter-spacing: -.02
 .flip-back strong { font-size: 1.35rem; font-weight: 800; letter-spacing: -.03em; line-height: 1.15; }
 .flip-back em { color: var(--red); font-style: normal; font-size: .75rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
 
+/* Phones: the month becomes a pinned deck. Each session rises in, flips over to
+   show what they built, then steps back into the pile (set up by motion.js). */
+.month-meta, .month-dots { display: none; }
+@media (max-width: 767px) {
+  .month-deck.is-pinned { display: grid; align-content: center; gap: 18px; overflow: clip; min-height: calc(100vh - 16px); min-height: calc(100svh - 16px); }
+  .month-deck.is-pinned .month-meta { display: flex; flex-wrap: wrap; align-items: baseline; gap: .2rem 1rem; }
+  .month-when { color: var(--red); font-size: 2.6rem; font-weight: 800; letter-spacing: -.05em; line-height: 1; }
+  .month-count { color: var(--muted); font-weight: 600; }
+  .month-count b { color: var(--ink); font-variant-numeric: tabular-nums; }
+  .month-deck.is-pinned .flips { display: block; position: relative; height: min(56vh, 440px); height: min(56svh, 440px); }
+  .month-deck.is-pinned .flip { position: absolute; top: 50%; left: 50%; width: 84%; height: min(300px, 42vh); height: min(300px, 42svh); min-height: 0; }
+  .month-deck.is-pinned .flip-face { padding: 24px; box-shadow: 0 24px 50px -30px rgb(17 17 17 / .55); }
+  .month-deck.is-pinned .flip-front { background: var(--white); border: 1px solid var(--line); }
+  .month-deck.is-pinned .flip-num { font-size: 4.6rem; }
+  .month-deck.is-pinned .flip-front strong { font-size: 1.8rem; }
+  .month-deck.is-pinned .flip-back strong { font-size: 1.75rem; }
+  .month-deck.is-pinned .month-dots { display: flex; justify-content: center; gap: 6px; }
+  .month-dots i { width: 7px; height: 7px; background: var(--line); border-radius: 4px; transition: width .4s var(--ease-out), background-color .3s ease; }
+  .month-dots i.on { width: 22px; background: var(--red); }
+}
+
 /* ---------- Class 8–10: the climb to Demo Day ---------- */
 
 .climb { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 10px; align-items: end; min-height: 460px; }
@@ -645,6 +670,8 @@ h3 { font-size: 1.3rem; font-weight: 700; line-height: 1.3; letter-spacing: -.02
   .climb { grid-template-columns: minmax(0, 1fr); min-height: 0; gap: 14px; }
   .climb li { grid-template-rows: none; grid-template-columns: minmax(0, 1fr) 30%; align-items: center; }
   .climb-bar { height: 14px; width: var(--w); border-radius: 0 7px 7px 0; transform-origin: left; }
+  .climb li:last-child.is-reached .climb-bar { box-shadow: 0 0 0 6px rgb(245 30 43 / .18), 0 0 24px rgb(245 30 43 / .45); transition: box-shadow .6s ease; }
+  .climb li:last-child.is-reached strong { color: var(--red); }
 }
 
 /* ---------- BBA: the CV that rewrites itself ---------- */
