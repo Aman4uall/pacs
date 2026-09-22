@@ -104,7 +104,7 @@
 
   /* ---------- Single elements glide up ---------- */
   if (entrances) {
-    document.querySelectorAll(":is(.eyebrow, .lede, .cta .actions, .story-line, .demoday-lede, .demoday-row)").forEach((el) => {
+    document.querySelectorAll(":is(.eyebrow, .lede, .cta .actions, .world-close, .story-line, .demoday-lede, .demoday-row)").forEach((el) => {
       if (el.closest(".hero-copy")) return;
       gsap.fromTo(el, { y: 40, opacity: 0 }, {
         y: 0, opacity: 1, duration: 1.2, ease: "expo.out", delay: inView(el) ? 0.6 : 0, scrollTrigger: once(el, "top 92%"),
@@ -119,9 +119,10 @@
     document.querySelectorAll(".stats, .cols-2, .cols-3, .steps, .timeline, .faq, .contact-grid, .world-grid, .wall, .doors, .how, .howto").forEach((group) => {
       const items = [...group.children].filter((el) => el.matches(groupItems));
       if (!items.length) return;
-      // On phones the two doors swing in from opposite sides
+      // On phones the two doors rise and tilt into place (never from the sides,
+      // which would push the page wider than the screen)
       const from = phone && group.classList.contains("doors")
-        ? { x: (i) => (i % 2 ? 110 : -110), rotation: (i) => (i % 2 ? 5 : -5), opacity: 0 }
+        ? { y: 90, rotation: (i) => (i % 2 ? 6 : -6), opacity: 0 }
         : { y: 60, opacity: 0 };
       gsap.fromTo(items, from, {
         x: 0, y: 0, rotation: 0, opacity: 1, duration: 1.2, ease: "expo.out", stagger: 0.09, delay: inView(group) ? 0.7 : 0,
@@ -138,7 +139,7 @@
     });
   }
 
-  /* ---------- Numbers count up ---------- */
+  /* ---------- Numbers count up; meters fill ---------- */
   function countUp(el, to, suffix) {
     const v = { n: 0 };
     el.textContent = "0" + suffix;
@@ -152,6 +153,9 @@
     if (m && +m[1] >= 2) countUp(el, +m[1], m[2]);
   });
   document.querySelectorAll("[data-count-to]").forEach((el) => countUp(el, +el.dataset.countTo, el.dataset.suffix || ""));
+  document.querySelectorAll(".meter span").forEach((bar) => {
+    gsap.from(bar, { scaleX: 0, duration: 1.8, ease: "expo.out", delay: 0.2, scrollTrigger: once(bar, "top 95%") });
+  });
 
   /* ---------- Big statements light up word by word as you scroll ---------- */
   document.querySelectorAll(".statement").forEach((el) => {
@@ -184,40 +188,80 @@
     });
   });
 
-  /* ---------- Journey: Day 1 to Demo Day, as one strip ---------- */
-  document.querySelectorAll("[data-path]").forEach((path) => {
-    const steps = [...path.children];
-    const rail = path.parentElement.querySelector(".path-rail span");
+  /* ---------- Journey: pinned while the week-by-week cards stack, then fan out ---------- */
+  const journey = document.querySelector(".journey");
+  if (journey) {
+    const grid = journey.querySelector("[data-journey]");
+    const chapters = [...journey.querySelectorAll(".chapter")];
+    const arts = [...journey.querySelectorAll(".art")];
+    const whenEl = journey.querySelector("[data-j-when]");
+    const countEl = journey.querySelector("[data-j-count]");
+    const dots = [...journey.querySelectorAll(".journey-dots i")];
+    const whens = chapters.map((c) => c.querySelector(".when").textContent);
+    const n = chapters.length;
+    const stack = (i) => ({ xPercent: -50 + (i - (n - 1) / 2) * 9, yPercent: -50 + (i % 2 ? 4 : -4), rotation: (i - (n - 1) / 2) * 4, scale: 1 });
 
-    // Laptops: the rail draws itself and each step lands as the line reaches it
-    mm.add("(min-width: 701px)", () => {
-      if (!entrances) {
-        steps.forEach((s) => s.classList.add("is-active"));
-        return;
-      }
-      const tl = gsap.timeline({ scrollTrigger: once(path, "top 80%") });
-      if (rail) tl.fromTo(rail, { scaleX: 0 }, { scaleX: 1, duration: 2.1, ease: "power2.inOut" }, 0);
-      steps.forEach((step, i) => {
-        tl.fromTo(step, { y: 50, opacity: 0 }, {
-          y: 0, opacity: 1, duration: 1, ease: "expo.out", onStart: () => step.classList.add("is-active"),
-        }, 0.15 + i * 0.32);
+    // spread: how wide the six cards fan out at the end; length: how long the pin lasts
+    const pin = ({ spread, length, start }) => {
+      journey.classList.add("is-pinned");
+      let shown = -1;
+      const setChapter = (i) => {
+        if (i === shown) return;
+        shown = i;
+        whenEl.textContent = whens[i];
+        countEl.textContent = i + 1;
+        dots.forEach((d, k) => d.classList.toggle("on", k === i));
+        // Each card's drawing comes alive as it lands (and again if you scroll back to it)
+        arts.forEach((art, k) => art.classList.toggle("is-active", k <= i));
+      };
+      gsap.set(chapters, { autoAlpha: 0, y: 40 });
+      gsap.set(chapters[0], { autoAlpha: 1, y: 0 });
+      gsap.set(arts, { xPercent: -50, yPercent: -50, x: () => window.innerWidth * 0.55, rotation: 20, autoAlpha: 0 });
+      gsap.set(arts[0], { x: 0, autoAlpha: 1, ...stack(0) });
+      setChapter(0);
+
+      const tl = gsap.timeline({
+        defaults: { ease: "power3.out" },
+        // Chapter i fades in between i+0.1 and i+0.55; switch the label once it's mostly visible.
+        // Driven by the timeline itself so it stays in step with the smoothed scroll.
+        onUpdate() { setChapter(Math.max(0, Math.min(n - 1, Math.floor(this.time() - 0.2)))); },
+        scrollTrigger: {
+          trigger: grid, start, end: () => `+=${window.innerHeight * (n + 1) * length}`,
+          pin: true, scrub: 0.8, invalidateOnRefresh: true,
+        },
       });
-    });
+      for (let i = 1; i < n; i++) {
+        tl.to(chapters[i - 1], { autoAlpha: 0, y: -40, duration: 0.4 }, i)
+          .to(chapters[i], { autoAlpha: 1, y: 0, duration: 0.45 }, i + 0.1)
+          .to(arts[i], { x: 0, autoAlpha: 1, duration: 0.8, ...stack(i) }, i);
+      }
+      // The finished portfolio fans out
+      tl.to(arts, {
+        xPercent: (k) => -50 + (k - (n - 1) / 2) * spread,
+        yPercent: (k) => -50 + Math.abs(k - (n - 1) / 2) * 7,
+        rotation: (k) => (k - (n - 1) / 2) * 6,
+        scale: 0.8, duration: 1.1, ease: "power2.inOut",
+      }, n + 0.2);
+      tl.to({}, { duration: 0.5 });
 
-    // Phones: the cards slide in from the right, then nudge left to show they swipe
-    mm.add("(max-width: 700px)", () => {
-      if (!entrances) return;
-      gsap.timeline({ scrollTrigger: once(path, "top 85%") })
-        .fromTo(steps, { x: 90, opacity: 0 }, { x: 0, opacity: 1, duration: 1, ease: "expo.out", stagger: 0.07 })
-        .to(steps, { x: -38, duration: 0.45, ease: "power2.inOut" }, "-=0.2")
-        .to(steps, { x: 0, duration: 0.7, ease: "back.out(2.2)" });
-    });
-  });
+      return () => {
+        journey.classList.remove("is-pinned");
+        gsap.set([...chapters, ...arts], { clearProps: "all" });
+        arts.forEach((art) => art.classList.remove("is-active"));
+        countEl.textContent = n;
+      };
+    };
+
+    // Tablets and laptops: words beside the cards
+    mm.add("(min-width: 768px)", () => pin({ spread: 30, length: 0.75, start: "center center" }));
+    // Phones: words above the cards, pinned to the top of the screen, with a tighter fan
+    mm.add("(max-width: 767px)", () => pin({ spread: 17, length: 0.62, start: "top top" }));
+  }
 
   /* ---------- Phones: extra life for touch screens ---------- */
   mm.add("(max-width: 700px)", () => {
     // Big story lines light up word by word as you read down
-    document.querySelectorAll(".story-line, .demoday-lede").forEach((el) => {
+    document.querySelectorAll(".world-close, .story-line, .demoday-lede").forEach((el) => {
       el._words = el._words || splitWords(el, false);
       gsap.fromTo(el._words, { opacity: 0.16 }, {
         opacity: 1, ease: "none", stagger: 0.1,

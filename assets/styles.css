@@ -31,9 +31,9 @@
 /* ---------- Base ---------- */
 
 *, *::before, *::after { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; scroll-padding-top: 96px; background: var(--white); }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 96px; background: var(--white); overflow-x: clip; }
 @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
-body { margin: 0; background: var(--white); color: var(--text); font-family: var(--f-body); font-size: 1.0625rem; line-height: 1.65; -webkit-font-smoothing: antialiased; }
+body { margin: 0; overflow-x: clip; background: var(--white); color: var(--text); font-family: var(--f-body); font-size: 1.0625rem; line-height: 1.65; -webkit-font-smoothing: antialiased; }
 img, svg { max-width: 100%; }
 [hidden] { display: none !important; }
 p, ul, ol, figure { margin: 0; }
@@ -256,6 +256,12 @@ h3 { font-size: 1.3rem; font-weight: 700; line-height: 1.3; letter-spacing: -.02
 .big-stat p { color: var(--ink); font-size: 1.15rem; font-weight: 500; line-height: 1.45; }
 .big-stat p b { display: block; margin-top: .6rem; font-weight: 800; letter-spacing: -.01em; }
 .source, .big-stat .source { color: var(--muted); font-size: .8rem; font-weight: 400; }
+.meter { display: grid; gap: .4rem; }
+.meter div { position: relative; height: 8px; background: var(--grey); border-radius: 4px; overflow: hidden; }
+.meter div span { position: absolute; inset: 0 auto 0 0; width: var(--v); background: var(--ink); border-radius: 4px; transform-origin: left; }
+.meter div.hot span { background: var(--red); }
+.meter small { color: var(--muted); font-size: .8rem; }
+.world-close { margin-top: clamp(64px, 8vw, 104px); max-width: 20ch; color: var(--ink); font-size: clamp(2rem, 1.2rem + 3vw, 3.6rem); font-weight: 800; letter-spacing: -.04em; line-height: 1.05; text-wrap: balance; }
 
 /* The closing line of a story section, with its next step */
 .story-end { display: grid; justify-items: start; gap: 1.5rem; margin-top: clamp(56px, 7vw, 88px); }
@@ -268,6 +274,10 @@ h3 { font-size: 1.3rem; font-weight: 700; line-height: 1.3; letter-spacing: -.02
 .build::before { content: ""; position: absolute; inset: 0; z-index: -1; background: radial-gradient(500px circle at var(--mx, 50%) var(--my, 0%), rgb(245 30 43 / .07), transparent 45%); opacity: 0; transition: opacity .4s ease; pointer-events: none; }
 .build:hover::before { opacity: 1; }
 .build.span-2 { grid-column: span 2; }
+/* The home page wall uses three columns */
+.wall.wall-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 980px) { .wall.wall-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); } .wall-3 > .build.span-2:last-child { grid-column: auto; } }
+@media (max-width: 640px) { .wall.wall-3 { grid-template-columns: minmax(0, 1fr); } }
 @media (max-width: 640px) { .wall { grid-template-columns: minmax(0, 1fr); } .build.span-2 { grid-column: auto; } }
 .build-head { display: grid; gap: .3rem; }
 .build-tag { color: var(--red); font-size: .72rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
@@ -394,52 +404,72 @@ h3 { font-size: 1.3rem; font-weight: 700; line-height: 1.3; letter-spacing: -.02
 .post figcaption { padding: .7rem .8rem .9rem; color: var(--text); font-size: .82rem; line-height: 1.45; }
 .post figcaption b { color: var(--ink); }
 
-/* ---------- Journey: Day 1 to Demo Day, as one strip ---------- */
+/* ---------- Journey on laptops: pinned while the week-by-week cards stack up ---------- */
 
-.path-rail { position: relative; height: 2px; margin-bottom: 26px; background: var(--line); }
-.path-rail span { position: absolute; inset: 0; background: var(--red); transform-origin: left; }
-.path { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 14px; }
-.step { position: relative; display: grid; gap: .45rem; align-content: start; padding: 12px 12px 18px; background: var(--white); border-radius: 18px; transition: translate .4s var(--ease-out); }
-.step::before { content: ""; position: absolute; top: -33px; left: 50%; width: 12px; height: 12px; margin-left: -6px; background: var(--grey); border: 2px solid var(--line); border-radius: 50%; transition: background-color .4s ease, border-color .4s ease, scale .4s var(--ease-out); }
-.step.is-active::before { background: var(--red); border-color: var(--red); scale: 1.25; }
-.step .art-visual { aspect-ratio: 4 / 3; margin-bottom: .35rem; }
-.step .when { color: var(--red); font-size: .7rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
-.step h3 { font-size: 1.05rem; font-weight: 800; letter-spacing: -.02em; line-height: 1.2; }
-.step p { color: var(--muted); font-size: .88rem; line-height: 1.45; }
-.step:last-child { background: var(--ink); }
-.step:last-child h3 { color: var(--white); }
-.step:last-child p { color: var(--on-dark-muted); }
-.step:last-child .v-stage { background: #232323; }
-.step .v-code { gap: 5px; padding: 10px 12px; }
-.step .v-code span { margin-top: 4px; font-size: .6rem; white-space: nowrap; }
-@media (hover: hover) { .step:hover { translate: 0 -4px; } }
-@media (max-width: 1099px) {
-  .path { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: 18px; }
-  .path-rail, .step::before { display: none; }
+.journey { padding-block: var(--section); overflow: hidden; }
+.journey-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(32px, 6vw, 96px); align-items: center; }
+.journey-meta { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; align-items: baseline; margin-bottom: 1.5rem; }
+.journey-when { color: var(--red); font-size: clamp(2.4rem, 1.6rem + 3vw, 4.4rem); font-weight: 800; letter-spacing: -.05em; line-height: 1; }
+.journey-count { color: var(--muted); font-weight: 600; }
+.journey-count b { color: var(--ink); font-variant-numeric: tabular-nums; }
+.chapters { display: grid; gap: 1.6rem; }
+.chapter { display: grid; gap: .4rem; padding-left: 1.2rem; border-left: 2px solid var(--line); }
+.chapter .when { color: var(--red); font-size: .8rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+.chapter h3 { font-size: clamp(1.5rem, 1.1rem + 1.4vw, 2.2rem); font-weight: 800; letter-spacing: -.035em; line-height: 1.1; }
+.chapter p { max-width: 42ch; color: var(--muted); font-size: 1.05rem; }
+.journey-dots { display: none; gap: 8px; margin-top: 2rem; }
+.journey-dots i { width: 8px; height: 8px; background: var(--line); border-radius: 50%; transition: width .4s var(--ease-out), background-color .3s ease; }
+.journey-dots i.on { width: 26px; background: var(--red); border-radius: 4px; }
+.journey-stage { position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.art { display: grid; grid-template-rows: 1fr auto; aspect-ratio: 4 / 5; padding: 14px; background: var(--white); border: 1px solid var(--line); border-radius: 20px; box-shadow: 0 30px 60px -40px rgb(17 17 17 / .45); }
+.art figcaption { display: grid; gap: .1rem; padding-top: .8rem; color: var(--ink); font-size: .95rem; font-weight: 700; line-height: 1.25; }
+.art figcaption span { color: var(--red); font-size: .68rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+
+/* Pinned version on large screens (set up by motion.js) */
+.journey.is-pinned .journey-grid { min-height: calc(100vh - 140px); }
+.journey.is-pinned .chapters { position: relative; display: block; min-height: 14rem; }
+.journey.is-pinned .chapter { position: absolute; inset: 0 0 auto 0; padding-left: 0; border-left: 0; }
+.journey.is-pinned .chapter .when { display: none; }
+.journey.is-pinned .journey-dots { display: flex; }
+.journey.is-pinned .journey-stage { display: block; height: min(560px, 70vh); }
+.journey.is-pinned .art { position: absolute; top: 50%; left: 50%; width: min(300px, 42%); margin: 0; }
+
+/* Phones: the same pinned story, with the words above the cards */
+@media (max-width: 767px) {
+  .journey-grid { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .journey.is-pinned .journey-grid { min-height: calc(100vh - 16px); min-height: calc(100svh - 16px); align-content: center; gap: 14px; }
+  .journey.is-pinned .journey-meta { margin-bottom: .5rem; }
+  .journey.is-pinned .chapters { min-height: 10.5rem; }
+  .journey.is-pinned .chapter h3 { font-size: 1.6rem; }
+  .journey.is-pinned .chapter p { font-size: 1rem; }
+  .journey.is-pinned .journey-dots { margin-top: .9rem; }
+  .journey.is-pinned .journey-stage { height: min(44vh, 380px); height: min(44svh, 380px); }
+  .journey.is-pinned .art { width: 52%; padding: 10px; border-radius: 16px; }
+  .journey.is-pinned .art figcaption { padding-top: .5rem; font-size: .82rem; }
 }
 
-/* Each drawing comes alive when its step is reached */
+/* Each card's drawing comes alive as it lands in the journey stack */
 @keyframes grow-x { from { transform: scaleX(0); } }
 @keyframes grow-y { from { transform: scaleY(0); } }
 @keyframes pop { from { transform: scale(.55); opacity: 0; } }
 @keyframes rise { from { transform: translateY(14px); opacity: 0; } }
 @keyframes spot-sway { from { transform: translateX(-22%); } to { transform: translateX(22%); } }
 .art-visual { position: relative; display: grid; place-items: center; overflow: hidden; background: var(--grey); border-radius: 12px; }
-.step.is-active .v-model .mini-mango { animation: pop .7s var(--ease-out) both; }
-.step.is-active .v-model .mini-bars i::before { transform-origin: left; animation: grow-x 1.1s .3s var(--ease-out) both; }
-.step.is-active .v-film i { animation: pop .5s var(--ease-out) both; }
-.step.is-active .v-app .mini-phone { animation: rise .6s var(--ease-out) both; }
-.step.is-active .v-app .mini-phone b i { animation: rise .45s .25s var(--ease-out) both; }
-.step.is-active .v-code i { transform-origin: left; animation: grow-x .45s var(--ease-out) both; }
-.step.is-active .v-code span { animation: pop .5s .6s var(--ease-out) both; }
-.step.is-active .v-client i { transform-origin: bottom; animation: grow-y .8s var(--ease-out) both; }
-.step.is-active .v-stage b { animation: pop .8s var(--ease-out) both; }
-.step.is-active .v-stage::before { animation: spot-sway 2.6s ease-in-out infinite alternate; }
-.step.is-active .art-visual i:nth-child(2) { animation-delay: .08s; }
-.step.is-active .art-visual i:nth-child(3) { animation-delay: .16s; }
-.step.is-active .art-visual i:nth-child(4) { animation-delay: .24s; }
-.step.is-active .art-visual i:nth-child(5) { animation-delay: .32s; }
-.step.is-active .art-visual i:nth-child(6) { animation-delay: .4s; }
+.art.is-active .v-model .mini-mango { animation: pop .7s var(--ease-out) both; }
+.art.is-active .v-model .mini-bars i::before { transform-origin: left; animation: grow-x 1.1s .3s var(--ease-out) both; }
+.art.is-active .v-film i { animation: pop .5s var(--ease-out) both; }
+.art.is-active .v-app .mini-phone { animation: rise .6s var(--ease-out) both; }
+.art.is-active .v-app .mini-phone b i { animation: rise .45s .25s var(--ease-out) both; }
+.art.is-active .v-code i { transform-origin: left; animation: grow-x .45s var(--ease-out) both; }
+.art.is-active .v-code span { animation: pop .5s .6s var(--ease-out) both; }
+.art.is-active .v-client i { transform-origin: bottom; animation: grow-y .8s var(--ease-out) both; }
+.art.is-active .v-stage b { animation: pop .8s var(--ease-out) both; }
+.art.is-active .v-stage::before { animation: spot-sway 2.6s ease-in-out infinite alternate; }
+.art.is-active .art-visual i:nth-child(2) { animation-delay: .08s; }
+.art.is-active .art-visual i:nth-child(3) { animation-delay: .16s; }
+.art.is-active .art-visual i:nth-child(4) { animation-delay: .24s; }
+.art.is-active .art-visual i:nth-child(5) { animation-delay: .32s; }
+.art.is-active .art-visual i:nth-child(6) { animation-delay: .4s; }
 
 /* Art cards: small drawings of each build */
 .v-model .mini-mango { width: 42%; }
@@ -533,9 +563,6 @@ h3 { font-size: 1.3rem; font-weight: 700; line-height: 1.3; letter-spacing: -.02
   .swipe-bar i { display: block; height: 100%; background: var(--red); transform: scaleX(var(--p, 0)); transform-origin: left; transition: transform .55s var(--ease-out); }
   .swipe-count { color: var(--muted); font-size: .8rem; font-weight: 600; font-variant-numeric: tabular-nums; }
   .world-grid.swipe > .big-stat { padding: 22px 20px 24px; border-top: 0; background: var(--grey); border-radius: 18px; }
-  .path.swipe > .step { padding-bottom: 22px; }
-  .path.swipe .step h3 { font-size: 1.3rem; }
-  .path.swipe .step p { font-size: .98rem; }
 }
 
 /* ---------- Phones: smaller hero phone, and buttons that press in ---------- */
@@ -904,7 +931,7 @@ html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }
 .lenis.lenis-stopped { overflow: hidden; }
 
-.motion :is(h1, .head h2, .eyebrow, .lede, .hero-copy .actions, .cta .actions, .stats > *, .cols-2 > *, .cols-3 > *, .steps > li, .timeline > li, .faq details, .contact-grid > *, .builder, .big-stat, .wall > *, .doors > *, .briefs > *, .path > *, .how > li, .howto > li, .story-line, .demoday-lede, .demoday-row) { opacity: 0; }
+.motion :is(h1, .head h2, .eyebrow, .lede, .hero-copy .actions, .cta .actions, .stats > *, .cols-2 > *, .cols-3 > *, .steps > li, .timeline > li, .faq details, .contact-grid > *, .builder, .big-stat, .world-close, .wall > *, .doors > *, .briefs > *, .how > li, .howto > li, .story-line, .demoday-lede, .demoday-row) { opacity: 0; }
 
 .w { display: inline-block; overflow: hidden; vertical-align: top; white-space: nowrap; padding-bottom: .12em; margin-bottom: -.12em; }
 .wi { display: inline-block; will-change: transform; }
