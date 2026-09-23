@@ -1,6 +1,6 @@
 # PACS AI website
 
-The website for PACS AI: hands-on AI courses in Mangalore for Class 8–10 and BBA students, plus the AI Song Challenge.
+The website for PACS AI: hands-on AI courses in Mangalore for Class 8–12 and BBA students, plus the AI Song Challenge.
 
 **Live address:** https://pacsai.pacsglobal.in
 

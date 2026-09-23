@@ -11,13 +11,13 @@
   const $ = (root, sel) => root.querySelector(sel);
   const $$ = (root, sel) => [...root.querySelectorAll(sel)];
   // Change this whenever terms.html changes, so the sheet records which version each entry agreed to
-  const TERMS_VERSION = "2026-09-21";
+  const TERMS_VERSION = "2026-09-23";
 
   /* ---------- Now playing: the card cycles through song ideas ---------- */
   const playerTitle = document.querySelector("[data-player-title]");
   const playerBy = document.querySelector("[data-player-by]");
   if (playerTitle && !reduce) {
-    const songs = [["One More Page", "Class 9"], ["Monsoon Mode", "Class 8"], ["Same Bench", "Class 10"], ["Last Ball Six", "Class 9"], ["Build Tomorrow", "Class 8"]];
+    const songs = [["One More Page", "Class 9"], ["Monsoon Mode", "Class 11"], ["Same Bench", "Class 10"], ["Last Ball Six", "Class 8"], ["Build Tomorrow", "Class 12"]];
     let n = 0;
     setInterval(() => {
       n = (n + 1) % songs.length;
@@ -249,7 +249,7 @@
   function whatsappText(d) {
     return [
       "Hi PACS AI, here is our AI Song Challenge entry.",
-      `Student: ${d.studentName}, Class ${d.class}, ${d.school}, ${d.city}`,
+      `Entrant: ${d.studentName}, ${d.class === "Other" ? "not in school" : `Class ${d.class}`}${d.school ? `, ${d.school}` : ""}, ${d.city}`,
       `Song: ${d.songTitle}`,
       `Link: ${d.songLink}`,
       `Made with: ${d.tool}. Words by: ${d.lyricsBy}`,

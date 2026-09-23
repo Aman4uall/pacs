@@ -306,7 +306,7 @@
       .to(final, { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" }, "+=0.25");
   });
 
-  /* ---------- Class 8–10: cards flip from session to build ---------- */
+  /* ---------- Class 8–12: cards flip from session to build ---------- */
   document.querySelectorAll("[data-month]").forEach((deck) => {
     const cards = [...deck.querySelectorAll(".flip")];
     const n = cards.length;
@@ -391,7 +391,7 @@
     }
   });
 
-  /* ---------- Class 8–10: the climb to Demo Day ---------- */
+  /* ---------- Class 8–12: the climb to Demo Day ---------- */
   document.querySelectorAll(".climb").forEach((list) => {
     const bars = list.querySelectorAll(".climb-bar");
     const labels = list.querySelectorAll(".climb-label");

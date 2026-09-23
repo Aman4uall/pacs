@@ -1,7 +1,7 @@
 /* =========================================================================
    PACS AI – the working builds
    The home page's hero app that builds itself, and the Build Wall tiles on
-   the Class 8–10 and BBA pages. Everything works without the animation libraries.
+   the Class 8–12 and BBA pages. Everything works without the animation libraries.
    ========================================================================= */
 (function () {
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
