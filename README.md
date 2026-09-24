@@ -1,6 +1,6 @@
 # PACS AI website
 
-The website for PACS AI: hands-on AI courses in Mangalore for Class 8–12 and BBA/BBM students, a 36-skill AI for Everyone catalogue, and a Class 8–12 AI Song Challenge.
+The website for PACS AI: hands-on AI courses in Mangalore for Class 8–12 and BBA/BBM students, a 36-skill AI for Everyone catalogue, a Class 8–12 AI Song Challenge, and the Innovators & Hustlers Meetup.
 
 **Live address:** https://pacsai.pacsglobal.in
 
@@ -17,7 +17,33 @@ This is a plain static website. There's no build step, no server code and no dat
 
 1. Open https://pacsai.pacsglobal.in/song-challenge.html and send a test entry. It should appear in the "PACS AI – AI Song Challenge entries" Google Sheet. Delete the test row afterwards.
 2. Open https://pacsai.pacsglobal.in/learn.html, tick a couple of things and send the list. It should open WhatsApp, and (once the separate learn-requests script is set up, see `../learn-requests-backend/SETUP.md`) the same message and list number appear in the **PACS AI Learn requests** sheet. Delete the test row afterwards.
-3. Work through "Getting found on Google" below.
+3. Open https://pacsai.pacsglobal.in/meetup.html and register once. It should appear in the
+   "PACS AI Meetup registrations" Google Sheet (see `../meetup-backend/SETUP.md`). Delete the
+   test row afterwards.
+4. Work through "Getting found on Google" below.
+
+## The meetup dates look after themselves
+
+The Innovators & Hustlers Meetup runs every alternate Saturday, 3 to 5 pm, at the office.
+No date on the site is ever typed in by hand. `meetup.html` works out the next one from two
+lines in `assets/site.js`:
+
+```js
+meetupStart: "2026-09-26",   // any one meetup date
+meetupEveryDays: 14,          // the rhythm
+```
+
+From those it shows the next Saturday still to come, counts down to it, lists the five after it,
+builds the "add to calendar" file, and writes the `Event` structured data that Google reads.
+Once the last meetup of the day is over the page rolls forward by itself.
+
+Registration closes `meetupClosesHours` before a meetup starts (3 hours by default). Inside that
+window the page still counts down to Saturday, but the form saves seats for the one after it and
+says so. To move the whole series, change `meetupStart`. To go weekly, set `meetupEveryDays` to 7.
+
+Registrations are saved by a third Apps Script, separate from the other two. Set it up with
+`../meetup-backend/SETUP.md` and paste its address into `meetupRsvps` in `assets/site.js`.
+Until that is done the form hands each registration to WhatsApp instead, so nobody is lost.
 
 ## Getting found on Google
 
@@ -60,18 +86,19 @@ in a way that matters.
 
 | What | Where |
 |---|---|
-| Phone, WhatsApp, email, address, Instagram, Demo Day date, Google Sheet links | `assets/site.js` (the `SITE` settings at the top) |
+| Phone, WhatsApp, email, address, Instagram, Demo Day date, meetup dates and times, Google Sheet links | `assets/site.js` (the `SITE` settings at the top) |
 | Styles | `assets/styles.css`, `assets/refresh.css` for layout, and `assets/motion.css` for animation |
 | Card journeys, entrances, flip cards, hover lighting, BBA portfolio, reading progress and mobile enquiry bar | `assets/motion.js` (native browser APIs; no external animation libraries) |
 | The working demos (mango sorter, study coach, Python game, revision app, film storyboard, campaign post, break-even, pitch deck) and the home page Class 8–12 / BBA demo tabs | `assets/builds.js` |
 | The Song Challenge idea machine and entry form | `assets/challenge.js` |
+| The meetup: next date, countdown, upcoming dates, calendar file and registration form | `meetup.html`, with `assets/meetup.js` |
 | AI for Everyone: 36 skills in seven categories, search and plan review | `learn.html`, with `assets/learn.js` |
 | Share images for WhatsApp and social media | `assets/og-home.png`, `assets/og-song.png` |
 | Search data: titles, descriptions, canonicals, structured data | in the `<head>` of every page |
 | Crawling and listing | `robots.txt`, `sitemap.xml` |
 | The old Class 8–10 address | `class-8-10.html`, which forwards to `class-8-12.html` |
 
-Song Challenge entries are saved by a Google Apps Script attached to the entries sheet, in the PACS AI Google account. Nothing needs to be installed on the web host for this.
+Song Challenge entries, Learn requests and meetup registrations are each saved by their own Google Apps Script in the PACS AI Google account, writing to their own sheet. Nothing needs to be installed on the web host for any of them.
 
 Skill choices stay in the current browser tab's session storage. A copy of the WhatsApp message, with its list number, is sent to the separate PACS AI Learn requests sheet only when the visitor explicitly continues from the review dialog to WhatsApp. The site opens a draft; the visitor sends the message in WhatsApp. No booking or payment is completed by these buttons.
 

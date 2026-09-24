@@ -24,6 +24,20 @@ const SITE = {
   // Apps Script web app that copies the WhatsApp message into its own sheet. It ends in /exec.
   // See learn-requests-backend/SETUP.md. While it's empty, lists only go to WhatsApp.
   learnPicks: "https://script.google.com/macros/s/AKfycbxVsHB9aGSVigEMidfZJjCXUIGyZfNLVJUTqsAQkfGGaGLNLrs4aJv4UBJbrv-Eky3xwg/exec",
+  // Innovators & Hustlers Meetup: it runs every alternate Saturday, 3 to 5 pm, at the
+  // office. Put ANY ONE meetup date below (a Saturday, YYYY-MM-DD) and meetup.html
+  // works out every date after it by itself, for good. Nothing needs changing monthly.
+  meetupStart: "2026-09-26",
+  meetupEveryDays: 14,
+  meetupFrom: "15:00",
+  meetupTo: "17:00",
+  // Registration closes this many hours before a meetup starts. After that the form
+  // quietly saves seats for the next one instead, and says so on the page.
+  meetupClosesHours: 3,
+  // Meetup registrations: a SEPARATE Apps Script web app that saves them to its own
+  // sheet (it ends in /exec). See meetup-backend/SETUP.md.
+  // While it's empty, registrations are handed to WhatsApp instead.
+  meetupRsvps: "",
 };
 
 (function () {

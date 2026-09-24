@@ -1154,3 +1154,76 @@ body.has-pickbar { padding-bottom: 76px; }
 .learn-taste li.more a:hover { color: var(--ink); }
 @media (min-width: 861px) { .split:has(.learn-taste) { align-items: center; } }
 @media (max-width: 860px) { .split:has(.learn-taste) { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---------- Innovators & Hustlers Meetup ---------- */
+
+.meetup-hero .hero-grid { align-items: center; }
+.meetup-page .hero-copy h1 .accent { color: var(--red); }
+
+/* The card that works out its own date */
+.next-card {
+  display: grid; gap: .35rem; justify-items: start;
+  padding: clamp(24px, 3vw, 34px);
+  background: #faf9f6; border: 1px solid #e1ded7; border-radius: 22px;
+  box-shadow: 0 30px 70px -55px rgb(74 45 22 / .75);
+}
+.next-kicker { display: flex; align-items: center; color: var(--muted); font-size: .72rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; }
+.next-day { color: var(--red); font-size: .95rem; font-weight: 700; letter-spacing: -.01em; }
+.next-date { color: var(--ink); font-size: clamp(1.9rem, 1.2rem + 2.2vw, 2.6rem); font-weight: 800; letter-spacing: -.045em; line-height: 1.05; text-wrap: balance; }
+.next-time { color: var(--muted); font-size: .95rem; }
+.next-card .countdown { width: 100%; margin-block: 1.1rem .9rem; }
+.countdown { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
+.countdown > div { display: grid; gap: .1rem; justify-items: center; padding: .7rem .2rem; background: var(--white); border: 1px solid #e6e3dc; border-radius: 12px; }
+.countdown b { color: var(--ink); font-size: clamp(1.25rem, 1rem + .9vw, 1.7rem); font-weight: 800; letter-spacing: -.04em; line-height: 1; font-variant-numeric: tabular-nums; }
+.countdown span { color: var(--muted); font-size: .64rem; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; }
+.next-live { width: 100%; margin-block: 1.1rem .9rem; padding: .85rem 1rem; background: var(--red); border-radius: 12px; color: var(--white); font-weight: 700; text-align: center; }
+.next-where { margin-bottom: .9rem; color: var(--muted); font-size: .9rem; }
+.next-where a { color: var(--ink); font-weight: 600; text-underline-offset: 4px; }
+.next-card .btn { width: 100%; }
+.next-closed { margin-top: .9rem; padding-top: .9rem; border-top: 1px solid #e1ded7; color: var(--muted); font-size: .84rem; line-height: 1.55; }
+
+/* The four plain facts under the hero */
+.meetup-facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: clamp(40px, 5vw, 64px); }
+.meetup-facts li { display: grid; gap: .1rem; padding: 18px 20px; background: var(--grey); border-radius: 14px; }
+.meetup-facts strong { color: var(--ink); font-size: 1.1rem; font-weight: 800; letter-spacing: -.03em; }
+.meetup-facts span { color: var(--muted); font-size: .84rem; }
+
+.take-away { margin-top: clamp(48px, 6vw, 72px); padding-top: clamp(40px, 5vw, 56px); border-top: 1px solid var(--line); }
+
+/* The dates, written by the page itself */
+.dates-list { display: grid; }
+.dates-loading { padding-block: 1.35rem; color: var(--muted); }
+.date-row { display: grid; grid-template-columns: 11rem minmax(0, 1fr) auto; gap: .25rem 2rem; align-items: baseline; padding-block: 1.35rem; border-top: 1px solid var(--line); }
+.date-row:last-child { border-bottom: 1px solid var(--line); }
+.date-when { color: var(--ink); font-size: 1.05rem; font-variant-numeric: tabular-nums; }
+.date-when b { font-size: 1.2rem; font-weight: 800; letter-spacing: -.03em; }
+.date-day { color: var(--muted); }
+.date-tag { justify-self: end; }
+.date-tag:not(:empty) { padding: .25rem .7rem; background: var(--red); border-radius: 999px; color: var(--white); font-size: .68rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.date-row.is-next .date-when, .date-row.is-next .date-day { color: var(--ink); font-weight: 600; }
+.dates-actions { margin-top: 2rem; }
+
+/* Where it happens */
+.venue-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(32px, 6vw, 88px); align-items: center; }
+.venue-grid > div { display: grid; gap: 1.1rem; justify-items: start; }
+.venue-address a { color: var(--white); font-weight: 600; text-underline-offset: 4px; }
+
+/* Registration */
+.rsvp-for { margin-bottom: .6rem; padding: .85rem 1.1rem; background: var(--grey); border-radius: 12px; color: var(--muted); font-size: .92rem; }
+.rsvp-for b { color: var(--ink); font-weight: 700; }
+.meetup-page .entry .actions { margin-top: .5rem; }
+.done-when { color: var(--white); font-weight: 600; }
+
+@media (max-width: 980px) {
+  .meetup-hero .hero-grid { grid-template-columns: minmax(0, 1fr); }
+  .next-card { justify-self: stretch; }
+  .venue-grid { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 700px) {
+  .meetup-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  /* The date and its badge share the first line; the day drops underneath */
+  .date-row { grid-template-columns: minmax(0, 1fr) auto; }
+  .date-when { grid-column: 1; grid-row: 1; }
+  .date-tag { grid-column: 2; grid-row: 1; }
+  .date-day { grid-column: 1 / -1; grid-row: 2; }
+}
