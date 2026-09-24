@@ -14,12 +14,15 @@ const SITE = {
   address: "PACS Office, 4th Floor, PVS Sadan, Kodialbail, Mangalore, Karnataka 575003",
   // The "Get directions" link: the Google listing for the office
   mapsUrl: "https://share.google/wSD5nGk2nQYzYpPFw",
-  // First Demo Day, e.g. "2027-03-14T10:00:00+05:30". Leave empty to show "date announced soon".
+  // Next Demo Day, e.g. "2027-03-14T10:00:00+05:30". Leave empty to show no countdown.
   demoDay: "",
   // AI Song Challenge: the Google Apps Script web app address that saves entries
   // to your Google Sheet (it ends in /exec). See song-challenge-backend/SETUP.md.
   // While it's empty, entries are handed to WhatsApp instead.
   songEntries: "https://script.google.com/macros/s/AKfycbw4eXH_1CNAstVAli2ljb_cNBKWXn1S-xfACfnXYOLx0cUgzeZuETjmPFl2xArt3Lk5xA/exec",
+  // "What do you want to learn?": the same script saves the ticked topics to a
+  // second tab of the same sheet. Leave it empty to only hand the list to WhatsApp.
+  learnPicks: "https://script.google.com/macros/s/AKfycbw4eXH_1CNAstVAli2ljb_cNBKWXn1S-xfACfnXYOLx0cUgzeZuETjmPFl2xArt3Lk5xA/exec",
 };
 
 (function () {
@@ -56,18 +59,35 @@ const SITE = {
   const toggle = document.querySelector(".nav-toggle");
   const links = document.getElementById("nav-links");
   if (toggle && links) {
+    // Phones: the open menu ends with a WhatsApp button and the Song Challenge (hidden on laptops)
+    const extra = document.createElement("li");
+    extra.className = "menu-extra";
+    extra.innerHTML = `<a class="menu-cta" href="${waLink("Hi PACS AI, I'd like to know more about your courses.")}" target="_blank" rel="noopener">WhatsApp us</a>`
+      + `<a class="menu-song" href="song-challenge.html"><b>1 in 10 wins ₹500</b><span>AI Song Challenge · Class 8–12</span></a>`;
+    links.append(extra);
     const setOpen = (open) => {
       toggle.setAttribute("aria-expanded", String(open));
       toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
       links.classList.toggle("open", open);
       // The menu covers the screen, so the page behind it stays still
       document.documentElement.classList.toggle("menu-open", open);
+      document.querySelectorAll('main, footer, .mobile-plan-bar, .course-action-bar').forEach(el => { el.inert = open; });
       if (open) toggle.closest(".site-header")?.classList.remove("is-hidden");
-      if (window.__lenis) open ? window.__lenis.stop() : window.__lenis.start();
+      if (open) links.querySelector('a')?.focus();
     };
     toggle.addEventListener("click", () => setOpen(toggle.getAttribute("aria-expanded") !== "true"));
     links.addEventListener("click", (e) => { if (e.target.closest("a")) setOpen(false); });
-    document.addEventListener("keydown", (e) => { if (e.key === "Escape") setOpen(false); });
+    document.addEventListener("keydown", (e) => {
+      if (toggle.getAttribute('aria-expanded') !== 'true') return;
+      if (e.key === 'Escape') { setOpen(false); toggle.focus(); }
+      if (e.key === 'Tab') {
+        const targets = [toggle, ...links.querySelectorAll('a')];
+        const index = targets.indexOf(document.activeElement);
+        e.preventDefault();
+        targets[(index + (e.shiftKey ? -1 : 1) + targets.length) % targets.length].focus();
+      }
+    });
+    matchMedia('(max-width: 880px)').addEventListener('change', () => setOpen(false));
   }
 
   // Swipe rows: on phones some grids become rows you swipe through (see .swipe in
@@ -133,11 +153,29 @@ const SITE = {
       const lines = [
         `Hi PACS AI, my name is ${value("fullname")}.`,
         `I am: ${who.options[who.selectedIndex].text}.`,
-        value("place") && `School / college: ${value("place")}`,
+        value("place") && `School / college / workplace: ${value("place")}`,
         value("message"),
       ].filter(Boolean);
       window.open(waLink(lines.join("\n")), "_blank", "noopener");
       status.textContent = "WhatsApp has opened with your message. Press send there to reach us.";
     });
   }
+
+  // Home closing: tick a few skills, then "Help me choose" opens WhatsApp with them written in
+  document.querySelectorAll("[data-closing-picks]").forEach((form) => {
+    const status = form.querySelector(".closing-status");
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const picks = [...form.querySelectorAll('input[name="pick"]:checked')].map((b) => b.value);
+      const lines = ["Hi PACS AI, I'd like help choosing where to start with AI."];
+      if (picks.length) lines.push("", "I'm interested in:", ...picks.map((p) => "• " + p));
+      window.open(waLink(lines.join("\n")), "_blank", "noopener");
+      if (picks.length && SITE.learnPicks) {
+        const ref = "H-" + Date.now().toString(36).slice(-6).toUpperCase();
+        const body = JSON.stringify({ kind: "learn", ref: ref, who: "From the homepage", count: picks.length, picks: picks.join(" | "), other: "" });
+        try { navigator.sendBeacon(SITE.learnPicks, new Blob([body], { type: "text/plain;charset=UTF-8" })); } catch (err) { /* saving is optional; WhatsApp already opened */ }
+      }
+      status.textContent = "WhatsApp has opened with your message. Press send there to reach us.";
+    });
+  });
 })();

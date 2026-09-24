@@ -3,17 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <script>
-    /* Hide animated content until motion.js reveals it; show everything if it never loads */
-    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      document.documentElement.classList.add("motion");
-      setTimeout(function () { if (!window.__motionReady) document.documentElement.classList.remove("motion"); }, 3500);
-    }
-  </script>
-  <title>AI Courses for BBA Students | PACS AI Mangalore</title>
-  <meta name="description" content="AI is taking the entry-level job. Take the level above it. Real business work with AI for BBA and BBM students in Mangalore, ending with a real client project.">
+<title>AI Courses for BBA Students | PACS AI Mangalore</title>
+  <meta name="description" content="Learn AI for real business work. Build a portfolio before you graduate. Real business work with AI for BBA and BBM students in Mangalore, ending with a real client project.">
   <meta property="og:title" content="AI Courses for BBA Students | PACS AI">
-  <meta property="og:description" content="AI is taking the entry-level job. Take the level above it.">
+  <meta property="og:description" content="Learn AI for real business work. Build a portfolio before you graduate.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://pacsai.pacsglobal.in/bba.html">
   <link rel="canonical" href="https://pacsai.pacsglobal.in/bba.html">
@@ -31,30 +24,18 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@1,400&display=swap">
   <link rel="stylesheet" href="assets/styles.css">
+  <link rel="stylesheet" href="assets/refresh.css">
+  <link rel="stylesheet" href="assets/motion.css">
 </head>
-<body>
+<body class="course-page bba-page">
 <a class="skip" href="#main">Skip to content</a>
-
-<a class="topbar" href="song-challenge.html">
-  <span class="topbar-eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
-  <span class="topbar-new">New</span>
-  <span class="topbar-text">AI Song Challenge <span class="topbar-more">for Classes 8–12 · Make your first AI song and win ₹500</span></span>
-  <span class="topbar-go">Enter now</span>
-</a>
 
 <header class="site-header">
   <div class="wrap nav">
     <a class="brand" href="index.html" aria-label="PACS AI home">
       <img class="brand-logo" src="assets/logo-horizontal.png" alt="PACS AI" width="433" height="124">
     </a>
-    <nav class="site-nav" aria-label="Main">
-      <ul class="nav-links" id="nav-links">
-        <li><a href="class-8-12.html" data-note="Day 1 to Demo Day">Class 8–12</a></li>
-        <li><a href="bba.html" data-note="Work, not just a degree" aria-current="page">BBA</a></li>
-        <li><a href="#colleges" data-note="A free session or project">For colleges</a></li>
-        <li><a href="contact.html" data-note="WhatsApp, call or visit">Contact</a></li>
-      </ul>
-    </nav>
+    <nav class="site-nav" aria-label="Main"><ul class="nav-links" id="nav-links"><li><a href="class-8-12.html" data-note="For school students & parents">Class 8–12</a></li><li><a href="bba.html" data-note="Build work for your portfolio" aria-current="page">BBA & BBM</a></li><li><a href="learn.html" data-note="Find a skill for your life">AI for everyone</a></li><li><a href="index.html#build-wall" data-note="A taste of learning by doing">Try the demos</a></li><li><a href="contact.html" data-note="Let us help you choose">Contact</a></li></ul></nav>
     <a class="btn btn-dark btn-sm nav-cta" href="contact.html?for=bba" data-wa="Hi PACS AI, I'm a BBA student and I'd like to know about your courses.">WhatsApp us</a>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
@@ -62,43 +43,68 @@
   </div>
 </header>
 
-<main id="main">
-
-  <section class="page-hero">
+<main id="main"><section class="page-hero">
     <div class="wrap">
       <div class="hero-copy">
         <p class="eyebrow">For BBA and BBM students · Mangalore</p>
-        <h1>AI is taking the entry-level job. <span class="accent">Take the level above it.</span></h1>
+        <h1>Bring more than a degree. <span class="accent">Bring work you made.</span></h1>
         <p class="lede">Do real business work with AI: market research, campaigns, dashboards and pitches. Then do it for a real client, before you graduate.</p>
         <div class="actions">
-          <a class="btn btn-primary" href="contact.html?for=bba" data-wa="Hi PACS AI, I'm a BBA student. I'd like a seat in the next Saturday AI Work Sprint.">Book a Saturday Sprint</a>
-          <a class="btn btn-outline" href="#cv">Watch your CV change</a>
+          <a class="btn btn-primary" href="contact.html?for=bba" data-wa="Hi PACS AI, I'm interested in the Saturday AI Work Sprint for BBA/BBM students. Please share the dates and fees.">Get Sprint dates & fees</a>
+          <a class="btn btn-outline" href="#cv">See a sample portfolio</a>
         </div>
       </div>
-      <div class="stats">
+      <div class="stats"><p class="stats-heading">Start small. Build your proof.</p>
         <div class="stat"><strong>3 work samples</strong><span>in one 3-hour Saturday</span></div>
         <div class="stat"><strong>8 work samples</strong><span>in two weekends</span></div>
         <div class="stat"><strong>1 real client</strong><span>in the 12-week Studio</span></div>
         <div class="stat"><strong>0 coding</strong><span>needed</span></div>
       </div>
     </div>
-  </section>
-
-  <section class="section grey cv-section" id="cv">
-    <div class="wrap cv-grid">
+  </section><nav class="course-jumps wrap" aria-label="On this page"><a href="#ways">Find your course</a><a href="#cv">Sample portfolio</a><a href="#bootcamp">Try the work</a><a href="#questions">Your questions</a></nav><section class="section" id="ways">
+    <div class="wrap">
+      <div class="head">
+        <h2>Start with a Saturday.</h2>
+        <p class="lede">Three ways to build your skills, from a first try to a real client project.</p>
+      </div>
+      <div class="grid cols-3 rise">
+        <div class="card">
+          <p class="meta">3 hours · one Saturday</p>
+          <h3>Saturday AI Work Sprint</h3>
+          <p>A market brief, an Excel analysis and a business dashboard, done by lunch. Bring a laptop.</p>
+          <a class="btn btn-primary" href="contact.html?for=bba" data-wa="Hi PACS AI, I'm interested in the Saturday AI Work Sprint for BBA/BBM students. Please share the dates and fees.">Get dates & fees</a>
+        </div>
+        <div class="card">
+          <p class="meta">16 hours · two weekends</p>
+          <h3>AI Business Bootcamp</h3>
+          <p>Marketing, sales, HR, operations and finance, with AI. Eight work samples.</p>
+          <a class="link" href="#bootcamp">See the sessions</a>
+        </div>
+        <div class="card card-dark">
+          <p class="meta">90 hours · 12 weeks</p>
+          <h3>AI Business Consulting Studio</h3>
+          <p>Work in a consulting team for a real business. Present to the owner.</p>
+          <a class="link" href="#studio">See the Studio</a>
+        </div>
+      </div>
+    </div>
+  </section><section class="section grey cv-section" id="cv">
+    <div class="cv-scroll"><div class="wrap cv-grid">
       <div>
         <div class="head flush">
-          <p class="eyebrow">Keep scrolling</p>
+          <p class="eyebrow">Your CV, before and after</p>
           <h2>Watch your CV change.</h2>
           <p class="lede">Most BBA CVs say the same four things. Here's what yours says after PACS AI.</p>
         </div>
         <ol class="cv-steps">
-          <li><strong>Saturday Sprint · 3 hours</strong><span>Your first three work samples.</span></li>
-          <li><strong>Bootcamp · 2 weekends</strong><span>Five more, across every business function.</span></li>
-          <li><strong>Studio · 12 weeks</strong><span>A real client, and their feedback.</span></li>
+          <li data-stage="1"><strong>Saturday Sprint · 3 hours</strong><span>Your first three work samples.</span><em class="cv-plus">+3</em></li>
+          <li data-stage="2"><strong>Bootcamp · 2 weekends</strong><span>Five more, across every business function.</span><em class="cv-plus">+5</em></li>
+          <li data-stage="3"><strong>Studio · 12 weeks</strong><span>A real client, and their feedback.</span><em class="cv-plus">+2</em></li>
         </ol>
+        <p class="cv-scroll-hint" aria-hidden="true">Keep scrolling. Watch the old lines go.</p>
       </div>
       <div class="cv">
+        <span class="cv-stamp" aria-hidden="true">Interview<br>ready</span>
         <div class="cv-head"><div class="cv-avatar" aria-hidden="true"></div><div><p class="cv-name">Your name</p><p class="cv-role">BBA · Final year</p></div></div>
         <p class="cv-label">Skills</p>
         <ul class="cv-old">
@@ -120,62 +126,42 @@
           <li data-stage="3" class="star"><span class="tag">Studio</span>Client project: more weekday orders for a bakery chain</li>
           <li data-stage="3" class="star"><span class="tag">Studio</span>Written feedback from the client</li>
         </ul>
-        <p class="cv-final">Walk into the interview with work, not just a degree.</p>
+        <p class="cv-final">Walk into the interview with work you can discuss.</p>
       </div>
-    </div>
-  </section>
-
-  <section class="section" id="ways">
-    <div class="wrap">
-      <div class="head">
-        <h2>Three steps to that CV.</h2>
-        <p class="lede">Start with one Saturday. Go further when you're sure.</p>
-      </div>
-      <div class="grid cols-3 rise">
-        <div class="card">
-          <p class="meta">3 hours · one Saturday</p>
-          <h3>Saturday AI Work Sprint</h3>
-          <p>A market brief, an Excel analysis and a business dashboard, done by lunch. Bring a laptop.</p>
-          <a class="link" href="contact.html?for=bba" data-wa="Hi PACS AI, I'm a BBA student. I'd like a seat in the next Saturday AI Work Sprint.">Book a seat</a>
-        </div>
-        <div class="card">
-          <p class="meta">16 hours · two weekends</p>
-          <h3>AI Business Bootcamp</h3>
-          <p>Marketing, sales, HR, operations and finance, with AI. Eight work samples.</p>
-          <a class="link" href="#bootcamp">See the sessions</a>
-        </div>
-        <div class="card card-dark">
-          <p class="meta">90 hours · 12 weeks</p>
-          <h3>AI Business Consulting Studio</h3>
-          <p>Work in a consulting team for a real business. Present to the owner.</p>
-          <a class="link" href="#studio">See the Studio</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section grey" id="bootcamp">
+    </div></div>
+  </section><section class="section grey" id="bootcamp">
     <div class="wrap">
       <div class="head">
         <h2>Step two: the AI Business Bootcamp</h2>
         <p class="lede">Eight 2-hour sessions over two weekends, for BBA and BBM students in any year. Each one ends with a piece of work you can show.</p>
       </div>
-      <ol class="steps">
-        <li><span class="num">1</span><strong>The AI-era manager</strong><span class="desc">Your rules for using AI at work</span></li>
-        <li><span class="num">2</span><strong>Market research in an hour</strong><span class="desc">A market brief for a real brand</span></li>
-        <li><span class="num">3</span><strong>Marketing that works</strong><span class="desc">A campaign kit</span></li>
-        <li><span class="num">4</span><strong>Selling with AI</strong><span class="desc">A sales playbook</span></li>
-        <li><span class="num">5</span><strong>Fair hiring with AI</strong><span class="desc">A hiring kit</span></li>
-        <li><span class="num">6</span><strong>Numbers that decide</strong><span class="desc">A pricing and break-even dashboard</span></li>
-        <li><span class="num">7</span><strong>Present like a consultant</strong><span class="desc">A 5-slide pitch</span></li>
-        <li><span class="num">8</span><strong>Your path and showcase</strong><span class="desc">A 90-day plan: job, MBA or business</span></li>
-      </ol>
+      <div class="bootcamp-board" data-bootcamp>
+        <div class="bc-weekend">
+          <p class="bc-label"><b>Weekend 1</b><span>Sessions 1 to 4</span></p>
+          <ol class="bc-grid">
+            <li class="bc-card"><span class="bc-num">01</span><svg class="bc-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 6v6c0 4.5 3.4 7.8 8 9 4.6-1.2 8-4.5 8-9V6l-8-3Z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg><strong>The AI-era manager</strong><span class="bc-make"><small>You leave with</small>Your rules for using AI at work</span></li>
+            <li class="bc-card"><span class="bc-num">02</span><svg class="bc-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/><path d="M8 12.5v-2M10.5 12.5v-4M13 12.5v-3"/></svg><strong>Market research in an hour</strong><span class="bc-make"><small>You leave with</small>A market brief for a real brand</span></li>
+            <li class="bc-card has-demo"><span class="bc-num">03</span><svg class="bc-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10v4l3 1 1 5h3l-1-4.5L19 19V5L6 9Z"/><path d="M19 9.5a3 3 0 0 1 0 5"/></svg><strong>Marketing that works</strong><span class="bc-make"><small>You leave with</small>A campaign kit</span><a class="bc-try" href="#try-campaign">Try it <span aria-hidden="true">↓</span></a></li>
+            <li class="bc-card"><span class="bc-num">04</span><svg class="bc-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r=".8"/></svg><strong>Selling with AI</strong><span class="bc-make"><small>You leave with</small>A sales playbook</span></li>
+          </ol>
+        </div>
+        <div class="bc-weekend">
+          <p class="bc-label"><b>Weekend 2</b><span>Sessions 5 to 8</span></p>
+          <ol class="bc-grid" start="5">
+            <li class="bc-card"><span class="bc-num">05</span><svg class="bc-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="8" r="3"/><circle cx="16.5" cy="9.5" r="2.5"/><path d="M2.5 19c.6-3.3 2.8-5 5.5-5s4.9 1.7 5.5 5M14 14.3c.8-.5 1.6-.8 2.5-.8 2.2 0 3.9 1.4 4.5 4.5"/></svg><strong>Fair hiring with AI</strong><span class="bc-make"><small>You leave with</small>A hiring kit</span></li>
+            <li class="bc-card has-demo"><span class="bc-num">06</span><svg class="bc-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18"/><path d="M6 16v-4M10.5 16V8M15 16v-6M19.5 16V5"/></svg><strong>Numbers that decide</strong><span class="bc-make"><small>You leave with</small>A pricing and break-even dashboard</span><a class="bc-try" href="#try-price">Try it <span aria-hidden="true">↓</span></a></li>
+            <li class="bc-card has-demo"><span class="bc-num">07</span><svg class="bc-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M12 16v4M8 20h8M7 12l3-3 2.5 2L17 7.5"/></svg><strong>Present like a consultant</strong><span class="bc-make"><small>You leave with</small>A 5-slide pitch</span><a class="bc-try" href="#try-pitch">Try it <span aria-hidden="true">↓</span></a></li>
+            <li class="bc-card"><span class="bc-num">08</span><svg class="bc-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="m15.5 8.5-2 5-5 2 2-5 5-2Z"/></svg><strong>Your path and showcase</strong><span class="bc-make"><small>You leave with</small>A 90-day plan: job, MBA or business</span></li>
+          </ol>
+        </div>
+        <p class="bc-total" aria-hidden="true"><b data-bc-count>8</b> pieces of work in <b>16</b> hours</p>
+      </div>
       <div class="sub-head">
         <h3>Try three of the eight.</h3>
-        <p class="lede">Work from sessions 3, 6 and 7, made the way you'll make it.</p>
+        <p class="lede">Work from sessions 3, 6 and 7. Try it yourself.</p>
       </div>
       <div class="wall">
-        <article class="build span-2">
+        <article class="build span-2" id="try-campaign">
           <header class="build-head"><span class="build-tag">BBA · Bootcamp session 3</span><h3>A campaign post, written for the brand</h3></header>
           <div class="build-demo">
             <div class="postmaker" data-post>
@@ -192,17 +178,44 @@
                   <button class="chip" type="button" data-v="friendly" aria-pressed="false">Friendly</button>
                   <button class="chip" type="button" data-v="premium" aria-pressed="false">Premium</button>
                 </div>
+                <p class="pm-label">Format</p>
+                <div class="chip-row" data-group="format">
+                  <button class="chip" type="button" data-v="post" aria-pressed="true">Feed post</button>
+                  <button class="chip" type="button" data-v="story" aria-pressed="false">Story</button>
+                  <button class="chip" type="button" data-v="whatsapp" aria-pressed="false">WhatsApp</button>
+                </div>
+                <div class="pm-brief"><span class="pm-label">AI brief</span><p data-brief>Write a bold feed post for a bakery in Mangalore. Offer: breakfast from 7:30. End with one clear call to action.</p></div>
+                <ul class="pm-checks" data-checks>
+                  <li>A hook in under eight words</li>
+                  <li>One clear offer</li>
+                  <li>A single call to action</li>
+                </ul>
               </div>
-              <figure class="post" aria-live="polite">
-                <div class="post-head"><i></i><span data-handle>@sample.bakery</span></div>
-                <div class="post-img" data-img><span class="ai-tag">Made with AI</span><p class="bold" data-headline>Fresh at 7:30. Gone by 9.</p></div>
-                <figcaption data-caption><b>@sample.bakery</b> Breakfast is back on weekdays. Pre-order on WhatsApp.</figcaption>
+              <figure class="post" data-format="post" aria-live="polite">
+                <div class="post-head"><i data-avatar></i><span class="post-who"><b data-handle>sample.bakery</b><small data-sub>Mangalore · Sponsored</small></span><span class="post-more" aria-hidden="true">•••</span></div>
+                <div class="post-img" data-img>
+                  <span class="post-art" data-art aria-hidden="true">🥐</span>
+                  <span class="post-sticker" data-sticker>From 7:30 AM</span>
+                  <span class="ai-tag">Made with AI</span>
+                  <p class="bold" data-headline>Fresh at 7:30. Gone by 9.</p>
+                  <span class="post-scan" aria-hidden="true"></span>
+                </div>
+                <div class="post-actions" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg>
+                  <svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-3.3-6.5L20 4l-.6 4.2A8 8 0 0 1 20 12Z"/></svg>
+                  <svg viewBox="0 0 24 24"><path d="m21 3-9 18-2-8-8-2 19-8Z"/></svg>
+                  <svg class="save" viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4V3Z"/></svg>
+                </div>
+                <p class="post-likes"><b data-likes>1,248</b> likes</p>
+                <figcaption data-caption><b>sample.bakery</b> Breakfast is back on weekdays. Pre-order on WhatsApp. <span class="tags">#Mangalore #FreshBakes</span></figcaption>
+                <span class="post-cta" data-cta>Order on WhatsApp</span>
+                <span class="post-time" aria-hidden="true">7:31 AM ✓✓</span>
               </figure>
             </div>
           </div>
         </article>
 
-        <article class="build">
+        <article class="build" id="try-price">
           <header class="build-head"><span class="build-tag">BBA · Bootcamp session 6</span><h3>The price that makes a bakery profitable</h3></header>
           <div class="build-demo">
             <div class="be" data-breakeven>
@@ -234,14 +247,14 @@
           </div>
         </article>
 
-        <article class="build">
+        <article class="build" id="try-pitch">
           <header class="build-head"><span class="build-tag">BBA · Bootcamp session 7</span><h3>A 5-slide client pitch</h3></header>
           <div class="build-demo">
             <div class="deck" data-deck>
               <div class="deck-frame" aria-live="polite">
-                <div class="slide"><small>Client pitch</small><strong>More weekday orders for a family bakery</strong><p>Team 3 · Consulting Studio</p></div>
+                <div class="slide"><small>Client pitch</small><strong>More weekday orders for a family bakery</strong><p>Illustrative client pitch</p></div>
                 <div class="slide"><small>The problem</small><strong>Weekends sell out. Weekdays are quiet.</strong><div class="slide-bars"><i style="--h: 42%"></i><i style="--h: 38%"></i><i style="--h: 35%"></i><i style="--h: 40%"></i><i style="--h: 55%"></i><i class="hot" style="--h: 88%"></i><i class="hot" style="--h: 96%"></i></div></div>
-                <div class="slide"><small>What customers said</small><strong>"I'd buy breakfast here, but you open at 10."</strong><p>From 60 conversations with people passing the shop.</p></div>
+                <div class="slide"><small>What customers said</small><strong>"I'd buy breakfast here, but you open at 10."</strong><p>Illustrative feedback from a sample customer survey.</p></div>
                 <div class="slide"><small>Our plan</small><strong>Open at 7:30. A breakfast combo. WhatsApp pre-orders.</strong></div>
                 <div class="slide"><small>The target</small><span class="slide-big">+25%</span><strong>weekday orders in 8 weeks</strong></div>
               </div>
@@ -250,45 +263,108 @@
           </div>
         </article>
       </div>
-      <p class="wall-note">Sample builds made by the PACS AI team, the same way students make them in the Bootcamp.</p>
     </div>
-  </section>
-
-  <section class="section" id="studio">
+  </section><section class="section" id="studio">
     <div class="wrap">
       <div class="head">
         <h2>Step three: the AI Business Consulting Studio</h2>
         <p class="lede">Two weekday evenings and a Saturday session each week, for 12 weeks. For second and final-year students, and recent graduates.</p>
       </div>
-      <ol class="timeline">
-        <li><span class="when">Weeks 1–4</span><strong>Foundations</strong><span class="desc">Research, spreadsheets and presenting, all with AI.</span></li>
-        <li><span class="when">Weeks 5–8</span><strong>Function studios</strong><span class="desc">Marketing, sales, HR, operations and finance.</span></li>
-        <li><span class="when">Weeks 9–12</span><strong>Client project</strong><span class="desc">Your team solves a real problem for a business, then presents it to the owner.</span></li>
-      </ol>
+      <div class="studio-plan" data-studio>
+        <div class="studio-bar" aria-hidden="true">
+          <div class="studio-weeks"><i>1</i><i>2</i><i>3</i><i>4</i><i>5</i><i>6</i><i>7</i><i>8</i><i>9</i><i>10</i><i>11</i><i>12</i></div>
+          <span class="studio-head" data-studio-head><b data-studio-week>Week 1</b></span>
+        </div>
+        <ol class="studio-phases">
+          <li class="studio-phase">
+            <button class="studio-pick" type="button" aria-pressed="false"><span class="when">Weeks 1 to 4</span><strong>Foundations</strong></button>
+            <p>Research, spreadsheets and presenting, all with AI.</p>
+            <ul class="studio-chips"><li>Research</li><li>Spreadsheets</li><li>Presenting</li></ul>
+          </li>
+          <li class="studio-phase">
+            <button class="studio-pick" type="button" aria-pressed="false"><span class="when">Weeks 5 to 8</span><strong>Function studios</strong></button>
+            <p>Every part of a business, one studio at a time.</p>
+            <ul class="studio-chips"><li>Marketing</li><li>Sales</li><li>HR</li><li>Operations</li><li>Finance</li></ul>
+          </li>
+          <li class="studio-phase">
+            <button class="studio-pick" type="button" aria-pressed="false"><span class="when">Weeks 9 to 12</span><strong>Client project</strong></button>
+            <p>Your team solves a real problem for a business, then presents it to the owner.</p>
+            <ul class="studio-chips"><li>The brief</li><li>The research</li><li>The plan</li><li>The pitch</li></ul>
+          </li>
+        </ol>
+      </div>
       <div class="grid cols-3" style="margin-top: clamp(56px, 7vw, 80px)">
         <div class="feature"><h3>Job-ready</h3><p>A CV and interview practice built around your client work.</p></div>
         <div class="feature"><h3>MBA-ready</h3><p>A "why MBA" story backed by real work, and interview practice.</p></div>
         <div class="feature"><h3>Family business or venture</h3><p>Use your own or your family's business as the client.</p></div>
       </div>
     </div>
-  </section>
-
-  <section class="section grey">
+  </section><section class="section grey">
     <div class="wrap">
       <div class="head">
         <h2>Then, a real client.</h2>
         <p class="lede">In the Studio's client sprint, your team spends four weeks on a problem like one of these.</p>
       </div>
-      <div class="briefs">
-        <div class="brief"><small>Example brief</small><strong>A family-run bakery chain</strong><p>Wants more weekday orders.</p></div>
-        <div class="brief"><small>Example brief</small><strong>An exporter</strong><p>Needs to see, at a glance, which buyers owe them money.</p></div>
-        <div class="brief"><small>Example brief</small><strong>A hotel</strong><p>Wants a faster, fairer way to hire seasonal staff.</p></div>
-        <div class="brief"><small>Example brief</small><strong>An NGO</strong><p>Wants to grow its monthly donors.</p></div>
+      <div class="cases">
+        <article class="case" style="--tone: #F6D7A7">
+          <div class="case-face case-front">
+            <div class="case-top"><small>Example brief · 01</small><span class="case-icon" aria-hidden="true">🥐</span></div>
+            <h3>A family-run bakery chain</h3>
+            <p>Wants more weekday orders.</p>
+            <button class="case-flip" type="button" aria-expanded="false">See the plan <span aria-hidden="true">↻</span></button>
+          </div>
+          <div class="case-face case-back">
+            <small>What your team hands over</small>
+            <ul><li>What customers said, in one page</li><li>A breakfast offer and its launch post</li><li>A WhatsApp pre-order flow</li></ul>
+            <p class="case-metric"><span>The number to move</span><b>Weekday orders</b></p>
+            <button class="case-flip" type="button" aria-expanded="true">Back to the brief <span aria-hidden="true">↺</span></button>
+          </div>
+        </article>
+        <article class="case" style="--tone: #CFE3F2">
+          <div class="case-face case-front">
+            <div class="case-top"><small>Example brief · 02</small><span class="case-icon" aria-hidden="true">🚢</span></div>
+            <h3>An exporter</h3>
+            <p>Needs to see, at a glance, which buyers owe them money.</p>
+            <button class="case-flip" type="button" aria-expanded="false">See the plan <span aria-hidden="true">↻</span></button>
+          </div>
+          <div class="case-face case-back">
+            <small>What your team hands over</small>
+            <ul><li>A dashboard of who owes what</li><li>Polite, firm payment reminders</li><li>A weekly cash view for the owner</li></ul>
+            <p class="case-metric"><span>The number to move</span><b>Days to get paid</b></p>
+            <button class="case-flip" type="button" aria-expanded="true">Back to the brief <span aria-hidden="true">↺</span></button>
+          </div>
+        </article>
+        <article class="case" style="--tone: #E4DDF4">
+          <div class="case-face case-front">
+            <div class="case-top"><small>Example brief · 03</small><span class="case-icon" aria-hidden="true">🏨</span></div>
+            <h3>A hotel</h3>
+            <p>Wants a faster, fairer way to hire seasonal staff.</p>
+            <button class="case-flip" type="button" aria-expanded="false">See the plan <span aria-hidden="true">↻</span></button>
+          </div>
+          <div class="case-face case-back">
+            <small>What your team hands over</small>
+            <ul><li>A fair scorecard for every role</li><li>The same interview questions for everyone</li><li>A shortlist in days, not weeks</li></ul>
+            <p class="case-metric"><span>The number to move</span><b>Time to hire</b></p>
+            <button class="case-flip" type="button" aria-expanded="true">Back to the brief <span aria-hidden="true">↺</span></button>
+          </div>
+        </article>
+        <article class="case" style="--tone: #D8EDDC">
+          <div class="case-face case-front">
+            <div class="case-top"><small>Example brief · 04</small><span class="case-icon" aria-hidden="true">🤝</span></div>
+            <h3>An NGO</h3>
+            <p>Wants to grow its monthly donors.</p>
+            <button class="case-flip" type="button" aria-expanded="false">See the plan <span aria-hidden="true">↻</span></button>
+          </div>
+          <div class="case-face case-back">
+            <small>What your team hands over</small>
+            <ul><li>A campaign built on one true story</li><li>A simple monthly-giving page</li><li>A thank-you journey for new donors</li></ul>
+            <p class="case-metric"><span>The number to move</span><b>Monthly donors</b></p>
+            <button class="case-flip" type="button" aria-expanded="true">Back to the brief <span aria-hidden="true">↺</span></button>
+          </div>
+        </article>
       </div>
     </div>
-  </section>
-
-  <section class="section" id="colleges">
+  </section><section class="section" id="colleges">
     <div class="wrap">
       <div class="head">
         <h2>For colleges and businesses</h2>
@@ -306,33 +382,36 @@
         </div>
       </div>
     </div>
-  </section>
-
-  <section class="section grey">
+  </section><section class="section grey">
     <div class="wrap split">
       <div class="head">
-        <h2>Questions students ask</h2>
+        <h2 id="questions">Questions students ask</h2>
       </div>
       <div class="faq">
-        <details><summary>Will this get me a job?</summary><p>No course can promise that, and we won't. You'll walk into interviews with what interviewers ask to see: real work samples, a client project and practice built on your own work.</p></details>
+        <details><summary>Will this get me a job?</summary><p>It gives you what interviewers ask to see: real work samples, a client project, and interview practice built on your own work.</p></details>
         <details><summary>Do I need to know coding?</summary><p>No. Everything is done with AI tools and spreadsheets.</p></details>
         <details><summary>Does it replace CAT or CET coaching?</summary><p>No. The Studio's MBA-ready track helps with your profile, your "why MBA" story and your interviews.</p></details>
         <details><summary>When do batches run?</summary><p>Weekends and evenings, planned around university semester exams. Nothing runs during exams.</p></details>
         <details><summary>What are the fees and dates?</summary><p>Message us on WhatsApp and we'll share fees and dates for the next Sprint, Bootcamp or Studio.</p></details>
       </div>
     </div>
-  </section>
-
-  <section class="section dark">
-    <div class="wrap cta">
-      <p class="statement">Three hours. Three pieces of work for your CV.</p>
-      <div class="actions">
-        <a class="btn btn-primary" href="contact.html?for=bba" data-wa="Hi PACS AI, I'm a BBA student. I'd like a seat in the next Saturday AI Work Sprint.">Book a Sprint seat</a>
+  </section><section class="three" data-three>
+    <div class="wrap three-inner">
+      <div class="three-copy">
+        <p class="eyebrow">The Saturday AI Work Sprint</p>
+        <h2 class="three-line"><span class="three-w">Three</span> <span class="three-w">hours.</span><br><span class="three-mark"><span class="three-w">Three</span> <span class="three-w">pieces</span> <span class="three-w">of</span> <span class="three-w">work</span></span><br><span class="three-w">for</span> <span class="three-w">your</span> <span class="three-w">CV.</span></h2>
+        <div class="actions">
+          <a class="btn btn-primary" href="contact.html?for=bba" data-wa="Hi PACS AI, I'm interested in the Saturday AI Work Sprint for BBA/BBM students. Please share the dates and fees.">Get Sprint dates & fees</a>
+        </div>
       </div>
+      <ol class="three-docs">
+        <li class="three-doc" style="--n: 0"><span class="three-hour">Hour 1</span><strong>Market research brief</strong><span class="three-lines" aria-hidden="true"><i></i><i></i><i></i><i></i></span></li>
+        <li class="three-doc" style="--n: 1"><span class="three-hour">Hour 2</span><strong>Sales analysis in Excel</strong><span class="three-cells" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></li>
+        <li class="three-doc" style="--n: 2"><span class="three-hour">Hour 3</span><strong>One-page dashboard</strong><span class="three-bars" aria-hidden="true"><i style="--h: 40%"></i><i style="--h: 65%"></i><i style="--h: 50%"></i><i style="--h: 90%"></i></span></li>
+      </ol>
     </div>
-  </section>
-
-</main>
+    <div class="three-ribbon" aria-hidden="true"><div class="three-track" data-three-track><span>Market brief</span><span>Excel analysis</span><span>Dashboard</span><span>Done by lunch</span><span>Market brief</span><span>Excel analysis</span><span>Dashboard</span><span>Done by lunch</span><span>Market brief</span><span>Excel analysis</span><span>Dashboard</span><span>Done by lunch</span></div></div>
+  </section></main>
 
 <footer class="site-footer">
   <div class="wrap footer-grid">
@@ -340,14 +419,14 @@
       <a class="brand" href="index.html" aria-label="PACS AI home">
         <img class="brand-logo" src="assets/logo-horizontal.png" alt="PACS AI" width="433" height="124">
       </a>
-      <p class="tagline">Learn | Create | Be tomorrow ready</p>
+      <p class="tagline">Learn. Create. Put AI to work.</p>
     </div>
     <div>
       <h2>Programmes</h2>
       <ul>
         <li><a href="class-8-12.html">Class 8–12</a></li>
         <li><a href="bba.html">BBA</a></li>
-        <li><a href="bba.html#colleges">For colleges</a></li>
+        <li><a href="learn.html">AI for everyone</a></li>
         <li><a href="song-challenge.html">AI Song Challenge</a></li>
       </ul>
     </div>
@@ -358,19 +437,15 @@
         <li><a href="contact.html" data-phone>Call us</a></li>
         <li><a href="mailto:info@pacsglobal.in" data-email data-email-text>info@pacsglobal.in</a></li>
         <li><a href="https://www.instagram.com/pacs.ai/" data-instagram>Instagram</a></li>
-        <li><span data-address>PACS Office, 4th Floor, PVS Sadan, Kodialbail, Mangalore, Karnataka 575003</span></li>
+        <li><a href="https://share.google/wSD5nGk2nQYzYpPFw" data-address data-maps>PACS Office, 4th Floor, PVS Sadan, Kodialbail, Mangalore, Karnataka 575003</a></li>
       </ul>
     </div>
   </div>
   <div class="wrap footer-base">
-    <span>© <span data-year>2026</span> PACS AI</span>
-    <span>Students today. Brighter tomorrows.</span>
+    <span>© <span data-year>2026</span> PACS AI · <a href="terms.html">Challenge terms</a></span>
   </div>
 </footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
 <script src="assets/site.js"></script>
 <script src="assets/builds.js"></script>
 <script src="assets/motion.js"></script>

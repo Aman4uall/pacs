@@ -3,17 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <script>
-    /* Hide animated content until motion.js reveals it; show everything if it never loads */
-    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      document.documentElement.classList.add("motion");
-      setTimeout(function () { if (!window.__motionReady) document.documentElement.classList.remove("motion"); }, 3500);
-    }
-  </script>
-  <title>PACS AI | AI courses in Mangalore for Class 8–12 and BBA</title>
-  <meta name="description" content="They won't just use AI. They'll build with it. Hands-on AI courses in Mangalore for Class 8–12 and BBA students: apps, AI models, games and real client work.">
+<title>PACS AI | Hands-on AI for school, work & everyday life</title>
+  <meta name="description" content="Hands-on AI in Mangalore for Class 8–12, BBA and everyone. Students build apps, AI models and real client work; explore practical skills and shape a one-month learning plan.">
   <meta property="og:title" content="PACS AI">
-  <meta property="og:description" content="They won't just use AI. They'll build with it.">
+  <meta property="og:description" content="Hands-on AI for school, work, business and everyday life.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://pacsai.pacsglobal.in/">
   <link rel="canonical" href="https://pacsai.pacsglobal.in/">
@@ -31,6 +24,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@1,400&display=swap">
   <link rel="stylesheet" href="assets/styles.css">
+  <link rel="stylesheet" href="assets/refresh.css">
+  <link rel="stylesheet" href="assets/motion.css">
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -88,14 +83,14 @@
 }
   </script>
 </head>
-<body>
+<body class="home-page">
 <a class="skip" href="#main">Skip to content</a>
 
 <a class="topbar" href="song-challenge.html">
   <span class="topbar-eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
-  <span class="topbar-new">New</span>
-  <span class="topbar-text">AI Song Challenge <span class="topbar-more">for Classes 8–12 · Make your first AI song and win ₹500</span></span>
-  <span class="topbar-go">Enter now</span>
+  <span class="topbar-new"><span class="tn-new">New</span><span class="tn-prize">1 in 10 wins ₹500</span></span>
+  <span class="topbar-text">AI Song Challenge · Class 8–12<span class="topbar-more"> · 1 in 10 songs wins ₹500</span></span>
+  <span class="topbar-go">Enter<span class="tn-now"> now</span></span>
 </a>
 
 <header class="site-header">
@@ -103,14 +98,7 @@
     <a class="brand" href="index.html" aria-label="PACS AI home">
       <img class="brand-logo" src="assets/logo-horizontal.png" alt="PACS AI" width="433" height="124">
     </a>
-    <nav class="site-nav" aria-label="Main">
-      <ul class="nav-links" id="nav-links">
-        <li><a href="class-8-12.html" data-note="Day 1 to Demo Day">Class 8–12</a></li>
-        <li><a href="bba.html" data-note="Work, not just a degree">BBA</a></li>
-        <li><a href="#build-wall" data-note="Try what they build">Build Wall</a></li>
-        <li><a href="contact.html" data-note="WhatsApp, call or visit">Contact</a></li>
-      </ul>
-    </nav>
+    <nav class="site-nav" aria-label="Main"><ul class="nav-links" id="nav-links"><li><a href="class-8-12.html" data-note="School students & parents">Class 8–12</a></li><li><a href="bba.html" data-note="Build work for your portfolio">BBA & BBM</a></li><li><a href="learn.html" data-note="Find a skill for your life">AI for everyone</a></li><li><a href="index.html#build-wall" data-note="A taste of learning by doing">Try the demos</a></li><li><a href="contact.html" data-note="Let us help you choose">Contact</a></li></ul></nav>
     <a class="btn btn-dark btn-sm nav-cta" href="contact.html" data-wa="Hi PACS AI, I'd like to know more about your courses.">WhatsApp us</a>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
@@ -119,98 +107,78 @@
 </header>
 
 <main id="main">
-
-  <!-- Hero: one sentence becomes a working app -->
-  <section class="hero">
-    <div class="wrap hero-grid">
-      <div class="hero-copy">
-        <p class="eyebrow">PACS AI · AI lab in Mangalore</p>
-        <h1>They won't just use AI. <span class="accent">They'll build with it.</span></h1>
-        <p class="lede">Hands-on AI courses for Class 8–12 and BBA students. Every student leaves with things they built: apps, AI models, games and real client work.</p>
-        <div class="actions">
-          <a class="btn btn-primary" href="class-8-12.html">For Class 8–12</a>
-          <a class="btn btn-outline" href="bba.html">For BBA students</a>
-        </div>
+  <section class="home-opening">
+    <div class="wrap opening-grid">
+      <div class="opening-copy">
+        <p class="eyebrow"><span class="status-dot"></span> Hands-on AI classes · Mangalore</p>
+        <h1>Dream big.<br><span class="accent">Learn the skills.</span></h1>
+        <p class="lede">Make something. Solve something. Learn AI through the things you actually want to do.</p>
+        <div class="actions"><a class="btn btn-primary" href="learn.html">Find my AI skills</a><a class="btn btn-outline" href="#start">Find my course</a></div>
+        <p class="opening-note">Start as a beginner. Leave with <span class="rotator" data-rotate="a reel you made|an app you built|a dashboard that works|a song with your words|a website with your name">something you made</span>.</p>
       </div>
+      <div class="possibilities" aria-label="Choose something to learn">
+        <div class="possibilities-top"><span class="eyebrow">What if you could…</span><span class="spark" aria-hidden="true">✳</span></div>
+        <a class="possibility possibility-work" href="learn.html?goal=work"><span class="possibility-icon" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span><small>Make work lighter</small><strong>Turn numbers into<br>a clear story.</strong></span><span class="round-arrow" aria-hidden="true">↗</span></a>
+        <a class="possibility possibility-create" href="learn.html?goal=create"><span class="possibility-icon" aria-hidden="true">▶</span><span><small>Bring an idea to life</small><strong>Make the reel<br>you imagined.</strong></span><span class="round-arrow" aria-hidden="true">↗</span></a>
+        <a class="possibility possibility-build" href="learn.html?goal=build"><span class="possibility-icon" aria-hidden="true">&lt;/&gt;</span><span><small>Build something of your own</small><strong>Your idea.<br>Your first app.</strong></span><span class="round-arrow" aria-hidden="true">↗</span></a>
+        <div class="possibilities-bottom"><span>Learn it. Try it. Make it yours.</span><span aria-hidden="true">↓</span></div>
+      </div>
+    </div>
+    <nav class="wrap audience-routes" id="start" aria-label="Find your starting point">
+      <a href="class-8-12.html"><span class="route-number">01</span><span><small>School students & parents</small><strong>Class 8–12</strong></span><span class="route-arrow" aria-hidden="true">↗</span></a>
+      <a href="bba.html"><span class="route-number">02</span><span><small>College & career</small><strong>BBA & BBM</strong></span><span class="route-arrow" aria-hidden="true">↗</span></a>
+      <a href="learn.html?goal=work"><span class="route-number">03</span><span><small>For your working day</small><strong>Work & business</strong></span><span class="route-arrow" aria-hidden="true">↗</span></a>
+      <a href="learn.html?goal=start"><span class="route-number">04</span><span><small>No experience needed</small><strong>Just curious?</strong></span><span class="route-arrow" aria-hidden="true">↗</span></a>
+    </nav>
+  </section>
 
-      <div class="builder" data-builder>
-        <div class="prompt">
-          <span class="prompt-label">Idea</span>
-          <p class="prompt-text" data-prompt>An app that quizzes me on Chapter 5 before my exam.</p>
-          <span class="prompt-go" aria-hidden="true">Build</span>
-        </div>
-        <p class="build-status" data-status aria-live="polite">Built and live</p>
-        <div class="phone">
-          <span class="live-badge">Live</span>
-          <div class="app" data-app>
-            <div class="app-top bp"><div><p class="app-name">StudySprint</p><p class="app-sub">Chapter 5 · Quick quiz</p></div><span class="app-score" data-score>0 pts</span></div>
-            <div class="app-progress bp"><span data-bar></span></div>
-            <div class="app-q bp"><p class="app-count" data-count>Question 1 of 3</p><p class="app-question" data-question>Which gas do plants take in to make their food?</p></div>
-            <div class="app-options bp" data-options>
-              <button type="button">Oxygen</button>
-              <button type="button">Carbon dioxide</button>
-              <button type="button">Nitrogen</button>
-            </div>
-            <p class="app-feedback" data-feedback aria-live="polite"></p>
-            <div class="app-tabs bp"><span>Home</span><span class="on">Quiz</span><span>Review</span></div>
-          </div>
-        </div>
-        <p class="builder-caption"><strong>Age 14. First AI app. Day 30.</strong><span>Built in Session 7 of the one-month course.</span></p>
-        <button class="replay" type="button" data-replay hidden>↻ Build it again</button>
+  <div class="skill-band" aria-hidden="true"><div class="skill-band-row"><div class="skill-band-track"><span>Ask AI better questions</span><span>Find the right AI tool</span><span>Create and edit AI images</span><span>Make short videos and reels</span><span>Design posts and invitations</span><span>Turn your words into a song</span><span>Make sense of an Excel sheet</span><span>Turn data into a dashboard</span><span>Make slides from rough notes</span><span>Write emails and reports</span><span>Prepare for your next interview</span><span>Ask AI better questions</span><span>Find the right AI tool</span><span>Create and edit AI images</span><span>Make short videos and reels</span><span>Design posts and invitations</span><span>Turn your words into a song</span><span>Make sense of an Excel sheet</span><span>Turn data into a dashboard</span><span>Make slides from rough notes</span><span>Write emails and reports</span><span>Prepare for your next interview</span></div></div><div class="skill-band-row is-reverse"><div class="skill-band-track"><span>Practise spoken English</span><span>Build your first website</span><span>Make an app without starting with code</span><span>Build your own AI assistant</span><span>Automate a task you keep repeating</span><span>Plan a small marketing campaign</span><span>Study with an AI tutor</span><span>Plan lessons and question papers</span><span>Research with sources you can check</span><span>Talk to AI in your language</span><span>Practise spoken English</span><span>Build your first website</span><span>Make an app without starting with code</span><span>Build your own AI assistant</span><span>Automate a task you keep repeating</span><span>Plan a small marketing campaign</span><span>Study with an AI tutor</span><span>Plan lessons and question papers</span><span>Research with sources you can check</span><span>Talk to AI in your language</span></div></div></div>
+
+  <section class="section outcome-section" id="skills">
+    <div class="wrap">
+      <div class="section-intro"><div class="head"><p class="eyebrow">AI for everyone</p><h2>Start with a little<br>“I wish I could…”</h2><p>Pick a few skills. We'll help you shape a month of learning around them.</p></div><a class="link" href="learn.html">Explore all 36 skills</a></div>
+      <div class="outcome-grid">
+        <a class="outcome-card" href="learn.html?goal=work"><span class="outcome-symbol" aria-hidden="true">↗</span><h3>Finish work faster</h3><p>Emails, slides, spreadsheets. Get to the useful part.</p><span class="outcome-link">Find work skills <b aria-hidden="true">→</b></span></a>
+        <a class="outcome-card" href="learn.html?goal=business"><span class="outcome-symbol" aria-hidden="true">◎</span><h3>Help my business grow</h3><p>Understand customers. Shape an offer. Plan a campaign.</p><span class="outcome-link">Find business skills <b aria-hidden="true">→</b></span></a>
+        <a class="outcome-card" href="learn.html?goal=study"><span class="outcome-symbol" aria-hidden="true">Aa</span><h3>Make learning click</h3><p>Study plans, clearer explanations and practice that helps.</p><span class="outcome-link">Find study skills <b aria-hidden="true">→</b></span></a>
+        <a class="outcome-card" href="learn.html?goal=build"><span class="outcome-symbol" aria-hidden="true">&lt;/&gt;</span><h3>Build my own thing</h3><p>A website, an app or a helper for repetitive tasks.</p><span class="outcome-link">Find building skills <b aria-hidden="true">→</b></span></a>
       </div>
     </div>
   </section>
 
-  <div class="marquee" aria-hidden="true">
-    <div class="marquee-track">
-      <span>Build</span><i></i><span>Launch</span><i></i><span>Present</span><i></i><span>Be tomorrow ready</span><i></i>
-    </div>
-  </div>
-
-  <!-- Why now -->
-  <section class="section" id="why-now">
-    <div class="wrap">
-      <div class="head">
-        <p class="eyebrow">Why now</p>
-        <h2>The world they're walking into</h2>
+  <section class="section home-courses" id="courses">
+    <div class="wrap"><div class="head"><p class="eyebrow">A little structure. A lot of making.</p><h2>A course for<br>your next chapter.</h2></div>
+      <div class="course-pair">
+        <a class="course-door" href="class-8-12.html"><span class="course-kicker">Class 8–12 · All boards & PUC</span><h3>Their first model.<br>Their own app.<br><em>A real “I made this.”</em></h3><p>A one-month introduction, with the option to go deeper in the six-month Creator Programme.</p><div class="course-facts"><span>No coding to start</span><span>One device per student</span></div><span class="door-action">Explore school courses <b aria-hidden="true">↗</b></span></a>
+        <a class="course-door course-door-dark" href="bba.html"><span class="course-kicker">BBA & BBM · Any year</span><h3>Your degree.<br>Your ideas.<br><em>Work you can show.</em></h3><p>Start with a three-hour Saturday Sprint. Build towards a portfolio and a real client project.</p><div class="course-facts"><span>Business + AI</span><span>Bring your laptop</span></div><span class="door-action">Explore BBA courses <b aria-hidden="true">↗</b></span></a>
       </div>
-      <div class="world-grid swipe" data-swipe>
-        <div class="big-stat">
-          <span class="big-num" data-count-to="37" data-suffix="%">37%</span>
-          <p>of entry-level tasks in India are already being done by AI.</p>
-          <div class="meter"><div class="hot"><span style="--v: 37%"></span></div></div>
-          <p class="source">Cognizant–Pearson survey of HR leaders, 2026</p>
-        </div>
-        <div class="big-stat">
-          <span class="big-num" data-count-to="32" data-suffix="%">32%</span>
-          <p>of Gen Z in India have had any AI training. 93% already use AI at work.</p>
-          <div class="meter">
-            <div><span style="--v: 93%"></span></div><small>93% use AI at work</small>
-            <div class="hot"><span style="--v: 32%"></span></div><small>32% have been trained</small>
-          </div>
-          <p class="source">Deloitte Gen Z and Millennial Survey, India, 2026</p>
-        </div>
-        <div class="big-stat">
-          <span class="big-num big-word">Class 3</span>
-          <p>is where AI now starts in CBSE schools. It's compulsory.</p>
-          <p class="source">CBSE Computational Thinking and AI, from 2026–27</p>
-        </div>
-      </div>
-      <p class="world-close">Every school now teaches about AI. <span class="accent">We teach them to build with it.</span></p>
+      <p class="course-other">Studying something else? <a href="learn.html?goal=work">Build a skill plan for your goals →</a></p>
     </div>
   </section>
 
-  <!-- The Build Wall -->
-  <section class="section grey" id="build-wall">
-    <div class="wrap">
-      <div class="head">
-        <p class="eyebrow">The Build Wall</p>
-        <h2>Things our students build. Go on, try them.</h2>
-        <p class="lede">Every tile is a working build, made the way students make them in class.</p>
+<section class="journey" id="journey" data-story>
+ <div class="wrap">
+  <div class="head"><p class="eyebrow">Class 8–12 · Learn it. Build it. Show it.</p><h2>Watch their ideas become real.</h2><p class="lede">A one-month introduction, followed by the six-month Creator Programme. Scroll through what they could make along the way.</p></div>
+  <div class="story-track"><div class="journey-grid">
+   <div class="journey-text">
+    <div class="journey-meta" aria-hidden="true"><span class="journey-when" data-story-when>Intro · Week 1</span><span class="journey-count"><b data-story-count>01</b> / 06</span></div>
+    <ol class="chapters"><li class="chapter"><span class="when">Intro · Week 1</span><h3>Their first AI model.</h3><p>Train it to sort mangoes. Try tricky photos. Discover how a model learns.</p></li><li class="chapter"><span class="when">Intro · Week 3</span><h3>Their idea becomes a film.</h3><p>A storyboard, a soundtrack, a short film. They direct. AI is the crew.</p></li><li class="chapter"><span class="when">Intro · Week 4</span><h3>An app they made themselves.</h3><p>Build a revision app, test it with friends and make it better.</p></li><li class="chapter"><span class="when">Creator · Months 2–3</span><h3>Now they write the code.</h3><p>Turn Python, data and AI into games and tools people can use.</p></li><li class="chapter"><span class="when">Creator · Month 4</span><h3>A real problem. A real client.</h3><p>A Mangalore organisation brings a challenge. Their team builds an answer.</p></li><li class="chapter"><span class="when">Creator · Month 6</span><h3>Their work. Their stage.</h3><p>Present their own project to parents, schools and industry at Demo Day.</p></li></ol>
+    <div class="story-controls"><button type="button" data-story-prev aria-label="Previous journey stage">←</button><div class="story-meter" aria-hidden="true"><span></span></div><button type="button" data-story-next aria-label="Next journey stage">→</button><a href="#journey-after">Skip journey ↓</a></div>
+   </div>
+   <div class="journey-stage" aria-hidden="true"><figure class="art"><div class="art-visual v-model"><svg class="mini-mango" viewBox="0 0 100 100"><path d="M52 10C80 12 94 38 88 62 83 84 62 95 42 91 20 87 7 68 10 46 13 25 30 8 52 10Z" fill="#EDA832"/><ellipse cx="38" cy="36" rx="12" ry="8" fill="#fff" opacity=".35"/><path d="M52 11C54 5 58 3 62 2" stroke="#5A3A1A" stroke-width="3" fill="none" stroke-linecap="round"/></svg><div class="mini-bars"><i style="--v: 94%"></i><i style="--v: 6%"></i></div></div><figcaption><span>Intro · Week 1</span>Their first AI model.</figcaption></figure><figure class="art"><div class="art-visual v-film"><i></i><i></i><i></i><i></i><i></i><i></i></div><figcaption><span>Intro · Week 3</span>Their idea becomes a film.</figcaption></figure><figure class="art"><div class="art-visual v-app"><div class="mini-phone"><b><i></i><i></i><i></i><i></i><i></i><i></i></b></div></div><figcaption><span>Intro · Week 4</span>An app they made themselves.</figcaption></figure><figure class="art"><div class="art-visual v-code"><i style="--w: 40%; --c: #FF7A83"></i><i style="--w: 70%; --x: 14px"></i><i style="--w: 55%; --x: 14px; --c: #9FD39F"></i><i style="--w: 30%; --c: #FF7A83"></i><i style="--w: 62%; --x: 14px"></i><i style="--w: 48%; --x: 28px; --c: #9FD39F"></i><span>▶ python escape.py</span></div><figcaption><span>Creator · Months 2–3</span>Now they write the code.</figcaption></figure><figure class="art"><div class="art-visual v-client"><i style="--h: 45%"></i><i style="--h: 90%"></i><i style="--h: 60%"></i><i style="--h: 30%"></i><i style="--h: 70%"></i></div><figcaption><span>Creator · Month 4</span>A real problem. A real client.</figcaption></figure><figure class="art"><div class="art-visual v-stage"><b>Demo <span>Day</span></b></div><figcaption><span>Creator · Month 6</span>Their work. Their stage.</figcaption></figure></div>
+  </div></div>
+  <div class="journey-after" id="journey-after"><p>A little more confidence. Something bigger to show.</p><a class="btn btn-primary" href="class-8-12.html">Explore the school courses</a></div>
+ </div>
+</section>
+  <section class="section grey home-demos" id="build-wall"><div class="wrap">
+    <div class="section-intro"><div class="head"><p class="eyebrow">A taste of the classroom</p><h2>Less wondering.<br>More trying.</h2></div>
+      <div class="demo-switch" role="tablist" aria-label="Whose demos would you like to try?" data-demo-switch>
+        <button type="button" role="tab" id="tab-school" aria-controls="demos-school" aria-selected="true">Class 8–12<small>3 to try</small></button>
+        <button type="button" role="tab" id="tab-bba" aria-controls="demos-bba" aria-selected="false">BBA &amp; BBM<small>3 to try</small></button>
       </div>
-
-      <div class="wall wall-3">
-        <article class="build span-2">
+    </div>
+    <div class="wall demo-panel" id="demos-school" role="tabpanel" aria-labelledby="tab-school" data-more="class-8-12.html#build-wall" data-more-text="All 5 Class 8–12 demos">
+<article class="build span-2">
           <header class="build-head"><span class="build-tag">Class 8–12 · Session 1</span><h3>An AI that sorts mangoes</h3></header>
           <div class="build-demo">
             <div class="sorter" data-sorter>
@@ -225,10 +193,9 @@
               </div>
             </div>
           </div>
-          <p class="build-hint">Trained in the first hour of the course, on photos the students took themselves.</p>
+          <p class="build-hint">Choose a mango to explore how an image classifier makes a prediction.</p>
         </article>
-
-        <article class="build">
+<article class="build">
           <header class="build-head"><span class="build-tag">Class 8–12 · Session 6</span><h3>A study coach that refuses to cheat</h3></header>
           <div class="build-demo">
             <div class="coach" data-coach>
@@ -243,9 +210,8 @@
             </div>
           </div>
         </article>
-
-        <article class="build">
-          <header class="build-head"><span class="build-tag">Creator Programme · Python</span><h3>A game written in Python</h3></header>
+<article class="build">
+          <header class="build-head"><span class="build-tag">Creator Programme · Months 2–3</span><h3>A game written in Python</h3></header>
           <div class="build-demo">
             <div class="term" data-term>
               <div class="term-bar"><i></i><i></i><i></i><span>escape.py</span><button class="term-toggle" type="button" data-code-toggle aria-pressed="false">View code</button></div>
@@ -267,9 +233,63 @@
             </div>
           </div>
         </article>
-
-        <article class="build span-2">
-          <header class="build-head"><span class="build-tag">BBA · Bootcamp session 6</span><h3>The price that makes a bakery profitable</h3></header>
+    </div>
+    <div class="wall demo-panel" id="demos-bba" role="tabpanel" aria-labelledby="tab-bba" data-more="bba.html#bootcamp" data-more-text="See all 8 BBA sessions">
+<article class="build span-2">
+          <header class="build-head"><span class="build-tag">BBA · Bootcamp session 3</span><h3>One business. Three ways to say it.</h3></header>
+          <div class="build-demo">
+            <div class="postmaker" data-post>
+              <div class="pm-controls">
+                <p class="pm-label">Business</p>
+                <div class="chip-row" data-group="biz">
+                  <button class="chip" type="button" data-v="bakery" aria-pressed="true">Bakery</button>
+                  <button class="chip" type="button" data-v="cafe" aria-pressed="false">Café</button>
+                  <button class="chip" type="button" data-v="books" aria-pressed="false">Bookshop</button>
+                </div>
+                <p class="pm-label">Tone</p>
+                <div class="chip-row" data-group="tone">
+                  <button class="chip" type="button" data-v="bold" aria-pressed="true">Bold</button>
+                  <button class="chip" type="button" data-v="friendly" aria-pressed="false">Friendly</button>
+                  <button class="chip" type="button" data-v="premium" aria-pressed="false">Premium</button>
+                </div>
+                <p class="pm-label">Format</p>
+                <div class="chip-row" data-group="format">
+                  <button class="chip" type="button" data-v="post" aria-pressed="true">Feed post</button>
+                  <button class="chip" type="button" data-v="story" aria-pressed="false">Story</button>
+                  <button class="chip" type="button" data-v="whatsapp" aria-pressed="false">WhatsApp</button>
+                </div>
+                <div class="pm-brief"><span class="pm-label">AI brief</span><p data-brief>Write a bold feed post for a bakery in Mangalore. Offer: breakfast from 7:30. End with one clear call to action.</p></div>
+                <ul class="pm-checks" data-checks>
+                  <li>A hook in under eight words</li>
+                  <li>One clear offer</li>
+                  <li>A single call to action</li>
+                </ul>
+              </div>
+              <figure class="post" data-format="post" aria-live="polite">
+                <div class="post-head"><i data-avatar></i><span class="post-who"><b data-handle>sample.bakery</b><small data-sub>Mangalore · Sponsored</small></span><span class="post-more" aria-hidden="true">•••</span></div>
+                <div class="post-img" data-img>
+                  <span class="post-art" data-art aria-hidden="true">🥐</span>
+                  <span class="post-sticker" data-sticker>From 7:30 AM</span>
+                  <span class="ai-tag">Made with AI</span>
+                  <p class="bold" data-headline>Fresh at 7:30. Gone by 9.</p>
+                  <span class="post-scan" aria-hidden="true"></span>
+                </div>
+                <div class="post-actions" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg>
+                  <svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-3.3-6.5L20 4l-.6 4.2A8 8 0 0 1 20 12Z"/></svg>
+                  <svg viewBox="0 0 24 24"><path d="m21 3-9 18-2-8-8-2 19-8Z"/></svg>
+                  <svg class="save" viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4V3Z"/></svg>
+                </div>
+                <p class="post-likes"><b data-likes>1,248</b> likes</p>
+                <figcaption data-caption><b>sample.bakery</b> Breakfast is back on weekdays. Pre-order on WhatsApp. <span class="tags">#Mangalore #FreshBakes</span></figcaption>
+                <span class="post-cta" data-cta>Order on WhatsApp</span>
+                <span class="post-time" aria-hidden="true">7:31 AM ✓✓</span>
+              </figure>
+            </div>
+          </div>
+        </article>
+<article class="build">
+          <header class="build-head"><span class="build-tag">BBA · Bootcamp session 6</span><h3>Can you make the bakery profitable?</h3></header>
           <div class="build-demo">
             <div class="be" data-breakeven>
               <div class="be-controls">
@@ -299,15 +319,14 @@
             </div>
           </div>
         </article>
-
-        <article class="build">
+<article class="build">
           <header class="build-head"><span class="build-tag">BBA · Bootcamp session 7</span><h3>A 5-slide client pitch</h3></header>
           <div class="build-demo">
             <div class="deck" data-deck>
               <div class="deck-frame" aria-live="polite">
-                <div class="slide"><small>Client pitch</small><strong>More weekday orders for a family bakery</strong><p>Team 3 · Consulting Studio</p></div>
+                <div class="slide"><small>Client pitch</small><strong>More weekday orders for a family bakery</strong><p>Illustrative client pitch</p></div>
                 <div class="slide"><small>The problem</small><strong>Weekends sell out. Weekdays are quiet.</strong><div class="slide-bars"><i style="--h: 42%"></i><i style="--h: 38%"></i><i style="--h: 35%"></i><i style="--h: 40%"></i><i style="--h: 55%"></i><i class="hot" style="--h: 88%"></i><i class="hot" style="--h: 96%"></i></div></div>
-                <div class="slide"><small>What customers said</small><strong>"I'd buy breakfast here, but you open at 10."</strong><p>From 60 conversations with people passing the shop.</p></div>
+                <div class="slide"><small>What customers said</small><strong>"I'd buy breakfast here, but you open at 10."</strong><p>Illustrative feedback from a sample customer survey.</p></div>
                 <div class="slide"><small>Our plan</small><strong>Open at 7:30. A breakfast combo. WhatsApp pre-orders.</strong></div>
                 <div class="slide"><small>The target</small><span class="slide-big">+25%</span><strong>weekday orders in 8 weeks</strong></div>
               </div>
@@ -315,136 +334,13 @@
             </div>
           </div>
         </article>
-
-        <article class="build span-2">
-          <header class="build-head"><span class="build-tag">BBA · Bootcamp session 3</span><h3>A campaign post, written for the brand</h3></header>
-          <div class="build-demo">
-            <div class="postmaker" data-post>
-              <div class="pm-controls">
-                <p class="pm-label">Business</p>
-                <div class="chip-row" data-group="biz">
-                  <button class="chip" type="button" data-v="bakery" aria-pressed="true">Bakery</button>
-                  <button class="chip" type="button" data-v="cafe" aria-pressed="false">Café</button>
-                  <button class="chip" type="button" data-v="books" aria-pressed="false">Bookshop</button>
-                </div>
-                <p class="pm-label">Tone</p>
-                <div class="chip-row" data-group="tone">
-                  <button class="chip" type="button" data-v="bold" aria-pressed="true">Bold</button>
-                  <button class="chip" type="button" data-v="friendly" aria-pressed="false">Friendly</button>
-                  <button class="chip" type="button" data-v="premium" aria-pressed="false">Premium</button>
-                </div>
-              </div>
-              <figure class="post" aria-live="polite">
-                <div class="post-head"><i></i><span data-handle>@sample.bakery</span></div>
-                <div class="post-img" data-img><span class="ai-tag">Made with AI</span><p class="bold" data-headline>Fresh at 7:30. Gone by 9.</p></div>
-                <figcaption data-caption><b>@sample.bakery</b> Breakfast is back on weekdays. Pre-order on WhatsApp.</figcaption>
-              </figure>
-            </div>
-          </div>
-        </article>
-      </div>
-      <p class="wall-note">These are sample builds made by the PACS AI team, the same way students build them. After our first batch, they'll be replaced by real student work.</p>
     </div>
-  </section>
+    <div class="demo-next"><a class="btn btn-dark" href="learn.html">I'd like to make something</a><a class="link" href="class-8-12.html#build-wall" data-demo-more>All 5 Class 8–12 demos</a></div>
+  </div></section>
 
-  <!-- A student's journey -->
-  <section class="journey" id="journey">
-    <div class="wrap">
-      <div class="head">
-        <p class="eyebrow">Day 1 → Demo Day</p>
-        <h2>Seven months. Six builds. One stage.</h2>
-        <p class="lede">Follow a Class 8–12 student through the one-month Introductory Programme and the six-month Creator Programme.</p>
-      </div>
-      <div class="journey-grid" data-journey>
-        <div class="journey-text">
-          <div class="journey-meta" aria-hidden="true"><span class="journey-when" data-j-when>Week 1</span><span class="journey-count">Things built <b data-j-count>6</b></span></div>
-          <ol class="chapters">
-            <li class="chapter"><span class="when">Week 1</span><h3>Trains their first AI model.</h3><p>It learns to tell ripe mangoes from raw ones. Then they feed it bad photos and watch it fail, on purpose.</p></li>
-            <li class="chapter"><span class="when">Week 3</span><h3>Directs a short film with AI.</h3><p>Characters, a five-shot storyboard and a soundtrack. They direct. The AI is the crew.</p></li>
-            <li class="chapter"><span class="when">Week 4</span><h3>Ships their first app.</h3><p>A revision app their friends actually open before exams.</p></li>
-            <li class="chapter"><span class="when">Months 2–3</span><h3>Writes real Python.</h3><p>From their first line of code to a game other people play.</p></li>
-            <li class="chapter"><span class="when">Month 4</span><h3>Takes on a real client.</h3><p>An organisation in Mangalore brings a real problem. Their team builds the answer.</p></li>
-            <li class="chapter"><span class="when">Month 6</span><h3>Walks onto the Demo Day stage.</h3><p>Their own project, presented to parents, schools and industry.</p></li>
-          </ol>
-          <div class="journey-dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
-        </div>
-        <div class="journey-stage" aria-hidden="true">
-          <figure class="art"><div class="art-visual v-model"><svg class="mini-mango" viewBox="0 0 100 100"><path d="M52 10C80 12 94 38 88 62 83 84 62 95 42 91 20 87 7 68 10 46 13 25 30 8 52 10Z" fill="#EDA832"/><ellipse cx="38" cy="36" rx="12" ry="8" fill="#fff" opacity=".35"/><path d="M52 11C54 5 58 3 62 2" stroke="#5A3A1A" stroke-width="3" fill="none" stroke-linecap="round"/></svg><div class="mini-bars"><i style="--v: 94%"></i><i style="--v: 6%"></i></div></div><figcaption><span>Week 1</span>AI model: mango sorter</figcaption></figure>
-          <figure class="art"><div class="art-visual v-film"><i></i><i></i><i></i><i></i><i></i><i></i></div><figcaption><span>Week 3</span>Short film: five shots</figcaption></figure>
-          <figure class="art"><div class="art-visual v-app"><div class="mini-phone"><b><i></i><i></i><i></i><i></i><i></i><i></i></b></div></div><figcaption><span>Week 4</span>App: StudySprint</figcaption></figure>
-          <figure class="art"><div class="art-visual v-code"><i style="--w: 40%; --c: #FF7A83"></i><i style="--w: 70%; --x: 14px"></i><i style="--w: 55%; --x: 14px; --c: #9FD39F"></i><i style="--w: 30%; --c: #FF7A83"></i><i style="--w: 62%; --x: 14px"></i><i style="--w: 48%; --x: 28px; --c: #9FD39F"></i><span>▶ python escape.py</span></div><figcaption><span>Months 2–3</span>Python game: Escape</figcaption></figure>
-          <figure class="art"><div class="art-visual v-client"><i style="--h: 45%"></i><i style="--h: 90%"></i><i style="--h: 60%"></i><i style="--h: 30%"></i><i style="--h: 70%"></i></div><figcaption><span>Month 4</span>Client project: waste dashboard</figcaption></figure>
-          <figure class="art"><div class="art-visual v-stage"><b>Demo <span>Day</span></b></div><figcaption><span>Month 6</span>Their own project, on stage</figcaption></figure>
-        </div>
-      </div>
-      <div class="story-end">
-        <p class="story-line">Most 15-year-olds finish the year with a marksheet. <span class="accent">Yours will have a portfolio.</span></p>
-        <a class="btn btn-primary" href="class-8-12.html">See the Class 8–12 courses</a>
-      </div>
-    </div>
-  </section>
+  <section class="challenge-invite"><div class="wrap"><div><p class="eyebrow">AI Song Challenge · Classes 8–12 only</p><h2>Your words.<br>Your first song.</h2><p>No singing or instruments needed. Free to enter.<br>One in every 10 songs wins ₹500.</p><a class="btn btn-primary" href="song-challenge.html">Start my song</a></div><div class="song-stamp" aria-hidden="true"><span>MAKE SOMETHING</span><strong>₹500</strong><span>1 IN 10 SONGS WINS</span></div></div></section>
 
-  <!-- Demo Day -->
-  <section class="demoday" id="demo-day" data-demoday>
-    <div class="spot" aria-hidden="true"></div>
-    <div class="wrap demoday-inner">
-      <p class="eyebrow">Month 6</p>
-      <h2 class="demoday-title"><span>Demo</span> <span>Day</span></h2>
-      <p class="demoday-lede">Their own project. A real stage. Parents, schools and industry in the audience.</p>
-      <div class="demoday-row">
-        <div data-countdown><p class="countdown-soon">First Demo Day: <b>date announced soon</b></p></div>
-        <a class="btn btn-primary" href="contact.html" data-wa="Hi PACS AI, I'd like an invite to the next Demo Day.">Get an invite</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Two doors -->
-  <section class="section">
-    <div class="wrap">
-      <div class="head">
-        <h2>Where do you start?</h2>
-      </div>
-      <div class="doors">
-        <a class="card card-link door" href="class-8-12.html">
-          <p class="meta">For your child · Class 8–12</p>
-          <h3>Day 1: their first AI model. Day 30: their own app.</h3>
-          <ul class="course-list">
-            <li>Introductory Programme <span>1 month</span></li>
-            <li>Creator Programme <span>6 months</span></li>
-          </ul>
-          <span class="link">Explore Class 8–12</span>
-        </a>
-        <a class="card card-link card-dark door" href="bba.html">
-          <p class="meta">For your career · BBA</p>
-          <h3>AI is taking the entry-level job. Take the level above it.</h3>
-          <ul class="course-list">
-            <li>Saturday AI Work Sprint <span>3 hours</span></li>
-            <li>AI Business Bootcamp <span>2 weekends</span></li>
-            <li>AI Business Consulting Studio <span>12 weeks</span></li>
-          </ul>
-          <span class="link">Explore BBA courses</span>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- AI Song Challenge -->
-  <section class="song-banner">
-    <div class="song-banner-wave" aria-hidden="true"><i style="--h:66%;--d:-1.23s"></i><i style="--h:75%;--d:-0.85s"></i><i style="--h:34%;--d:-1.07s"></i><i style="--h:37%;--d:-0.48s"></i><i style="--h:32%;--d:-1.18s"></i><i style="--h:52%;--d:-0.05s"></i><i style="--h:80%;--d:-0.54s"></i><i style="--h:55%;--d:-0.12s"></i><i style="--h:79%;--d:-0.08s"></i><i style="--h:97%;--d:-0.16s"></i><i style="--h:53%;--d:-0.82s"></i><i style="--h:99%;--d:-1.23s"></i><i style="--h:98%;--d:-0.76s"></i><i style="--h:31%;--d:-1.27s"></i><i style="--h:30%;--d:-0.72s"></i><i style="--h:42%;--d:-0.38s"></i><i style="--h:43%;--d:-0.70s"></i><i style="--h:98%;--d:-0.40s"></i><i style="--h:48%;--d:-0.13s"></i><i style="--h:98%;--d:-0.83s"></i><i style="--h:72%;--d:-0.13s"></i><i style="--h:33%;--d:-0.73s"></i><i style="--h:51%;--d:-0.65s"></i><i style="--h:93%;--d:-0.56s"></i><i style="--h:65%;--d:-0.61s"></i><i style="--h:83%;--d:-0.47s"></i><i style="--h:56%;--d:-1.03s"></i><i style="--h:56%;--d:-0.11s"></i><i style="--h:63%;--d:-0.68s"></i><i style="--h:68%;--d:-0.95s"></i><i style="--h:61%;--d:-0.79s"></i><i style="--h:34%;--d:-0.15s"></i><i style="--h:78%;--d:-0.21s"></i><i style="--h:68%;--d:-0.20s"></i><i style="--h:87%;--d:-0.55s"></i><i style="--h:34%;--d:-0.99s"></i><i style="--h:98%;--d:-1.03s"></i><i style="--h:65%;--d:-0.44s"></i><i style="--h:69%;--d:-0.77s"></i><i style="--h:99%;--d:-1.04s"></i><i style="--h:33%;--d:-1.09s"></i><i style="--h:59%;--d:-0.62s"></i><i style="--h:33%;--d:-0.08s"></i><i style="--h:64%;--d:-0.84s"></i><i style="--h:82%;--d:-0.37s"></i><i style="--h:74%;--d:-1.15s"></i><i style="--h:69%;--d:-0.03s"></i><i style="--h:84%;--d:-0.46s"></i></div>
-    <div class="wrap song-banner-inner">
-      <div class="song-banner-copy">
-        <p class="eyebrow">AI Song Challenge · Classes 8–12</p>
-        <h2>Make your first AI song. <span class="accent">Win ₹500.</span></h2>
-        <p class="song-banner-lede">No singing. No instruments. Just your idea. Write a few lines tonight and hear them come back as a real song.</p>
-        <a class="btn btn-primary" href="song-challenge.html">Enter the challenge</a>
-      </div>
-      <a class="song-badge" href="song-challenge.html" aria-label="Enter the AI Song Challenge and win ₹500">
-        <svg class="song-badge-ring" viewBox="0 0 200 200" aria-hidden="true"><defs><path id="badge-ring" d="M100,100 m-80,0 a80,80 0 1,1 160,0 a80,80 0 1,1 -160,0"/></defs><text><textPath href="#badge-ring" textLength="498" lengthAdjust="spacing">AI SONG CHALLENGE • FREE TO ENTER • CLASSES 8–12 •</textPath></text></svg>
-        <span class="song-badge-core" aria-hidden="true"><small>Win</small>₹500</span>
-      </a>
-    </div>
-  </section>
-
+  <section class="section closing-section"><div class="wrap closing-inner"><div><p class="eyebrow">Let's find your starting point</p><h2>You don't need<br>to have it figured out.</h2><p>Tell us what you'd like to do. We'll help you choose.</p></div><form class="closing-picks" data-closing-picks novalidate><fieldset><legend>Tick what sounds like you</legend><div class="closing-chips"><label><input type="checkbox" name="pick" value="Make sense of an Excel sheet"><span>Make sense of an Excel sheet</span></label><label><input type="checkbox" name="pick" value="Make short videos and reels"><span>Make short videos and reels</span></label><label><input type="checkbox" name="pick" value="Create and edit AI images"><span>Create and edit AI images</span></label><label><input type="checkbox" name="pick" value="Practise spoken English"><span>Practise spoken English</span></label><label><input type="checkbox" name="pick" value="Build your first website"><span>Build your first website</span></label><label><input type="checkbox" name="pick" value="Prepare for your next interview"><span>Prepare for your next interview</span></label></div></fieldset><button class="btn btn-primary" type="submit">Help me choose</button><p class="closing-status" role="status"></p></form></div></section>
 </main>
 
 <footer class="site-footer">
@@ -453,14 +349,14 @@
       <a class="brand" href="index.html" aria-label="PACS AI home">
         <img class="brand-logo" src="assets/logo-horizontal.png" alt="PACS AI" width="433" height="124">
       </a>
-      <p class="tagline">Learn | Create | Be tomorrow ready</p>
+      <p class="tagline">Learn. Create. Put AI to work.</p>
     </div>
     <div>
       <h2>Programmes</h2>
       <ul>
         <li><a href="class-8-12.html">Class 8–12</a></li>
         <li><a href="bba.html">BBA</a></li>
-        <li><a href="bba.html#colleges">For colleges</a></li>
+        <li><a href="learn.html">AI for everyone</a></li>
         <li><a href="song-challenge.html">AI Song Challenge</a></li>
       </ul>
     </div>
@@ -471,19 +367,15 @@
         <li><a href="contact.html" data-phone>Call us</a></li>
         <li><a href="mailto:info@pacsglobal.in" data-email data-email-text>info@pacsglobal.in</a></li>
         <li><a href="https://www.instagram.com/pacs.ai/" data-instagram>Instagram</a></li>
-        <li><span data-address>PACS Office, 4th Floor, PVS Sadan, Kodialbail, Mangalore, Karnataka 575003</span></li>
+        <li><a href="https://share.google/wSD5nGk2nQYzYpPFw" data-address data-maps>PACS Office, 4th Floor, PVS Sadan, Kodialbail, Mangalore, Karnataka 575003</a></li>
       </ul>
     </div>
   </div>
   <div class="wrap footer-base">
-    <span>© <span data-year>2026</span> PACS AI</span>
-    <span>Students today. Brighter tomorrows.</span>
+    <span>© <span data-year>2026</span> PACS AI · <a href="terms.html">Challenge terms</a></span>
   </div>
 </footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
 <script src="assets/site.js"></script>
 <script src="assets/builds.js"></script>
 <script src="assets/motion.js"></script>

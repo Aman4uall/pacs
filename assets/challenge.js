@@ -11,7 +11,7 @@
   const $ = (root, sel) => root.querySelector(sel);
   const $$ = (root, sel) => [...root.querySelectorAll(sel)];
   // Change this whenever terms.html changes, so the sheet records which version each entry agreed to
-  const TERMS_VERSION = "2026-09-23";
+  const TERMS_VERSION = "2026-09-23-v2";
 
   /* ---------- Now playing: the card cycles through song ideas ---------- */
   const playerTitle = document.querySelector("[data-player-title]");
@@ -249,7 +249,7 @@
   function whatsappText(d) {
     return [
       "Hi PACS AI, here is our AI Song Challenge entry.",
-      `Entrant: ${d.studentName}, ${d.class === "Other" ? "not in school" : `Class ${d.class}`}${d.school ? `, ${d.school}` : ""}, ${d.city}`,
+      `Entrant: ${d.studentName}, Class ${d.class}${d.school ? `, ${d.school}` : ""}, ${d.city}`,
       `Song: ${d.songTitle}`,
       `Link: ${d.songLink}`,
       `Made with: ${d.tool}. Words by: ${d.lyricsBy}`,
@@ -282,6 +282,12 @@
     if (!valid(steps[current])) return;
     const d = collect();
     if (d.website) return; // a bot filled the hidden field
+    if (!["8", "9", "10", "11", "12"].includes(d.class)) {
+      show(0, true);
+      status.classList.add("is-error");
+      status.textContent = "Only Class 8–12 students can enter.";
+      return;
+    }
 
     // No Google Sheet connected yet: hand the entry to WhatsApp
     if (!cfg.songEntries) {
