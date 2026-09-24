@@ -16,7 +16,7 @@ This is a plain static website. There's no build step, no server code and no dat
 ## After it's live
 
 1. Open https://pacsai.pacsglobal.in/song-challenge.html and send a test entry. It should appear in the "PACS AI – AI Song Challenge entries" Google Sheet. Delete the test row afterwards.
-2. Open https://pacsai.pacsglobal.in/learn.html, tick a couple of things and send the list. It should open WhatsApp, and appear in the **Learn requests** tab of the same sheet. Delete the test row afterwards.
+2. Open https://pacsai.pacsglobal.in/learn.html, tick a couple of things and send the list. It should open WhatsApp, and (once the separate learn-requests script is set up, see `../learn-requests-backend/SETUP.md`) the same message and list number appear in the **PACS AI Learn requests** sheet. Delete the test row afterwards.
 3. Work through "Getting found on Google" below.
 
 ## Getting found on Google
@@ -73,7 +73,7 @@ in a way that matters.
 
 Song Challenge entries are saved by a Google Apps Script attached to the entries sheet, in the PACS AI Google account. Nothing needs to be installed on the web host for this.
 
-Skill choices stay in the current browser tab's session storage. They are sent to the Learn requests sheet only when the visitor explicitly continues from the review dialog to WhatsApp. The site opens a draft; the visitor sends the message in WhatsApp. No booking or payment is completed by these buttons.
+Skill choices stay in the current browser tab's session storage. A copy of the WhatsApp message, with its list number, is sent to the separate PACS AI Learn requests sheet only when the visitor explicitly continues from the review dialog to WhatsApp. The site opens a draft; the visitor sends the message in WhatsApp. No booking or payment is completed by these buttons.
 
 The research and its limits are recorded in `../design-notes/ai-skills-research.md`. Category ordering is editorial, not a measured local popularity ranking. The course and challenge eligibility updates require publishing the website and updating the Apps Script deployment separately.
 

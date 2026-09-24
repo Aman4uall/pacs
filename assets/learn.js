@@ -118,12 +118,12 @@
       return;
     }
     const fingerprint = JSON.stringify([skills, extra]);
-    // The existing Apps Script stores a maximum of ten reference characters.
+    // The same list number goes into the WhatsApp message and the sheet, so the two can be matched.
     const reference = fingerprint === lastPayload ? lastReference : `L-${Date.now().toString(36).slice(-5)}${Math.random().toString(36).slice(2,5).padEnd(3,'0')}`.toUpperCase();
     const message = ["Hi PACS AI! I'd like to explore a one-month AI learning plan.", skills.length ? '\nMy picks:\n' + skills.map(skill => '• ' + skill).join('\n') : '', extra ? '\nMy idea: ' + extra : '', '\nPlease share the scope, dates and fees.', '\nMy list number: ' + reference].filter(Boolean).join('\n');
     const url = `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank', 'noopener');
-    if (fingerprint !== lastPayload) save({ kind:'learn', ref:reference, who:'', count:skills.length, picks:skills.join(' | '), other:extra });
+    if (fingerprint !== lastPayload) save({ kind:'learn', ref:reference, who:'AI for everyone page', count:skills.length, picks:skills.join(' | '), other:extra, message });
     lastPayload = fingerprint;
     lastReference = reference;
     status.classList.remove('is-error');

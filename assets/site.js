@@ -20,9 +20,10 @@ const SITE = {
   // to your Google Sheet (it ends in /exec). See song-challenge-backend/SETUP.md.
   // While it's empty, entries are handed to WhatsApp instead.
   songEntries: "https://script.google.com/macros/s/AKfycbw4eXH_1CNAstVAli2ljb_cNBKWXn1S-xfACfnXYOLx0cUgzeZuETjmPFl2xArt3Lk5xA/exec",
-  // "What do you want to learn?": the same script saves the ticked topics to a
-  // second tab of the same sheet. Leave it empty to only hand the list to WhatsApp.
-  learnPicks: "https://script.google.com/macros/s/AKfycbw4eXH_1CNAstVAli2ljb_cNBKWXn1S-xfACfnXYOLx0cUgzeZuETjmPFl2xArt3Lk5xA/exec",
+  // Skill lists (AI for everyone page and the home page's "Help me choose"): a SEPARATE
+  // Apps Script web app that copies the WhatsApp message into its own sheet. It ends in /exec.
+  // See learn-requests-backend/SETUP.md. While it's empty, lists only go to WhatsApp.
+  learnPicks: "https://script.google.com/macros/s/AKfycbxVsHB9aGSVigEMidfZJjCXUIGyZfNLVJUTqsAQkfGGaGLNLrs4aJv4UBJbrv-Eky3xwg/exec",
 };
 
 (function () {
@@ -167,12 +168,14 @@ const SITE = {
     form.addEventListener("submit", (e) => {
       e.preventDefault();
       const picks = [...form.querySelectorAll('input[name="pick"]:checked')].map((b) => b.value);
+      // The same list number goes into the WhatsApp message and the sheet, so the two can be matched
+      const ref = "H-" + (Date.now().toString(36).slice(-5) + Math.random().toString(36).slice(2, 5).padEnd(3, "0")).toUpperCase();
       const lines = ["Hi PACS AI, I'd like help choosing where to start with AI."];
-      if (picks.length) lines.push("", "I'm interested in:", ...picks.map((p) => "• " + p));
-      window.open(waLink(lines.join("\n")), "_blank", "noopener");
+      if (picks.length) lines.push("", "I'm interested in:", ...picks.map((p) => "• " + p), "", "My list number: " + ref);
+      const message = lines.join("\n");
+      window.open(waLink(message), "_blank", "noopener");
       if (picks.length && SITE.learnPicks) {
-        const ref = "H-" + Date.now().toString(36).slice(-6).toUpperCase();
-        const body = JSON.stringify({ kind: "learn", ref: ref, who: "From the homepage", count: picks.length, picks: picks.join(" | "), other: "" });
+        const body = JSON.stringify({ kind: "learn", ref: ref, who: "Home page", count: picks.length, picks: picks.join(" | "), other: "", message: message });
         try { navigator.sendBeacon(SITE.learnPicks, new Blob([body], { type: "text/plain;charset=UTF-8" })); } catch (err) { /* saving is optional; WhatsApp already opened */ }
       }
       status.textContent = "WhatsApp has opened with your message. Press send there to reach us.";
