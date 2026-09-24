@@ -987,6 +987,7 @@ fieldset.field > legend { margin-bottom: .45rem; padding: 0; color: var(--ink); 
 .footer-grid { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr); gap: 2.5rem; padding-block: clamp(56px, 7vw, 80px) 48px; }
 .footer-brand { display: grid; gap: 1rem; align-content: start; justify-items: start; }
 .tagline { font-size: .74rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+.footer-about { max-width: 46ch; color: var(--muted); font-size: .88rem; line-height: 1.55; }
 .site-footer h2 { margin-bottom: 1rem; color: var(--muted); font-size: .78rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; }
 .site-footer ul { display: grid; gap: .6rem; }
 .site-footer a { text-decoration: none; }

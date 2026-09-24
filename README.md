@@ -17,7 +17,44 @@ This is a plain static website. There's no build step, no server code and no dat
 
 1. Open https://pacsai.pacsglobal.in/song-challenge.html and send a test entry. It should appear in the "PACS AI – AI Song Challenge entries" Google Sheet. Delete the test row afterwards.
 2. Open https://pacsai.pacsglobal.in/learn.html, tick a couple of things and send the list. It should open WhatsApp, and appear in the **Learn requests** tab of the same sheet. Delete the test row afterwards.
-3. Add the site to [Google Search Console](https://search.google.com/search-console) and submit `https://pacsai.pacsglobal.in/sitemap.xml`.
+3. Work through "Getting found on Google" below.
+
+## Getting found on Google
+
+Checked on 24 September 2026: Google had **not indexed a single page** of this site
+(`site:pacsai.pacsglobal.in` returns nothing), and the live copy was still the version from
+21 September. The Instagram account already ranks for "PACS AI Mangalore"; the website does not.
+
+The site itself is ready for search engines. Every page carries a title, a description, a
+canonical address, share images and structured data (organisation, breadcrumbs, courses, the
+FAQs and the skills list), plus `robots.txt` and `sitemap.xml`. What is left is not code.
+
+**Do these in order:**
+
+1. **Publish the current files.** Nothing else on this list matters until the live site matches
+   this repository. `class-8-12.html`, `learn.html` and the new pages don't exist on the live
+   site yet.
+2. **Verify the site in [Google Search Console](https://search.google.com/search-console).**
+   Choose the URL-prefix property `https://pacsai.pacsglobal.in/`, then verify with the HTML
+   file or the meta tag it gives you (the meta tag goes just under `<meta charset="utf-8">` in
+   `index.html`). Submit `https://pacsai.pacsglobal.in/sitemap.xml`, then use **URL inspection →
+   Request indexing** for the home page and for `learn.html`. First results usually appear in a
+   few days.
+3. **Link to the site from `pacsglobal.in`.** A link from the parent site is the strongest
+   single signal available, and it is free. One line on the PACS Global home page is enough.
+4. **Put the address in the Instagram bio** (`pacsai.pacsglobal.in`), and update the bio text:
+   it still says "Classes 8–10". Instagram is the account Google already shows for the brand, so
+   it is the best road into the site.
+5. **Add PACS AI to Google Business Profile**, or add it to the existing PACS Global listing as a
+   service, with the same address, phone number and the website address. This is what gets the
+   site into the map results for "AI classes in Mangalore".
+6. **Keep the words people search.** Aim at "AI classes in Mangalore", "AI course for students
+   Mangalore", "AI for BBA students" and "PACS AI Mangalore". Plain "PACS AI" is a medical
+   imaging term (Fujifilm Synapse PACS AI and similar), so that search is crowded by hospital
+   software; the town name is what separates us from it.
+
+Keep `sitemap.xml` up to date when pages are added, and change `<lastmod>` when a page changes
+in a way that matters.
 
 ## Where things are
 
@@ -30,6 +67,9 @@ This is a plain static website. There's no build step, no server code and no dat
 | The Song Challenge idea machine and entry form | `assets/challenge.js` |
 | AI for Everyone: 36 skills in seven categories, search and plan review | `learn.html`, with `assets/learn.js` |
 | Share images for WhatsApp and social media | `assets/og-home.png`, `assets/og-song.png` |
+| Search data: titles, descriptions, canonicals, structured data | in the `<head>` of every page |
+| Crawling and listing | `robots.txt`, `sitemap.xml` |
+| The old Class 8–10 address | `class-8-10.html`, which forwards to `class-8-12.html` |
 
 Song Challenge entries are saved by a Google Apps Script attached to the entries sheet, in the PACS AI Google account. Nothing needs to be installed on the web host for this.
 
