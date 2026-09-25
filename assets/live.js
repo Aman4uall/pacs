@@ -199,7 +199,7 @@
       if (busy || !cam.live) return;
       busy = true; buzz();
       const guess = predict(); // the AI commits before it sees your hand
-      el.verdict.textContent = "AI has locked in its move 🔒"; el.verdict.dataset.result = "";
+      el.verdict.textContent = "The AI has locked in its move."; el.verdict.dataset.result = "";
       for (const word of ["Rock…", "Paper…", "Scissors…", "Shoot!"]) { el.count.textContent = word; el.count.classList.remove("pop"); void el.count.offsetWidth; el.count.classList.add("pop"); await wait(650); }
       recent = [];
       await wait(450);
@@ -214,7 +214,7 @@
     $$(root, "[data-rps-tap]").forEach((b) => b.addEventListener("click", () => { if (!busy) play(b.dataset.rpsTap, predict()); }));
     $(root, "[data-rps-reset]").addEventListener("click", () => {
       history.length = 0; you = ai = 0;
-      el.youScore.textContent = el.aiScore.textContent = "0"; el.you.textContent = el.ai.textContent = "❔";
+      el.youScore.textContent = el.aiScore.textContent = "0"; el.you.textContent = el.ai.textContent = "?";
       el.verdict.textContent = "New game. The AI has forgotten you."; el.verdict.dataset.result = ""; el.brain.textContent = insight();
     });
   });
@@ -262,7 +262,7 @@
     camera(root, "gesture", (res, canvas) => {
       const pts = res.landmarks && res.landmarks[0];
       draw(canvas, pts, HAND, "#FFD166");
-      if (!pts) { big.textContent = "✋"; big.classList.add("is-dim"); return; }
+      if (!pts) { big.textContent = ""; big.classList.add("is-dim"); return; }
       const f = features(pts);
       if (recording && recording.samples.length < MAX) { recording.samples.push(f); update(); }
       if (!ready()) return;
@@ -282,7 +282,7 @@
       c.rec.addEventListener("keydown", (e) => { if (e.key === " " || e.key === "Enter") on(e); });
       c.rec.addEventListener("keyup", off);
     });
-    $(root, "[data-train-reset]").addEventListener("click", () => { classes.forEach((c) => { c.samples.length = 0; if (c.bar) c.bar.style.width = "0%"; }); big.textContent = "✋"; update(); });
+    $(root, "[data-train-reset]").addEventListener("click", () => { classes.forEach((c) => { c.samples.length = 0; if (c.bar) c.bar.style.width = "0%"; }); big.textContent = ""; update(); });
     update();
   });
 
@@ -376,7 +376,7 @@
       buzz();
       frozen = false;
       for (const n of ["3", "2", "1"]) { count.textContent = n; count.classList.remove("pop"); void count.offsetWidth; count.classList.add("pop"); await wait(800); }
-      count.textContent = "📸";
+      count.textContent = "Snap!";
       frozen = true;
       render(latest, true);
       if (!latest) tipEl.textContent = "I couldn't see your whole body. Step back and try again.";
@@ -445,22 +445,22 @@
         laser.hidden = false;
         laser.style.left = `${(1 - pts[8].x) * 100}%`;
         laser.style.top = `${Math.min(96, Math.max(4, (pts[8].y - 0.15) / 0.6 * 100))}%`;
-        seen.textContent = "☝️ Laser pointer";
+        seen.textContent = "Laser pointer";
       } else laser.hidden = true;
       // An open palm held still for a second blanks the screen (and back)
       if (g && g.name === "Open_Palm" && g.score > 0.6) {
         palmSince ||= now;
-        if (now - palmSince > 1100) { stage.classList.toggle("is-blank"); palmSince = now + 1500; seen.textContent = stage.classList.contains("is-blank") ? "✋ Screen paused" : "✋ Back on"; buzz(15); }
+        if (now - palmSince > 1100) { stage.classList.toggle("is-blank"); palmSince = now + 1500; seen.textContent = stage.classList.contains("is-blank") ? "Screen paused" : "Back on"; buzz(15); }
       } else palmSince = 0;
-      if (g && g.name === "Thumb_Up" && g.score > 0.6 && now - thumbAt > 900) { thumbAt = now; pop("👍"); seen.textContent = "👍 Nice!"; }
+      if (g && g.name === "Thumb_Up" && g.score > 0.6 && now - thumbAt > 900) { thumbAt = now; pop("👍"); seen.textContent = "Nice!"; }
       // A quick swipe across the camera moves the slides. The camera image is mirrored,
       // so moving your hand to your left makes the raw x grow.
       trail.push([now, pts[0].x]);
       trail = trail.filter(([t]) => now - t < 450);
       if (now > cooldown && trail.length > 3) {
         const dx = trail[trail.length - 1][1] - trail[0][1];
-        if (dx > 0.22) { go(at + 1, "👈 Swipe: next slide"); cooldown = now + 900; trail = []; }
-        else if (dx < -0.22) { go(at - 1, "👉 Swipe: previous slide"); cooldown = now + 900; trail = []; }
+        if (dx > 0.22) { go(at + 1, "Swipe: next slide"); cooldown = now + 900; trail = []; }
+        else if (dx < -0.22) { go(at - 1, "Swipe: previous slide"); cooldown = now + 900; trail = []; }
       }
     });
     $(root, "[data-wave-prev]").addEventListener("click", () => go(at - 1));
@@ -527,7 +527,7 @@
     }
     function setMic(on) {
       mic.setAttribute("aria-pressed", String(on));
-      mic.innerHTML = on ? '<span class="cap-dot"></span> Stop listening' : "🎙️ Start talking";
+      mic.innerHTML = on ? '<span class="cap-dot"></span> Stop listening' : "Start talking";
       root.classList.toggle("is-listening", on);
     }
     mic.addEventListener("click", () => {
@@ -547,9 +547,9 @@
 
   /* ---------------- 6. Pitch to the AI Sharks (made-up investors) ---------------- */
   const SHARKS = [
-    { key: "numbers", name: "Meera", role: "The Numbers Shark", face: "📊" },
-    { key: "brand", name: "Arjun", role: "The Brand Shark", face: "🎯" },
-    { key: "ops", name: "Kavya", role: "The Operations Shark", face: "⚙️" },
+    { key: "numbers", name: "Meera", role: "The Numbers Shark", face: "M" },
+    { key: "brand", name: "Arjun", role: "The Brand Shark", face: "A" },
+    { key: "ops", name: "Kavya", role: "The Operations Shark", face: "K" },
   ];
   const PITCHES = {
     coffee: { name: "FilterBox", line: "Fresh filter-coffee decoction, delivered to your door every morning", qs: [
@@ -589,13 +589,13 @@
       const s = SHARKS[q], [question, ...answers] = PITCHES[idea].qs[q];
       $$(stage, ".sh-card").forEach((c) => c.classList.toggle("is-talking", c.dataset.k === s.key));
       const order = Math.random() < 0.5 ? answers : [answers[1], answers[0]];
-      panel.innerHTML = `<p class="sh-q"><span>${s.face} ${s.name} asks</span>${question}</p><div class="sh-answers">${order.map((a, i) => `<button type="button" class="iv-answer" data-a="${i}"><small>Your answer</small><span>${a[0]}</span></button>`).join("")}</div>`;
+      panel.innerHTML = `<p class="sh-q"><span>${s.name} asks</span>${question}</p><div class="sh-answers">${order.map((a, i) => `<button type="button" class="iv-answer" data-a="${i}"><small>Your answer</small><span>${a[0]}</span></button>`).join("")}</div>`;
       $$(panel, "[data-a]").forEach((b) => b.addEventListener("click", () => {
         buzz(8);
         const strong = order[+b.dataset.a][1];
         mood[s.key] += strong ? 32 : -28;
         SHARKS.forEach((o) => { if (o.key !== s.key) mood[o.key] += strong ? 6 : -6; });
-        panel.innerHTML = `<p class="sh-react">${s.face} ${s.name}: ${strong ? pick(["I like that. You know your numbers.", "Now that's an answer.", "Okay, you've done your homework."]) : pick(["Hmm. That worries me.", "That's not good enough.", "I've heard that before."])}</p>`;
+        panel.innerHTML = `<p class="sh-react">${s.name}: ${strong ? pick(["I like that. You know your numbers.", "Now that's an answer.", "Okay, you've done your homework."]) : pick(["Hmm. That worries me.", "That's not good enough.", "I've heard that before."])}</p>`;
         paint();
         q += 1;
         setTimeout(askNext, reduce ? 200 : 1300);
@@ -613,12 +613,12 @@
       });
       const any = offers.some((o) => !o.out);
       panel.innerHTML = `<p class="sh-q"><span>The verdict</span>${any ? "You have offers. Pick one, or walk away." : "All three Sharks are out. Fix the weak answers and pitch again."}</p><div class="sh-offers">${offers.map((o) => o.out
-        ? `<div class="sh-offer is-out"><b>${o.s.face} ${o.s.name}</b><span>I'm out.</span></div>`
-        : `<button type="button" class="sh-offer" data-deal="${o.s.key}"><b>${o.s.face} ${o.s.name}</b><span>₹${o.amt} lakh for ${o.equity}%</span><small>${o.perk} · values you at ${crore(o.value)}</small></button>`).join("")}</div><button type="button" class="pm-tool" data-sh-again>Pitch again <span aria-hidden="true">↻</span></button>`;
+        ? `<div class="sh-offer is-out"><b>${o.s.name}</b><span>I'm out.</span></div>`
+        : `<button type="button" class="sh-offer" data-deal="${o.s.key}"><b>${o.s.name}</b><span>₹${o.amt} lakh for ${o.equity}%</span><small>${o.perk} · values you at ${crore(o.value)}</small></button>`).join("")}</div><button type="button" class="pm-tool" data-sh-again>Pitch again <span aria-hidden="true">↻</span></button>`;
       $$(panel, "[data-deal]").forEach((b) => b.addEventListener("click", () => {
         buzz([10, 50, 30]);
         const o = offers.find((x) => x.s.key === b.dataset.deal);
-        panel.innerHTML = `<div class="sh-deal"><span aria-hidden="true">🤝</span><b>Deal done with ${o.s.name}!</b><p>You gave up ${o.equity}% for ₹${o.amt} lakh. Your company is now valued at ${crore(o.value)}.${o.equity > ask ? ` You asked for ${ask}%, so answering better would have kept ${o.equity - ask}% more of your company.` : " Exactly what you asked for. Brilliant pitch."}</p><button type="button" class="pm-tool" data-sh-again>Pitch another idea <span aria-hidden="true">↻</span></button></div>`;
+        panel.innerHTML = `<div class="sh-deal"><b>Deal done with ${o.s.name}!</b><p>You gave up ${o.equity}% for ₹${o.amt} lakh. Your company is now valued at ${crore(o.value)}.${o.equity > ask ? ` You asked for ${ask}%, so answering better would have kept ${o.equity - ask}% more of your company.` : " Exactly what you asked for. Brilliant pitch."}</p><button type="button" class="pm-tool" data-sh-again>Pitch another idea <span aria-hidden="true">↻</span></button></div>`;
         $(panel, "[data-sh-again]").addEventListener("click", setup);
       }));
       $(panel, "[data-sh-again]").addEventListener("click", setup);
@@ -683,7 +683,7 @@
       out.innerHTML = `<p class="fx-head">The AI checked <b>${best.checked.toLocaleString("en-IN")}</b> possible teams in ${ms} ms.</p>
         <div class="fx-vs"><span><small>AI team</small><b>${best.s} pts</b></span><span><small>Your team</small><b>${yours == null ? "Not complete" : yours + " pts"}</b></span></div>
         <ul class="fx-notes"><li>Captain: <b>${captain.name}</b>. Captains score double.</li><li>Best value: <b>${bargain.name}</b>, ${bargain.v.toFixed(1)} points for every credit.</li><li>Left out: <b>${trap.name}</b>. ${trap.pts} points for ${trap.cr} credits is poor value.</li></ul>
-        ${yours != null && yours >= best.s ? "<p class=\"fx-win\">You matched the AI. Serious analyst skills. 🏆</p>" : yours != null ? `<p>You're ${best.s - yours} points behind. The outlined cards are the AI's picks.</p>` : "<p>The outlined cards are the AI's picks. Now build yours and try to beat it.</p>"}`;
+        ${yours != null && yours >= best.s ? "<p class=\"fx-win\">You matched the AI. Serious analyst skills.</p>" : yours != null ? `<p>You're ${best.s - yours} points behind. The outlined cards are the AI's picks.</p>` : "<p>The outlined cards are the AI's picks. Now build yours and try to beat it.</p>"}`;
     });
     $(root, "[data-fx-clear]").addEventListener("click", () => { mine.clear(); out.innerHTML = ""; update(); });
     update();
@@ -691,9 +691,9 @@
 
   /* ---------------- 8. Haggle with an AI shopkeeper ---------------- */
   const WARES = {
-    jacket: { name: "Leather jacket", ask: 4000, floor: 2600, face: "🧥" },
-    phone: { name: "Second-hand phone", ask: 12000, floor: 9000, face: "📱" },
-    lamp: { name: "Brass lamp", ask: 2500, floor: 1500, face: "🪔" },
+    jacket: { name: "Leather jacket", ask: 4000, floor: 2600 },
+    phone: { name: "Second-hand phone", ask: 12000, floor: 9000 },
+    lamp: { name: "Brass lamp", ask: 2500, floor: 1500 },
   };
   document.querySelectorAll("[data-haggle]").forEach((root) => {
     const chat = $(root, "[data-hg-chat]");
@@ -710,7 +710,7 @@
       chat.appendChild(p);
       chat.scrollTop = chat.scrollHeight;
     };
-    const setMood = () => { moodEl.textContent = done ? "🤝" : patience >= 3 ? "🙂" : patience === 2 ? "😐" : "😠"; };
+    const setMood = () => { const p = Math.max(0, patience); moodEl.textContent = done ? "Done" : "●".repeat(p) + "○".repeat(3 - p); moodEl.parentElement.dataset.low = String(!done && p <= 1); };
     function start(key) {
       item = WARES[key]; price = item.ask; patience = 3; used = new Set(); done = false; moves = [];
       chat.innerHTML = "";
@@ -718,7 +718,7 @@
       offerOut.textContent = rupees(+range.value);
       priceTag.textContent = rupees(price);
       actions.hidden = false;
-      say("them", `${item.face} Namaskara! Best ${item.name.toLowerCase()} in the market. Only <b>${rupees(price)}</b>. Very good quality.`);
+      say("them", `Namaskara! Best ${item.name.toLowerCase()} in the market. Only <b>${rupees(price)}</b>. Very good quality.`);
       setMood();
     }
     function end(deal) {
@@ -738,10 +738,10 @@
       moves.push(amount);
       say("me", `I'll give you ${rupees(amount)}.`);
       setTimeout(() => {
-        if (amount >= price || (amount >= item.floor && price - amount <= item.ask * 0.03)) { say("them", `Okay, okay. ${rupees(amount)}. Done! 🤝`); return end(amount); }
+        if (amount >= price || (amount >= item.floor && price - amount <= item.ask * 0.03)) { say("them", `Okay, okay. ${rupees(amount)}. Done!`); return end(amount); }
         if (amount < item.floor * 0.8) {
           patience -= 1; setMood();
-          if (patience <= 0) { say("them", "Arre, you're wasting my time. Go, go. Not selling. 😤"); return end(null); }
+          if (patience <= 0) { say("them", "Arre, you're wasting my time. Go, go. Not selling."); return end(null); }
           say("them", pick([`${rupees(amount)}?! Are you joking? Even the cost price is more!`, "Arre, don't insult me. Be serious.", `For ${rupees(amount)} I can't even buy it myself!`]));
           return;
         }
@@ -766,7 +766,7 @@
     $$(root, "[data-hg-tactic]").forEach((b) => b.addEventListener("click", () => {
       const t = b.dataset.hgTactic;
       if (done) return;
-      if (used.has(t) && t !== "walk") { say("them", "You said that already! 😄"); return; }
+      if (used.has(t) && t !== "walk") { say("them", "You said that already!"); return; }
       buzz(); used.add(t); TACTICS[t](); setTimeout(() => { priceTag.textContent = rupees(price); }, 750);
     }));
     $(root, "[data-hg-accept]").addEventListener("click", () => { if (!done) { say("me", `Okay, ${rupees(price)}. Deal.`); end(price); } });
@@ -782,8 +782,7 @@
     bakery: ["Baked at dawn. Gone by noon.", "Fresh, every single morning.", "Life's sweeter at {n}.", "Warm from the oven, just for you."],
     fitness: ["Stronger every day.", "Sweat now. Shine later.", "Your best rep starts here.", "Show up. Level up."],
   };
-  const ICONS = { cafe: "☕", clothing: "👗", tech: "⚡", bakery: "🥐", fitness: "💪" };
-  const POSTS = { cafe: ["New brew drop", "Monday mood", "Our corner", "Latte art", "Weekend special"], clothing: ["New arrivals", "Style tip", "Behind the seams", "Outfit of the day", "Sale preview"], tech: ["Launch day", "How it works", "Behind the build", "Tip Tuesday", "Customer story"], bakery: ["Fresh today", "From our oven", "Meet the baker", "Cake of the week", "Pre-order now"], fitness: ["Workout of the day", "Member win", "Form check", "New class", "Rest day tip"] };
+    const POSTS = { cafe: ["New brew drop", "Monday mood", "Our corner", "Latte art", "Weekend special"], clothing: ["New arrivals", "Style tip", "Behind the seams", "Outfit of the day", "Sale preview"], tech: ["Launch day", "How it works", "Behind the build", "Tip Tuesday", "Customer story"], bakery: ["Fresh today", "From our oven", "Meet the baker", "Cake of the week", "Pre-order now"], fitness: ["Workout of the day", "Member win", "Form check", "New class", "Rest day tip"] };
   const hash = (s) => { let h = 2166136261; for (const c of s) { h ^= c.charCodeAt(0); h = Math.imul(h, 16777619); } return h >>> 0; };
   const hsl = (h, s, l) => `hsl(${Math.round(h)} ${s}% ${l}%)`;
   document.querySelectorAll("[data-brand]").forEach((root) => {
@@ -808,7 +807,7 @@
       ];
       const font = serif ? "'Playfair Display', Georgia, serif" : "Inter, system-ui, sans-serif";
       const logo = `<svg viewBox="0 0 100 100" class="br-logo" role="img" aria-label="${safe} logo">${shapes[shape]}<circle cx="78" cy="22" r="9" fill="${pop}"/><text x="50" y="${shape === 3 ? 72 : 63}" text-anchor="middle" font-family="${font}" font-style="${serif ? "italic" : "normal"}" font-weight="800" font-size="36" fill="#fff">${initials}</text></svg>`;
-      const tiles = POSTS[cat].map((t, i) => `<span class="br-tile" style="background:${[main, soft, ink, pop, soft][i]};color:${[ "#fff", ink, "#fff", ink, main][i]}"><em>${i === 1 ? ICONS[cat] : ""}</em>${t}</span>`).join("");
+      const tiles = POSTS[cat].map((t, i) => `<span class="br-tile" style="background:${[main, soft, ink, pop, soft][i]};color:${[ "#fff", ink, "#fff", ink, main][i]}">${t}</span>`).join("");
       out.innerHTML = `
         <div class="br-hero" style="background:${soft}">${logo}<div><strong style="font-family:${font};${serif ? "font-style:italic;font-weight:400;" : ""}color:${ink}">${safe}</strong><span style="color:${main}">${tagline}</span></div></div>
         <div class="br-palette">${[main, soft, pop, ink].map((c, i) => `<span style="background:${c}"><small style="color:${i === 1 ? ink : "#fff"}">${["Main", "Soft", "Pop", "Ink"][i]}</small></span>`).join("")}</div>

@@ -251,14 +251,14 @@
                 <canvas aria-hidden="true"></canvas>
                 <span class="cam-badge" data-rps-seen>Show me your hand</span>
                 <span class="cam-count" data-rps-count aria-live="assertive"></span>
-                <div class="cam-cover"><span class="cam-icon" aria-hidden="true">✊ ✋ ✌️</span><button type="button" class="pm-tool pm-publish" data-cam-start>Start camera</button><small>Runs on your device. Nothing is recorded or sent.</small><p class="cam-status" data-cam-status role="status"></p></div>
+                <div class="cam-cover"><button type="button" class="pm-tool pm-publish" data-cam-start>Start camera</button><small>Runs on your device. Nothing is recorded or sent.</small><p class="cam-status" data-cam-status role="status"></p></div>
                 <button type="button" class="cam-stop" data-cam-stop aria-label="Stop camera">✕</button>
               </div>
               <div class="live-side">
                 <div class="rps-board">
-                  <div><small>You</small><span class="rps-move" data-rps-you>❔</span><b data-rps-you-score>0</b></div>
+                  <div><small>You</small><span class="rps-move" data-rps-you>?</span><b data-rps-you-score>0</b></div>
                   <span class="rps-vs">vs</span>
-                  <div><small>AI</small><span class="rps-move" data-rps-ai>❔</span><b data-rps-ai-score>0</b></div>
+                  <div><small>AI</small><span class="rps-move" data-rps-ai>?</span><b data-rps-ai-score>0</b></div>
                 </div>
                 <p class="rps-verdict" data-rps-verdict aria-live="polite">Start the camera, press Play, and show ✊ ✋ or ✌️ on “Shoot!”</p>
                 <button type="button" class="pm-tool pm-publish" data-rps-play>Play a round <span aria-hidden="true">→</span></button>
@@ -314,8 +314,8 @@
               <div class="cam">
                 <video playsinline muted aria-hidden="true"></video>
                 <canvas aria-hidden="true"></canvas>
-                <span class="tr-out is-dim" data-train-out aria-live="polite">✋</span>
-                <div class="cam-cover"><span class="cam-icon" aria-hidden="true">🧠</span><button type="button" class="pm-tool pm-publish" data-cam-start>Start camera</button><small>Runs on your device. Nothing is recorded or sent.</small><p class="cam-status" data-cam-status role="status"></p></div>
+                <span class="tr-out is-dim" data-train-out aria-live="polite"></span>
+                <div class="cam-cover"><button type="button" class="pm-tool pm-publish" data-cam-start>Start camera</button><small>Runs on your device. Nothing is recorded or sent.</small><p class="cam-status" data-cam-status role="status"></p></div>
                 <button type="button" class="cam-stop" data-cam-stop aria-label="Stop camera">✕</button>
               </div>
               <div class="live-side">
@@ -383,7 +383,7 @@
                 <video playsinline muted aria-hidden="true"></video>
                 <canvas aria-hidden="true"></canvas>
                 <span class="cam-count" data-cr-count aria-live="assertive"></span>
-                <div class="cam-cover"><span class="cam-icon" aria-hidden="true">🏏</span><button type="button" class="pm-tool pm-publish" data-cam-start>Start camera</button><small>Prop your phone up and step back. Runs on your device. Nothing is recorded or sent.</small><p class="cam-status" data-cam-status role="status"></p></div>
+                <div class="cam-cover"><button type="button" class="pm-tool pm-publish" data-cam-start>Start camera</button><small>Prop your phone up and step back. Runs on your device. Nothing is recorded or sent.</small><p class="cam-status" data-cam-status role="status"></p></div>
                 <button type="button" class="cam-stop" data-cam-stop aria-label="Stop camera">✕</button>
               </div>
               <div class="live-side">
@@ -395,7 +395,7 @@
                 <button type="button" class="chip cr-hand" data-cr-hand aria-pressed="false">Right-handed batter</button>
                 <div class="cr-result"><div class="cr-score" data-cr-score><b>–</b><small>/10</small></div><p class="cr-tip" data-cr-tip aria-live="polite">Stand 2 to 3 metres from the camera so it can see you from head to toe.</p></div>
                 <ul class="cr-checks" data-cr-checks></ul>
-                <div class="cr-actions"><button type="button" class="pm-tool pm-publish" data-cr-freeze>Freeze my shot <span aria-hidden="true">📸</span></button><button type="button" class="pm-tool" data-cr-sample>No camera? Try a sample batter</button></div>
+                <div class="cr-actions"><button type="button" class="pm-tool pm-publish" data-cr-freeze>Freeze my shot</button><button type="button" class="pm-tool" data-cr-sample>No camera? Try a sample batter</button></div>
               </div>
             </div>
           </div>
@@ -476,7 +476,7 @@
                 <button class="chip" type="button" data-v="phone" aria-pressed="false">Old phone</button>
                 <button class="chip" type="button" data-v="lamp" aria-pressed="false">Brass lamp</button>
               </div>
-              <div class="hg-shop"><span class="hg-mood" data-hg-mood aria-hidden="true">🙂</span><span><small>Raju's price now</small><b data-hg-price>₹4,000</b></span></div>
+              <div class="hg-shop"><span class="hg-mood"><b data-hg-mood aria-hidden="true">●●●</b><small>Patience</small></span><span><small>Raju's price now</small><b data-hg-price>₹4,000</b></span></div>
               <div class="hg-chat" data-hg-chat aria-live="polite"></div>
               <div class="hg-actions" data-hg-actions>
                 <label class="hg-offer" for="hg-range">Your offer <output data-hg-offer for="hg-range">₹0</output></label>
@@ -698,7 +698,7 @@
                 <video playsinline muted aria-hidden="true"></video>
                 <canvas aria-hidden="true"></canvas>
                 <span class="cam-badge" data-wave-seen aria-live="polite">Swipe your hand across</span>
-                <div class="cam-cover"><span class="cam-icon" aria-hidden="true">👋</span><button type="button" class="pm-tool pm-publish" data-cam-start>Start camera</button><small>Runs on your device. Nothing is recorded or sent.</small><p class="cam-status" data-cam-status role="status"></p></div>
+                <div class="cam-cover"><button type="button" class="pm-tool pm-publish" data-cam-start>Start camera</button><small>Runs on your device. Nothing is recorded or sent.</small><p class="cam-status" data-cam-status role="status"></p></div>
                 <button type="button" class="cam-stop" data-cam-stop aria-label="Stop camera">✕</button>
               </div>
               <div class="live-side">
@@ -707,12 +707,12 @@
                   <div class="wave-slide"><small>Revenue</small><strong>Up 18% on August</strong><span class="wave-bars" aria-hidden="true"><i style="--h: 42%"></i><i style="--h: 55%"></i><i style="--h: 50%"></i><i style="--h: 68%"></i><i class="hot" style="--h: 92%"></i></span></div>
                   <div class="wave-slide"><small>Three wins</small><ul><li>42 new customers</li><li>Replies within 2 hours</li><li>Our best-ever festival week</li></ul></div>
                   <div class="wave-slide"><small>Next month</small><strong>Launch the WhatsApp store</strong><p>Target: 100 orders in the first week</p></div>
-                  <div class="wave-slide"><small>Thank you</small><strong>Questions?</strong><p>Give me a 👍 if you liked it</p></div>
+                  <div class="wave-slide"><small>Thank you</small><strong>Questions?</strong><p>Give me a thumbs up if you liked it</p></div>
                   <span class="wave-laser" hidden></span>
                   <span class="wave-react" aria-hidden="true"></span>
                 </div>
                 <div class="wave-nav"><button type="button" data-wave-prev aria-label="Previous slide">←</button><span data-wave-n>1 / 5</span><button type="button" data-wave-next aria-label="Next slide">→</button></div>
-                <ul class="wave-legend"><li><b>👋 Swipe</b>Next or previous slide</li><li><b>☝️ Point up</b>Laser pointer</li><li><b>✋ Hold palm</b>Pause the screen</li><li><b>👍 Thumbs up</b>Send a reaction</li></ul>
+                <ul class="wave-legend"><li><b>Swipe</b>Next or previous slide</li><li><b>Point up</b>Laser pointer</li><li><b>Hold your palm</b>Pause the screen</li><li><b>Thumbs up</b>Send a reaction</li></ul>
               </div>
             </div>
           </div>
@@ -728,7 +728,7 @@
                   <button class="chip" type="button" data-v="hi-IN" aria-pressed="false">हिन्दी</button>
                   <button class="chip" type="button" data-v="kn-IN" aria-pressed="false">ಕನ್ನಡ</button>
                 </div>
-                <button type="button" class="pm-tool pm-publish cap-mic" data-cap-mic aria-pressed="false">🎙️ Start talking</button>
+                <button type="button" class="pm-tool pm-publish cap-mic" data-cap-mic aria-pressed="false">Start talking</button>
               </div>
               <div class="cap-screen"><p class="cap-text" data-cap-text aria-live="polite"><span class="cap-empty">Your words appear here as you speak.</span></p></div>
               <div class="cap-stats">
@@ -834,7 +834,6 @@
               </div>
               <figure class="inv-card inv-classic" data-inv-card aria-live="polite">
                 <span class="ai-tag">Made with AI</span>
-                <span class="inv-art" data-inv-art aria-hidden="true">🎂</span>
                 <small class="inv-kicker" data-inv-kicker>You're invited</small>
                 <strong class="inv-title" data-inv-title>Riya's 10th birthday</strong>
                 <span class="inv-rule" aria-hidden="true"></span>

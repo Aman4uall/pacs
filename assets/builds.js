@@ -822,11 +822,11 @@ ${caption.textContent}`;
       adds: { who: "It's for my son turning 8, with 12 friends.", details: "At home, Saturday 5 to 8 pm, budget ₹5,000.", format: "Give me a timeline and a shopping list.", tone: "Keep it simple and fun." },
       generic: "A birthday party can be fun! Choose a theme, send invitations, plan food and games, and decorate. Let me know if you need more help.",
       lines: {
-        who: "🎈 Made for 8-year-olds: a superhero theme, short games, and home by 8.",
-        details: "💰 ₹5,000 split: food ₹2,500 · cake ₹1,200 · decorations ₹800 · return gifts ₹500.",
-        format: "🕔 5:00 Guests arrive · 5:30 Treasure hunt · 6:30 Cake · 7:00 Pizza · 8:00 Goodbyes<br>🛒 Balloons, 4 pizzas, 15 cupcakes, juice, 12 return gifts",
+        who: "Made for 8-year-olds: a superhero theme, short games, and home by 8.",
+        details: "₹5,000 split: food ₹2,500 · cake ₹1,200 · decorations ₹800 · return gifts ₹500.",
+        format: "5:00 Guests arrive · 5:30 Treasure hunt · 6:30 Cake · 7:00 Pizza · 8:00 Goodbyes<br>Shopping list: balloons, 4 pizzas, 15 cupcakes, juice, 12 return gifts",
       },
-      warm: ["Here's a fun, easy plan. You've got this! 🎉", "Want me to write the WhatsApp invitation too?"],
+      warm: ["Here's a fun, easy plan. You've got this!", "Want me to write the WhatsApp invitation too?"],
       plain: "Here is a plan for the party.",
     },
     leave: {
@@ -834,9 +834,9 @@ ${caption.textContent}`;
       adds: { who: "It's for my manager.", details: "I need 14 and 15 October off for my sister's wedding.", format: "Under 80 words, with a subject line.", tone: "Polite and professional." },
       generic: "Dear Sir/Madam, I would like to request leave. Kindly grant me leave for the required days. Thank you.",
       lines: {
-        who: "👤 Opens with “Dear Ma'am,” and reads like a note to your manager, not to a stranger.",
-        details: "📅 “I'd like to request leave on 14 and 15 October for my sister's wedding. The weekly report will be done before I go.”",
-        format: "📝 Subject: Leave request, 14 and 15 October. 62 words, ready to paste into an email.",
+        who: "Opens with “Dear Ma'am,” and reads like a note to your manager, not to a stranger.",
+        details: "“I'd like to request leave on 14 and 15 October for my sister's wedding. The weekly report will be done before I go.”",
+        format: "Subject: Leave request, 14 and 15 October. 62 words, ready to paste into an email.",
       },
       warm: ["Here's a polite, professional letter:", "Signed off with “Thank you for considering this.”"],
       plain: "Here is a leave letter.",
@@ -846,11 +846,11 @@ ${caption.textContent}`;
       adds: { who: "I'm in Class 8.", details: "I know it needs sunlight, but not what happens inside the leaf.", format: "Use 3 short steps and one everyday example.", tone: "Friendly, like a tutor." },
       generic: "Photosynthesis is the process by which green plants use sunlight, water and carbon dioxide to make glucose and oxygen, with the help of chlorophyll.",
       lines: {
-        who: "🎒 Written for Class 8: no hard words, and it matches your textbook chapter.",
-        details: "🍃 Inside the leaf, tiny green parts called chloroplasts catch sunlight and use it to join water and carbon dioxide into sugar.",
-        format: "① Roots bring water up. ② Leaves take in carbon dioxide. ③ Sunlight turns them into sugar, and oxygen goes out.<br>🌱 Everyday example: a plant kept in a dark cupboard turns pale and weak.",
+        who: "Written for Class 8: no hard words, and it matches your textbook chapter.",
+        details: "Inside the leaf, tiny green parts called chloroplasts catch sunlight and use it to join water and carbon dioxide into sugar.",
+        format: "1. Roots bring water up. 2. Leaves take in carbon dioxide. 3. Sunlight turns them into sugar, and oxygen goes out.<br>Everyday example: a plant kept in a dark cupboard turns pale and weak.",
       },
-      warm: ["Great question! Let's make it simple 😊", "Want a 3-question quiz to check you've got it?"],
+      warm: ["Great question! Let's make it simple.", "Want a 3-question quiz to check you've got it?"],
       plain: "Here is an explanation.",
     },
     trip: {
@@ -858,11 +858,11 @@ ${caption.textContent}`;
       adds: { who: "For 4 college friends.", details: "From Mangalore by train, 2 days, ₹3,000 each.", format: "Day by day, with the costs.", tone: "Fun, but realistic." },
       generic: "Goa has beaches, forts and markets. Book your travel and a stay, plan some activities, and keep an eye on your budget.",
       lines: {
-        who: "🎒 Made for friends: beaches, cheap food spots and one night market.",
-        details: "🚆 Train both ways and a shared stay, all within ₹3,000 each.",
-        format: "Day 1: Early train · beach · night market<br>Day 2: Old fort · lunch · train home at 5 pm<br>💰 Train ₹600 · stay ₹1,200 · food ₹900 · local travel ₹300",
+        who: "Made for friends: beaches, cheap food spots and one night market.",
+        details: "Train both ways and a shared stay, all within ₹3,000 each.",
+        format: "Day 1: Early train · beach · night market<br>Day 2: Old fort · lunch · train home at 5 pm<br>Costs: train ₹600 · stay ₹1,200 · food ₹900 · local travel ₹300",
       },
-      warm: ["Here's a fun plan that fits the budget. Pack light! 🏖️", "Want a packing list too?"],
+      warm: ["Here's a fun plan that fits the budget. Pack light!", "Want a packing list too?"],
       plain: "Here is a plan for the trip.",
     },
   };
@@ -1036,21 +1036,21 @@ ${caption.textContent}`;
   /* ---------- K. For everyone: an invitation, designed in seconds ---------- */
   const INVITES = {
     birthday: {
-      art: "🎂", when: "Saturday, 12 October · 5 pm", where: "At our home",
+      when: "Saturday, 12 October · 5 pm", where: "At our home",
       classic: ["You're invited", "Riya's 10th birthday"],
-      fun: ["Riya is turning 10! 🎉", "Cake, games and lots of noise"],
+      fun: ["Riya is turning 10!", "Cake, games and lots of noise"],
       elegant: ["Please join us", "as Riya turns ten"],
     },
     home: {
-      art: "🏡", when: "Sunday, 20 October · 11 am", where: "At our new home, lunch included",
+      when: "Sunday, 20 October · 11 am", where: "At our new home, lunch included",
       classic: ["You're invited", "Our housewarming"],
-      fun: ["We moved! 📦", "Come and see the new place"],
+      fun: ["We moved!", "Come and see the new place"],
       elegant: ["With joy, we invite you", "to bless our new home"],
     },
     shop: {
-      art: "🛍️", when: "Friday, 1 November · 10 am", where: "Sample Stores, Main Road",
+      when: "Friday, 1 November · 10 am", where: "Sample Stores, Main Road",
       classic: ["Grand opening", "Sample Stores opens its doors"],
-      fun: ["Doors open Friday! 🎁", "First 50 customers get a gift"],
+      fun: ["Doors open Friday!", "First 50 customers get a gift"],
       elegant: ["An invitation", "to our grand opening"],
     },
   };
@@ -1063,7 +1063,7 @@ ${caption.textContent}`;
   document.querySelectorAll("[data-invite]").forEach((root) => {
     const card = $(root, "[data-inv-card]");
     const shared = $(root, "[data-inv-shared]");
-    const els = { art: $(root, "[data-inv-art]"), kicker: $(root, "[data-inv-kicker]"), title: $(root, "[data-inv-title]"), when: $(root, "[data-inv-when]"), where: $(root, "[data-inv-where]") };
+    const els = { kicker: $(root, "[data-inv-kicker]"), title: $(root, "[data-inv-title]"), when: $(root, "[data-inv-when]"), where: $(root, "[data-inv-where]") };
     const state = { occasion: "birthday", style: "classic", colour: 0 };
     let run = 0;
     async function render() {
@@ -1078,7 +1078,6 @@ ${caption.textContent}`;
       card.style.setProperty("--inv-bg", bg);
       card.style.setProperty("--inv-accent", accent);
       card.style.setProperty("--inv-ink", ink);
-      els.art.textContent = o.art;
       [els.kicker.textContent, els.title.textContent] = o[state.style];
       els.when.textContent = o.when;
       els.where.textContent = o.where;
