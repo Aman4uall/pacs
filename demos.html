@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Try the AI demos | PACS AI Mangalore</title>
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-  <meta name="description" content="Try 16 hands-on AI demos from PACS AI classes in Mangalore: train a mango sorter, make a film, build a quiz app, write a campaign post, ask a spreadsheet a question and more.">
+  <meta name="description" content="Try 25 hands-on AI demos from PACS AI classes in Mangalore: train a mango sorter, make a film, build a quiz app, write a campaign post, ask a spreadsheet a question and more.">
   <meta property="og:title" content="Try the AI demos | PACS AI">
-  <meta property="og:description" content="Tap, pick and play: 16 things you learn to make with AI.">
+  <meta property="og:description" content="Tap, pick and play: 25 things you learn to make with AI.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://pacsai.pacsglobal.in/demos.html">
   <link rel="canonical" href="https://pacsai.pacsglobal.in/demos.html">
@@ -36,7 +36,7 @@
       "@id": "https://pacsai.pacsglobal.in/demos.html#webpage",
       "url": "https://pacsai.pacsglobal.in/demos.html",
       "name": "Try the AI demos | PACS AI Mangalore",
-      "description": "Sixteen hands-on AI demos from PACS AI classes for Class 8–12, BBA and BBM students, and everyone.",
+      "description": "Twenty-five hands-on AI demos from PACS AI classes for Class 8–12, BBA and BBM students, and everyone.",
       "isPartOf": { "@id": "https://pacsai.pacsglobal.in/#website" },
       "about": { "@id": "https://pacsai.pacsglobal.in/#organization" },
       "inLanguage": "en-IN"
@@ -78,35 +78,45 @@
 
 <main id="main">
   <section class="demos-top"><div class="wrap">
-    <div class="head"><p class="eyebrow">Try the demos</p><h1>Tap it. Change it.<br><span class="accent">Watch AI work.</span></h1><p class="lede">16 small things our students learn to make, from a first AI model to a competitor report. No sign-up. Just tap something.</p></div>
+    <div class="head"><p class="eyebrow">Try the demos</p><h1>Tap it. Change it.<br><span class="accent">Watch AI work.</span></h1><p class="lede">25 small things our students learn to make, from a first AI model to a competitor report. No sign-up. Just tap something.</p></div>
   </div></section>
   <div class="demo-jumps-bar">
     <nav class="wrap demo-jumps" aria-label="Demo groups" data-demo-jumps>
-      <a href="#for-school"><b>Class 8–12</b><small>5 demos</small></a>
-      <a href="#for-bba"><b>BBA &amp; BBM</b><small>3 demos</small></a>
-      <a href="#for-everyone"><b>For everyone</b><small>8 demos</small></a>
+      <a href="#for-school"><b>Class 8–12</b><small>8 demos</small></a>
+      <a href="#for-bba"><b>BBA &amp; BBM</b><small>7 demos</small></a>
+      <a href="#for-everyone"><b>For everyone</b><small>10 demos</small></a>
     </nav>
   </div>
 
   <section class="section grey demo-group" id="for-school"><div class="wrap">
-    <div class="section-intro"><div class="head"><p class="eyebrow">Class 8–12 · 5 demos</p><h2>A first model. A first film.<br>A first app.</h2><p class="lede">What school students make, from their first week to the Creator Programme.</p></div><a class="link" href="class-8-12.html">See the Class 8–12 courses</a></div>
+    <div class="section-intro"><div class="head"><p class="eyebrow">Class 8–12 · 8 demos</p><h2>A first model. A first film.<br>A first app.</h2><p class="lede">What school students make, from their first week to the Creator Programme.</p></div><a class="link" href="class-8-12.html">See the Class 8–12 courses</a></div>
     <div class="wall">
-        <article class="build span-2">
-          <header class="build-head"><span class="build-tag">Class 8–12 · Session 1</span><h3>An AI that sorts mangoes</h3></header>
+        <article class="build span-2" id="try-rps">
+          <header class="build-head"><span class="build-tag">Class 8–12 · Live AI on your camera</span><h3>Beat the AI at Rock, Paper, Scissors</h3></header>
           <div class="build-demo">
-            <div class="sorter" data-sorter>
-              <div class="sorter-pick" role="group" aria-label="Choose a mango" data-picks></div>
-              <div class="sorter-view">
-                <div class="sorter-stage" data-stage><span class="scan"></span></div>
-                <div class="sorter-out">
-                  <p class="sorter-verdict" data-verdict aria-live="polite">Pick a mango<small>The model decides if it's ripe.</small></p>
-                  <div class="conf ripe"><span>Ripe</span><div class="conf-bar"><i data-ripe></i></div><b data-ripe-n>–</b></div>
-                  <div class="conf"><span>Raw</span><div class="conf-bar"><i data-raw></i></div><b data-raw-n>–</b></div>
+            <div class="rps live-demo" data-rps>
+              <div class="cam">
+                <video playsinline muted aria-hidden="true"></video>
+                <canvas aria-hidden="true"></canvas>
+                <span class="cam-badge" data-rps-seen>Show me your hand</span>
+                <span class="cam-count" data-rps-count aria-live="assertive"></span>
+                <div class="cam-cover"><span class="cam-icon" aria-hidden="true">✊ ✋ ✌️</span><button type="button" class="pm-tool pm-publish" data-cam-start>Start camera</button><small>Runs on your device. Nothing is recorded or sent.</small><p class="cam-status" data-cam-status role="status"></p></div>
+                <button type="button" class="cam-stop" data-cam-stop aria-label="Stop camera">✕</button>
+              </div>
+              <div class="live-side">
+                <div class="rps-board">
+                  <div><small>You</small><span class="rps-move" data-rps-you>❔</span><b data-rps-you-score>0</b></div>
+                  <span class="rps-vs">vs</span>
+                  <div><small>AI</small><span class="rps-move" data-rps-ai>❔</span><b data-rps-ai-score>0</b></div>
                 </div>
+                <p class="rps-verdict" data-rps-verdict aria-live="polite">Start the camera, press Play, and show ✊ ✋ or ✌️ on “Shoot!”</p>
+                <button type="button" class="pm-tool pm-publish" data-rps-play>Play a round <span aria-hidden="true">→</span></button>
+                <p class="rps-brain" data-rps-brain aria-live="polite">The AI is watching your moves. After 5 rounds it starts reading you.</p>
+                <div class="rps-tap"><span>No camera? Tap:</span><button type="button" data-rps-tap="rock" aria-label="Rock">✊</button><button type="button" data-rps-tap="paper" aria-label="Paper">✋</button><button type="button" data-rps-tap="scissors" aria-label="Scissors">✌️</button><button type="button" class="rps-reset" data-rps-reset>New game</button></div>
               </div>
             </div>
           </div>
-          <p class="build-hint">Choose a mango to explore how an image classifier makes a prediction.</p>
+          <p class="build-hint">The AI remembers what you tend to play after each move, then picks the move that beats it. It locks in its choice before it sees your hand. Play 10 rounds and see who's really in control.</p>
         </article>
         <article class="build">
           <header class="build-head"><span class="build-tag">Class 8–12 · Session 6</span><h3>A study coach that refuses to cheat</h3></header>
@@ -145,6 +155,30 @@
               <div class="term-choices" data-choices></div>
             </div>
           </div>
+        </article>
+        <article class="build span-2" id="try-train">
+          <header class="build-head"><span class="build-tag">Class 8–12 · Live AI on your camera</span><h3>Train your own AI in 30 seconds</h3></header>
+          <div class="build-demo">
+            <div class="trainer live-demo" data-trainer>
+              <div class="cam">
+                <video playsinline muted aria-hidden="true"></video>
+                <canvas aria-hidden="true"></canvas>
+                <span class="tr-out is-dim" data-train-out aria-live="polite">✋</span>
+                <div class="cam-cover"><span class="cam-icon" aria-hidden="true">🧠</span><button type="button" class="pm-tool pm-publish" data-cam-start>Start camera</button><small>Runs on your device. Nothing is recorded or sent.</small><p class="cam-status" data-cam-status role="status"></p></div>
+                <button type="button" class="cam-stop" data-cam-stop aria-label="Stop camera">✕</button>
+              </div>
+              <div class="live-side">
+                <p class="tr-hint" data-train-hint aria-live="polite"></p>
+                <div class="tr-classes">
+                  <div class="tr-class" data-class data-emoji="🍕"><span class="tr-emoji" aria-hidden="true">🍕</span><span class="tr-name"><b>Sign 1</b><small data-count>0 examples</small></span><button type="button" class="tr-rec" data-rec>● Hold to record</button><span class="tr-conf"><i data-conf="0"></i></span></div>
+                  <div class="tr-class" data-class data-emoji="🎮"><span class="tr-emoji" aria-hidden="true">🎮</span><span class="tr-name"><b>Sign 2</b><small data-count>0 examples</small></span><button type="button" class="tr-rec" data-rec>● Hold to record</button><span class="tr-conf"><i data-conf="1"></i></span></div>
+                  <div class="tr-class" data-class data-emoji="🎵"><span class="tr-emoji" aria-hidden="true">🎵</span><span class="tr-name"><b>Sign 3</b><small data-count>0 examples</small></span><button type="button" class="tr-rec" data-rec>● Hold to record</button><span class="tr-conf"><i data-conf="2"></i></span></div>
+                </div>
+                <button type="button" class="pm-tool" data-train-reset>Start over <span aria-hidden="true">↻</span></button>
+              </div>
+            </div>
+          </div>
+          <p class="build-hint">Invent any three hand signs. Hold each one up and press Record. Each sign you teach becomes a pizza, a game controller or a music note, with its own sound. This is exactly how AI learns: from examples.</p>
         </article>
         <article class="build">
           <header class="build-head"><span class="build-tag">Class 8–12 · Intro week 4</span><h3>A revision app, from one sentence</h3></header>
@@ -190,12 +224,136 @@
           </div>
           <p class="build-hint">Students write the story and plan every shot. AI helps with the pictures and the music.</p>
         </article>
+        <article class="build span-2" id="try-cricket">
+          <header class="build-head"><span class="build-tag">Class 8–12 · Live AI on your camera</span><h3>Your cricket shot, coached by AI</h3></header>
+          <div class="build-demo">
+            <div class="cricket live-demo" data-cricket>
+              <div class="cam">
+                <video playsinline muted aria-hidden="true"></video>
+                <canvas aria-hidden="true"></canvas>
+                <span class="cam-count" data-cr-count aria-live="assertive"></span>
+                <div class="cam-cover"><span class="cam-icon" aria-hidden="true">🏏</span><button type="button" class="pm-tool pm-publish" data-cam-start>Start camera</button><small>Prop your phone up and step back. Runs on your device. Nothing is recorded or sent.</small><p class="cam-status" data-cam-status role="status"></p></div>
+                <button type="button" class="cam-stop" data-cam-stop aria-label="Stop camera">✕</button>
+              </div>
+              <div class="live-side">
+                <div class="chip-row" data-cr-shot role="group" aria-label="Choose a shot">
+                  <button class="chip" type="button" data-v="drive" aria-pressed="true">Cover drive</button>
+                  <button class="chip" type="button" data-v="pull" aria-pressed="false">Pull shot</button>
+                  <button class="chip" type="button" data-v="defence" aria-pressed="false">Forward defence</button>
+                </div>
+                <button type="button" class="chip cr-hand" data-cr-hand aria-pressed="false">Right-handed batter</button>
+                <div class="cr-result"><div class="cr-score" data-cr-score><b>–</b><small>/10</small></div><p class="cr-tip" data-cr-tip aria-live="polite">Stand 2 to 3 metres from the camera so it can see you from head to toe.</p></div>
+                <ul class="cr-checks" data-cr-checks></ul>
+                <div class="cr-actions"><button type="button" class="pm-tool pm-publish" data-cr-freeze>Freeze my shot <span aria-hidden="true">📸</span></button><button type="button" class="pm-tool" data-cr-sample>No camera? Try a sample batter</button></div>
+              </div>
+            </div>
+          </div>
+          <p class="build-hint">The AI finds 33 points on your body, then measures the angles a coach watches: your knees, your elbow and where your head is.</p>
+        </article>
+        <article class="build span-2">
+          <header class="build-head"><span class="build-tag">Class 8–12 · Session 1</span><h3>An AI that sorts mangoes</h3></header>
+          <div class="build-demo">
+            <div class="sorter" data-sorter>
+              <div class="sorter-pick" role="group" aria-label="Choose a mango" data-picks></div>
+              <div class="sorter-view">
+                <div class="sorter-stage" data-stage><span class="scan"></span></div>
+                <div class="sorter-out">
+                  <p class="sorter-verdict" data-verdict aria-live="polite">Pick a mango<small>The model decides if it's ripe.</small></p>
+                  <div class="conf ripe"><span>Ripe</span><div class="conf-bar"><i data-ripe></i></div><b data-ripe-n>–</b></div>
+                  <div class="conf"><span>Raw</span><div class="conf-bar"><i data-raw></i></div><b data-raw-n>–</b></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="build-hint">Choose a mango to explore how an image classifier makes a prediction.</p>
+        </article>
+
     </div>
   </div></section>
 
   <section class="section demo-group" id="for-bba"><div class="wrap">
-    <div class="section-intro"><div class="head"><p class="eyebrow">BBA &amp; BBM · 3 demos</p><h2>Business work<br>you can show.</h2><p class="lede">Pieces of real work from the AI Business Bootcamp. Change the numbers and watch them move.</p></div><a class="link" href="bba.html">See the BBA courses</a></div>
+    <div class="section-intro"><div class="head"><p class="eyebrow">BBA &amp; BBM · 7 demos</p><h2>Business work<br>you can show.</h2><p class="lede">Pieces of real work from the AI Business Bootcamp. Change the numbers and watch them move.</p></div><a class="link" href="bba.html">See the BBA courses</a></div>
     <div class="wall">
+        <article class="build span-2" id="try-sharks">
+          <header class="build-head"><span class="build-tag">BBA &amp; BBM · Startup pitching</span><h3>Pitch to the AI Sharks</h3></header>
+          <div class="build-demo">
+            <div class="sharks" data-sharks>
+              <div class="sh-controls">
+                <div><p class="pm-label">Your startup</p>
+                <div class="chip-row" data-sh-idea role="group" aria-label="Choose a startup">
+                  <button class="chip" type="button" data-v="coffee" aria-pressed="true">FilterBox, coffee</button>
+                  <button class="chip" type="button" data-v="rent" aria-pressed="false">RentRack, party wear</button>
+                  <button class="chip" type="button" data-v="videos" aria-pressed="false">ChalkTalk, maths videos</button>
+                </div></div>
+                <div><p class="pm-label">Your ask</p>
+                <div class="chip-row" data-sh-ask role="group" aria-label="Choose your ask">
+                  <button class="chip" type="button" data-v="5" aria-pressed="false">₹25 lakh for 5%</button>
+                  <button class="chip" type="button" data-v="10" aria-pressed="true">₹25 lakh for 10%</button>
+                  <button class="chip" type="button" data-v="20" aria-pressed="false">₹25 lakh for 20%</button>
+                </div></div>
+              </div>
+              <div class="sh-stage" data-sh-stage></div>
+              <div class="sh-panel" data-sh-panel aria-live="polite"></div>
+            </div>
+          </div>
+          <p class="build-hint">Made-up Sharks and made-up startups. Your ask sets your company's value, and every answer moves the Sharks' interest.</p>
+        </article>
+        <article class="build" id="try-brand">
+          <header class="build-head"><span class="build-tag">BBA &amp; BBM · Branding</span><h3>Your brand in 10 seconds</h3></header>
+          <div class="build-demo">
+            <div class="brand" data-brand>
+              <label class="br-input"><span class="pm-label">Business name</span><input type="text" data-br-name maxlength="22" value="Monsoon Café" autocomplete="off" spellcheck="false"></label>
+              <div class="chip-row" data-br-cat role="group" aria-label="Choose a type of business">
+                <button class="chip" type="button" data-v="cafe" aria-pressed="true">Café</button>
+                <button class="chip" type="button" data-v="clothing" aria-pressed="false">Clothing</button>
+                <button class="chip" type="button" data-v="tech" aria-pressed="false">Tech</button>
+                <button class="chip" type="button" data-v="bakery" aria-pressed="false">Bakery</button>
+                <button class="chip" type="button" data-v="fitness" aria-pressed="false">Fitness</button>
+              </div>
+              <div class="br-out" data-br-out aria-live="polite"></div>
+              <button type="button" class="pm-tool" data-br-shuffle><span aria-hidden="true">↻</span> Another look</button>
+            </div>
+          </div>
+          <p class="build-hint">Type any name. The logo, colours, tagline, Instagram grid and card are made from it.</p>
+        </article>
+        <article class="build" id="try-haggle">
+          <header class="build-head"><span class="build-tag">BBA &amp; BBM · Negotiation</span><h3>Haggle with an AI shopkeeper</h3></header>
+          <div class="build-demo">
+            <div class="haggle" data-haggle>
+              <div class="chip-row" data-hg-item role="group" aria-label="Choose what to buy">
+                <button class="chip" type="button" data-v="jacket" aria-pressed="true">Leather jacket</button>
+                <button class="chip" type="button" data-v="phone" aria-pressed="false">Old phone</button>
+                <button class="chip" type="button" data-v="lamp" aria-pressed="false">Brass lamp</button>
+              </div>
+              <div class="hg-shop"><span class="hg-mood" data-hg-mood aria-hidden="true">🙂</span><span><small>Raju's price now</small><b data-hg-price>₹4,000</b></span></div>
+              <div class="hg-chat" data-hg-chat aria-live="polite"></div>
+              <div class="hg-actions" data-hg-actions>
+                <label class="hg-offer" for="hg-range">Your offer <output data-hg-offer for="hg-range">₹0</output></label>
+                <input type="range" id="hg-range" data-hg-range>
+                <div class="hg-buttons"><button type="button" class="pm-tool pm-publish" data-hg-send>Make offer</button><button type="button" class="pm-tool" data-hg-accept>Accept his price</button></div>
+                <div class="chip-row hg-tactics"><button class="chip" type="button" data-hg-tactic="flaw">Point out a flaw</button><button class="chip" type="button" data-hg-tactic="cash">Offer cash now</button><button class="chip" type="button" data-hg-tactic="walk">Walk away</button></div>
+              </div>
+            </div>
+          </div>
+        </article>
+        <article class="build span-2" id="try-fantasy">
+          <header class="build-head"><span class="build-tag">BBA &amp; BBM · Data analysis</span><h3>Build a fantasy XI like a data analyst</h3></header>
+          <div class="build-demo">
+            <div class="fantasy" data-fantasy>
+              <div class="fx-bar">
+                <span><small>Players</small><b data-fx-n>0/11</b></span>
+                <span><small>Credits</small><b data-fx-cr>0 / 88</b></span>
+                <span><small>Projected points</small><b data-fx-pts>0</b></span>
+                <button type="button" class="pm-tool pm-publish" data-fx-ai>Let the AI pick <span aria-hidden="true">→</span></button>
+                <button type="button" class="pm-tool" data-fx-clear>Clear</button>
+              </div>
+              <p class="fx-rules">Pick 11 players within 88 credits: at least 1 wicketkeeper, 3 batters, 1 all-rounder and 3 bowlers. Your top scorer is captain and scores double.</p>
+              <div class="fx-grid" data-fx-grid></div>
+              <div class="fx-out" data-fx-out aria-live="polite"></div>
+            </div>
+          </div>
+          <p class="build-hint">Made-up players and made-up stats. The AI doesn't guess: it checks every possible team. Picking only the stars won't fit the budget.</p>
+        </article>
         <article class="build span-2">
           <header class="build-head"><span class="build-tag">BBA · Bootcamp session 3</span><h3>One business. Three ways to say it.</h3></header>
           <div class="build-demo">
@@ -295,11 +453,12 @@
             </div>
           </div>
         </article>
+
     </div>
   </div></section>
 
   <section class="section grey demo-group" id="for-everyone"><div class="wrap">
-    <div class="section-intro"><div class="head"><p class="eyebrow">For everyone · 8 demos</p><h2>Things you thought<br>needed an expert.</h2><p class="lede">Research a market, read a company's numbers, plan a side income. Then the everyday wins, for work, study and home.</p></div><a class="link" href="learn.html">Explore every skill</a></div>
+    <div class="section-intro"><div class="head"><p class="eyebrow">For everyone · 10 demos</p><h2>Things you thought<br>needed an expert.</h2><p class="lede">Research a market, read a company's numbers, plan a side income. Then the everyday wins, for work, study and home.</p></div><a class="link" href="learn.html">Explore every skill</a></div>
     <div class="wall">
         <article class="build span-2">
           <header class="build-head"><span class="build-tag">AI for everyone · Research customers and competitors</span><h3>Know your competitors in ten minutes</h3></header>
@@ -379,6 +538,59 @@
               <p class="st-note">A rough guide. It depends on finding clients and doing good work.</p>
             </div>
           </div>
+        </article>
+        <article class="build span-2" id="try-wave">
+          <header class="build-head"><span class="build-tag">AI for everyone · Live AI on your camera</span><h3>Present without a clicker</h3></header>
+          <div class="build-demo">
+            <div class="waver live-demo" data-wave>
+              <div class="cam">
+                <video playsinline muted aria-hidden="true"></video>
+                <canvas aria-hidden="true"></canvas>
+                <span class="cam-badge" data-wave-seen aria-live="polite">Swipe your hand across</span>
+                <div class="cam-cover"><span class="cam-icon" aria-hidden="true">👋</span><button type="button" class="pm-tool pm-publish" data-cam-start>Start camera</button><small>Runs on your device. Nothing is recorded or sent.</small><p class="cam-status" data-cam-status role="status"></p></div>
+                <button type="button" class="cam-stop" data-cam-stop aria-label="Stop camera">✕</button>
+              </div>
+              <div class="live-side">
+                <div class="wave-deck" aria-live="polite">
+                  <div class="wave-slide"><small>Monthly review</small><strong>September at a glance</strong><p>Sales team · Mangalore</p></div>
+                  <div class="wave-slide"><small>Revenue</small><strong>Up 18% on August</strong><span class="wave-bars" aria-hidden="true"><i style="--h: 42%"></i><i style="--h: 55%"></i><i style="--h: 50%"></i><i style="--h: 68%"></i><i class="hot" style="--h: 92%"></i></span></div>
+                  <div class="wave-slide"><small>Three wins</small><ul><li>42 new customers</li><li>Replies within 2 hours</li><li>Our best-ever festival week</li></ul></div>
+                  <div class="wave-slide"><small>Next month</small><strong>Launch the WhatsApp store</strong><p>Target: 100 orders in the first week</p></div>
+                  <div class="wave-slide"><small>Thank you</small><strong>Questions?</strong><p>Give me a 👍 if you liked it</p></div>
+                  <span class="wave-laser" hidden></span>
+                  <span class="wave-react" aria-hidden="true"></span>
+                </div>
+                <div class="wave-nav"><button type="button" data-wave-prev aria-label="Previous slide">←</button><span data-wave-n>1 / 5</span><button type="button" data-wave-next aria-label="Next slide">→</button></div>
+                <ul class="wave-legend"><li><b>👋 Swipe</b>Next or previous slide</li><li><b>☝️ Point up</b>Laser pointer</li><li><b>✋ Hold palm</b>Pause the screen</li><li><b>👍 Thumbs up</b>Send a reaction</li></ul>
+              </div>
+            </div>
+          </div>
+          <p class="build-hint">Your hand becomes the clicker and the laser pointer. The same hand-tracking AI powers VR headsets and smart TVs.</p>
+        </article>
+        <article class="build span-2" id="try-captions">
+          <header class="build-head"><span class="build-tag">AI for everyone · Live AI on your microphone</span><h3>Live subtitles, and a speaking coach</h3></header>
+          <div class="build-demo">
+            <div class="captions" data-captions>
+              <div class="cap-top">
+                <div class="chip-row" data-cap-lang role="group" aria-label="Choose a language">
+                  <button class="chip" type="button" data-v="en-IN" aria-pressed="true">English</button>
+                  <button class="chip" type="button" data-v="hi-IN" aria-pressed="false">हिन्दी</button>
+                  <button class="chip" type="button" data-v="kn-IN" aria-pressed="false">ಕನ್ನಡ</button>
+                </div>
+                <button type="button" class="pm-tool pm-publish cap-mic" data-cap-mic aria-pressed="false">🎙️ Start talking</button>
+              </div>
+              <div class="cap-screen"><p class="cap-text" data-cap-text aria-live="polite"><span class="cap-empty">Your words appear here as you speak.</span></p></div>
+              <div class="cap-stats">
+                <div><b data-cap-words>0</b><small>words</small></div>
+                <div><b data-cap-wpm>–</b><small>words a minute</small></div>
+                <div><b data-cap-fillers>0</b><small>filler words</small></div>
+                <div class="cap-pace" data-cap-pace>Start talking</div>
+              </div>
+              <div class="cap-list" data-cap-list></div>
+              <div class="cap-foot"><p class="st-note" data-cap-note>Try a 30-second self-introduction, as if you're in an interview.</p><button type="button" class="pm-tool" data-cap-clear>Clear</button></div>
+            </div>
+          </div>
+          <p class="build-hint">Speak in English, Hindi or Kannada. The words appear as you talk, and the coach counts your pace and your “um”s and “basically”s.</p>
         </article>
         <article class="build span-2">
           <header class="build-head"><span class="build-tag">AI for everyone · Ask AI better questions</span><h3>Same question. A much better answer.</h3></header>
@@ -506,6 +718,7 @@
             </div>
           </div>
         </article>
+
     </div>
   </div></section>
 
@@ -552,6 +765,7 @@
 
 <script src="assets/site.js"></script>
 <script src="assets/builds.js"></script>
+<script src="assets/live.js"></script>
 <script src="assets/motion.js"></script>
 </body>
 </html>
