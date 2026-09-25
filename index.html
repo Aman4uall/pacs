@@ -172,7 +172,7 @@
     <a class="brand" href="index.html" aria-label="PACS AI home">
       <img class="brand-logo" src="assets/logo-horizontal.png" alt="PACS AI" width="433" height="124">
     </a>
-    <nav class="site-nav" aria-label="Main"><ul class="nav-links" id="nav-links"><li><a href="class-8-12.html" data-note="School students & parents">Class 8–12</a></li><li><a href="bba.html" data-note="Build work for your portfolio">BBA & BBM</a></li><li><a href="learn.html" data-note="Find a skill for your life">AI for everyone</a></li><li><a href="index.html#build-wall" data-note="A taste of learning by doing">Try the demos</a></li><li><a href="meetup.html" data-note="Every alternate Saturday">Meetup</a></li><li><a href="contact.html" data-note="Let us help you choose">Contact</a></li></ul></nav>
+    <nav class="site-nav" aria-label="Main"><ul class="nav-links" id="nav-links"><li><a href="class-8-12.html" data-note="School students & parents">Class 8–12</a></li><li><a href="bba.html" data-note="Build work for your portfolio">BBA & BBM</a></li><li><a href="learn.html" data-note="Find a skill for your life">AI for everyone</a></li><li><a href="demos.html" data-note="A taste of learning by doing">Try the demos</a></li><li><a href="meetup.html" data-note="Every alternate Saturday">Meetup</a></li><li><a href="contact.html" data-note="Let us help you choose">Contact</a></li></ul></nav>
     <a class="btn btn-dark btn-sm nav-cta" href="contact.html" data-wa="Hi PACS AI, I'd like to know more about your courses.">WhatsApp us</a>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
@@ -247,12 +247,13 @@
   <section class="section grey home-demos" id="build-wall"><div class="wrap">
     <div class="section-intro"><div class="head"><p class="eyebrow">A taste of the classroom</p><h2>Less wondering.<br>More trying.</h2></div>
       <div class="demo-switch" role="tablist" aria-label="Whose demos would you like to try?" data-demo-switch>
-        <button type="button" role="tab" id="tab-school" aria-controls="demos-school" aria-selected="true">Class 8–12<small>3 to try</small></button>
-        <button type="button" role="tab" id="tab-bba" aria-controls="demos-bba" aria-selected="false">BBA &amp; BBM<small>3 to try</small></button>
+        <button type="button" role="tab" id="tab-school" aria-controls="demos-school" aria-selected="true">School<small>Class 8–12</small></button>
+        <button type="button" role="tab" id="tab-college" aria-controls="demos-college" aria-selected="false">College<small>BBA &amp; BBM</small></button>
+        <button type="button" role="tab" id="tab-everyone" aria-controls="demos-everyone" aria-selected="false">Everyone<small>Money &amp; work</small></button>
       </div>
     </div>
-    <div class="wall demo-panel" id="demos-school" role="tabpanel" aria-labelledby="tab-school" data-more="class-8-12.html#build-wall" data-more-text="All 5 Class 8–12 demos">
-<article class="build span-2">
+    <div class="wall demo-panel" id="demos-school" role="tabpanel" aria-labelledby="tab-school" data-more="class-8-12.html" data-more-text="See the Class 8–12 courses">
+        <article class="build span-2">
           <header class="build-head"><span class="build-tag">Class 8–12 · Session 1</span><h3>An AI that sorts mangoes</h3></header>
           <div class="build-demo">
             <div class="sorter" data-sorter>
@@ -269,47 +270,53 @@
           </div>
           <p class="build-hint">Choose a mango to explore how an image classifier makes a prediction.</p>
         </article>
-<article class="build">
-          <header class="build-head"><span class="build-tag">Class 8–12 · Session 6</span><h3>A study coach that refuses to cheat</h3></header>
+        <article class="build">
+          <header class="build-head"><span class="build-tag">Class 8–12 · Intro week 3</span><h3>Their idea becomes a film</h3></header>
           <div class="build-demo">
-            <div class="coach" data-coach>
-              <div class="coach-log" data-log data-lenis-prevent aria-live="polite">
-                <p class="msg bot">I'm Challenge Coach. I give hints, never answers. What are you stuck on?</p>
+            <div class="film" data-film>
+              <div class="chip-row" role="group" aria-label="Choose a story" data-film-ideas>
+                <button class="chip" type="button" data-v="robot" aria-pressed="true">A lost robot</button>
+                <button class="chip" type="button" data-v="mango" aria-pressed="false">The flying mango</button>
+                <button class="chip" type="button" data-v="cricket" aria-pressed="false">Monsoon final</button>
               </div>
-              <div class="chip-row" data-asks>
-                <button class="chip" type="button" data-ask="0">Just give me the answer</button>
-                <button class="chip" type="button" data-ask="1">I don't get photosynthesis</button>
-                <button class="chip" type="button" data-ask="2">Check my answer</button>
+              <div class="film-screen">
+                <div class="film-frame" data-film-frame aria-live="polite"><span class="film-art" data-film-art aria-hidden="true">🌆</span><span class="film-shot" data-film-shot>Scene 1 · Wide shot</span><p class="film-line" data-film-line>A small robot wakes up in an empty city.</p></div>
+                <div class="film-progress" aria-hidden="true"><i data-film-bar></i></div>
               </div>
+              <ol class="film-strip" data-film-strip aria-label="Storyboard"></ol>
+              <div class="film-foot"><button class="film-play" type="button" data-film-play>▶ Play the film</button><span class="film-sound"><span class="film-eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span data-film-sound>Hopeful piano, slow build</span></span></div>
             </div>
           </div>
+          <p class="build-hint">Students write the story and plan every shot. AI helps with the pictures and the music.</p>
         </article>
-<article class="build">
-          <header class="build-head"><span class="build-tag">Creator Programme · Months 2–3</span><h3>A game written in Python</h3></header>
+        <article class="build">
+          <header class="build-head"><span class="build-tag">Class 8–12 · Intro week 4</span><h3>A revision app, from one sentence</h3></header>
           <div class="build-demo">
-            <div class="term" data-term>
-              <div class="term-bar"><i></i><i></i><i></i><span>escape.py</span><button class="term-toggle" type="button" data-code-toggle aria-pressed="false">View code</button></div>
-              <div class="term-body" data-out data-lenis-prevent aria-live="polite"></div>
-              <pre class="term-code" data-code hidden><span class="c"># escape.py – a text adventure</span>
-<span class="k">def</span> start():
-    print(<span class="s">"The power is out. A robot blocks the door."</span>)
-    choice = input(<span class="s">"1) Talk to it  2) Find a torch  > "</span>)
-    <span class="k">if</span> choice == <span class="s">"1"</span>:
-        riddle()
-    <span class="k">else</span>:
-        torch()
-
-<span class="k">def</span> riddle():
-    answer = input(<span class="s">"What has keys but opens no locks? "</span>)
-    <span class="k">if</span> answer == <span class="s">"a piano"</span>:
-        print(<span class="s">"The robot steps aside. You escaped!"</span>)</pre>
-              <div class="term-choices" data-choices></div>
+            <div class="builder builder-compact" data-builder>
+              <div class="chip-row builder-subjects" role="group" aria-label="Choose a subject">
+                <button class="chip" type="button" data-subject="science" aria-pressed="true">Science</button>
+                <button class="chip" type="button" data-subject="maths" aria-pressed="false">Maths</button>
+                <button class="chip" type="button" data-subject="geo" aria-pressed="false">Geography</button>
+              </div>
+              <div class="prompt"><span class="prompt-label">Idea</span><span class="prompt-text" data-prompt>A revision quiz for Class 8 science, with a score</span><span class="prompt-go" aria-hidden="true">Build</span></div>
+              <p class="build-status" data-status aria-live="polite">Waiting for an idea</p>
+              <div class="phone"><span class="live-badge">Live</span>
+                <div class="app" data-app>
+                  <div class="app-top bp"><div><p class="app-name" data-app-name>Science Sprint</p><p class="app-sub" data-app-sub>Chapter 5 · Plants</p></div><span class="app-score" data-score>0 pts</span></div>
+                  <div class="app-progress bp"><span data-bar></span></div>
+                  <div class="app-q bp"><span class="app-count" data-count>Question 1 of 3</span><p class="app-question" data-question></p></div>
+                  <div class="app-options bp" data-options></div>
+                  <p class="app-feedback" data-feedback aria-live="polite"></p>
+                  <div class="app-tabs bp"><span class="on">Quiz</span><span>Review</span><span>Scores</span></div>
+                </div>
+              </div>
+              <button class="replay" type="button" data-replay hidden>↻ Build it again</button>
             </div>
           </div>
         </article>
     </div>
-    <div class="wall demo-panel" id="demos-bba" role="tabpanel" aria-labelledby="tab-bba" data-more="bba.html#bootcamp" data-more-text="See all 8 BBA sessions">
-<article class="build span-2">
+    <div class="wall demo-panel" id="demos-college" role="tabpanel" aria-labelledby="tab-college" data-more="bba.html" data-more-text="See the BBA courses">
+        <article class="build span-2">
           <header class="build-head"><span class="build-tag">BBA · Bootcamp session 3</span><h3>One business. Three ways to say it.</h3></header>
           <div class="build-demo">
             <div class="postmaker" data-post>
@@ -362,7 +369,7 @@
             </div>
           </div>
         </article>
-<article class="build">
+        <article class="build">
           <header class="build-head"><span class="build-tag">BBA · Bootcamp session 6</span><h3>Can you make the bakery profitable?</h3></header>
           <div class="build-demo">
             <div class="be" data-breakeven>
@@ -393,7 +400,7 @@
             </div>
           </div>
         </article>
-<article class="build">
+        <article class="build">
           <header class="build-head"><span class="build-tag">BBA · Bootcamp session 7</span><h3>A 5-slide client pitch</h3></header>
           <div class="build-demo">
             <div class="deck" data-deck>
@@ -409,7 +416,88 @@
           </div>
         </article>
     </div>
-    <div class="demo-next"><a class="btn btn-dark" href="learn.html">I'd like to make something</a><a class="link" href="class-8-12.html#build-wall" data-demo-more>All 5 Class 8–12 demos</a></div>
+    <div class="wall demo-panel" id="demos-everyone" role="tabpanel" aria-labelledby="tab-everyone" data-more="learn.html" data-more-text="Explore every skill">
+<article class="build span-2">
+          <header class="build-head"><span class="build-tag">AI for everyone · Research customers and competitors</span><h3>Know your competitors in ten minutes</h3></header>
+          <div class="build-demo">
+            <div class="rival" data-rival>
+              <div class="rv-controls">
+                <p class="pm-label">Your business</p>
+                <div class="chip-row" data-rv-biz role="group" aria-label="Choose a business">
+                  <button class="chip" type="button" data-v="bakery" aria-pressed="true">Home bakery</button>
+                  <button class="chip" type="button" data-v="tuition" aria-pressed="false">Tuition centre</button>
+                  <button class="chip" type="button" data-v="boutique" aria-pressed="false">Clothing boutique</button>
+                </div>
+                <button class="pm-tool pm-publish rv-go" type="button" data-rv-go>Research my competitors <span aria-hidden="true">→</span></button>
+                <ol class="rv-log" data-rv-log aria-live="polite"></ol>
+              </div>
+              <div class="rv-out">
+                <div class="rv-table-wrap">
+                  <table class="rv-table">
+                    <thead><tr><th scope="col">Competitor</th><th scope="col">Price</th><th scope="col">Rating</th><th scope="col">Customers love</th><th scope="col">Customers complain</th></tr></thead>
+                    <tbody data-rv-rows><tr class="rv-empty"><td colspan="5">Pick a business and press research.</td></tr></tbody>
+                  </table>
+                </div>
+                <div class="rv-gap" data-rv-gap aria-live="polite" hidden></div>
+              </div>
+            </div>
+          </div>
+          <p class="build-hint">An illustrative example with made-up shops. In class, you run this on real businesses and check every source.</p>
+        </article>
+        <article class="build">
+          <header class="build-head"><span class="build-tag">AI for everyone · Understand a long document</span><h3>Read a company like an analyst</h3></header>
+          <div class="build-demo">
+            <div class="stock" data-stock>
+              <div class="st-head"><span class="st-logo" aria-hidden="true">SF</span><span><b>Sample Foods Ltd</b><small>A made-up company · Annual report, 186 pages</small></span></div>
+              <div class="st-chart" data-st-chart aria-hidden="true"></div>
+              <div class="chip-row" data-st-qs role="group" aria-label="Ask about the company">
+                <button class="chip" type="button" data-q="growth" aria-pressed="false">Is it growing?</button>
+                <button class="chip" type="button" data-q="profit" aria-pressed="false">Is it making money?</button>
+                <button class="chip" type="button" data-q="price" aria-pressed="false">Is the share expensive?</button>
+                <button class="chip" type="button" data-q="risk" aria-pressed="false">What could go wrong?</button>
+              </div>
+              <div class="st-answer" aria-live="polite"><p data-st-answer>Pick a question. AI reads all 186 pages for you.</p><small data-st-source></small></div>
+              <ul class="st-score" data-st-score>
+                <li data-k="growth"><span>Growth</span><b>?</b></li>
+                <li data-k="profit"><span>Profit</span><b>?</b></li>
+                <li data-k="price"><span>Price</span><b>?</b></li>
+                <li data-k="risk"><span>Risk</span><b>?</b></li>
+              </ul>
+              <p class="st-note">AI helps you understand a company. It doesn't tell you what to buy.</p>
+            </div>
+          </div>
+        </article>
+        <article class="build">
+          <header class="build-head"><span class="build-tag">AI for everyone · Shape a freelance service</span><h3>Turn a skill into side income</h3></header>
+          <div class="build-demo">
+            <div class="earn" data-earn>
+              <p class="pm-label">I'm good at</p>
+              <div class="chip-row" data-earn-skill role="group" aria-label="Choose a skill">
+                <button class="chip" type="button" data-v="writing" aria-pressed="true">Writing English</button>
+                <button class="chip" type="button" data-v="photos" aria-pressed="false">Taking photos</button>
+                <button class="chip" type="button" data-v="maths" aria-pressed="false">Maths</button>
+              </div>
+              <div class="earn-card" aria-live="polite">
+                <small>Your service</small>
+                <strong data-earn-service></strong>
+                <dl class="earn-facts">
+                  <div><dt>Who pays</dt><dd data-earn-who></dd></div>
+                  <div><dt>Charge</dt><dd data-earn-price></dd></div>
+                  <div><dt>Where AI helps</dt><dd data-earn-ai></dd></div>
+                </dl>
+              </div>
+              <div class="earn-calc">
+                <label for="earn-hours">Hours a week <output for="earn-hours" data-earn-h>6</output></label>
+                <input type="range" id="earn-hours" min="2" max="20" step="1" value="6" data-earn-range>
+                <p class="earn-total"><span>Could earn about</span><b data-earn-total>₹0</b><span>a month</span></p>
+              </div>
+              <ol class="earn-steps" data-earn-steps></ol>
+              <p class="st-note">A rough guide. It depends on finding clients and doing good work.</p>
+            </div>
+          </div>
+        </article>
+    </div>
+    <div class="demo-next"><a class="btn btn-primary" href="demos.html">Try all 16 demos</a><a class="link" href="class-8-12.html" data-demo-more>See the Class 8–12 courses</a></div>
   </div></section>
 
   <section class="challenge-invite"><div class="wrap"><div><p class="eyebrow">AI Song Challenge · Classes 8–12 only</p><h2>Your words.<br>Your first song.</h2><p>No singing or instruments needed. Free to enter.<br>One in every 10 songs wins ₹500.</p><a class="btn btn-primary" href="song-challenge.html">Start my song</a></div><div class="song-stamp" aria-hidden="true"><span>MAKE SOMETHING</span><strong>₹500</strong><span>1 IN 10 SONGS WINS</span></div></div></section>

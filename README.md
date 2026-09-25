@@ -89,6 +89,7 @@ in a way that matters.
 | Phone, WhatsApp, email, address, Instagram, Demo Day date, meetup dates and times, Google Sheet links | `assets/site.js` (the `SITE` settings at the top) |
 | Styles | `assets/styles.css`, `assets/refresh.css` for layout, and `assets/motion.css` for animation |
 | Card journeys, entrances, flip cards, hover lighting, BBA portfolio, reading progress and mobile enquiry bar | `assets/motion.js` (native browser APIs; no external animation libraries) |
+| The Try the demos page (all 13 demos, grouped for Class 8–12, BBA & BBM and For everyone; the home page shows 3) | `demos.html` |
 | The working demos (mango sorter, study coach, Python game, revision app, film storyboard, campaign post, break-even, pitch deck) and the home page Class 8–12 / BBA demo tabs | `assets/builds.js` |
 | The Song Challenge idea machine and entry form | `assets/challenge.js` |
 | The meetup: next date, countdown, upcoming dates, calendar file and registration form | `meetup.html`, with `assets/meetup.js` |

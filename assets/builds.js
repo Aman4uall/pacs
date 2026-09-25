@@ -815,7 +815,541 @@ ${caption.textContent}`;
     whenSeen(root, () => { if (!reduce) play(); });
   });
 
-  /* ---------- Home: switch between the Class 8–12 and BBA demos ---------- */
+  /* ---------- H. For everyone: a better question gets a better answer ---------- */
+  const ASKS = {
+    party: {
+      base: "Plan a birthday party.",
+      adds: { who: "It's for my son turning 8, with 12 friends.", details: "At home, Saturday 5 to 8 pm, budget ₹5,000.", format: "Give me a timeline and a shopping list.", tone: "Keep it simple and fun." },
+      generic: "A birthday party can be fun! Choose a theme, send invitations, plan food and games, and decorate. Let me know if you need more help.",
+      lines: {
+        who: "🎈 Made for 8-year-olds: a superhero theme, short games, and home by 8.",
+        details: "💰 ₹5,000 split: food ₹2,500 · cake ₹1,200 · decorations ₹800 · return gifts ₹500.",
+        format: "🕔 5:00 Guests arrive · 5:30 Treasure hunt · 6:30 Cake · 7:00 Pizza · 8:00 Goodbyes<br>🛒 Balloons, 4 pizzas, 15 cupcakes, juice, 12 return gifts",
+      },
+      warm: ["Here's a fun, easy plan. You've got this! 🎉", "Want me to write the WhatsApp invitation too?"],
+      plain: "Here is a plan for the party.",
+    },
+    leave: {
+      base: "Write a leave letter.",
+      adds: { who: "It's for my manager.", details: "I need 14 and 15 October off for my sister's wedding.", format: "Under 80 words, with a subject line.", tone: "Polite and professional." },
+      generic: "Dear Sir/Madam, I would like to request leave. Kindly grant me leave for the required days. Thank you.",
+      lines: {
+        who: "👤 Opens with “Dear Ma'am,” and reads like a note to your manager, not to a stranger.",
+        details: "📅 “I'd like to request leave on 14 and 15 October for my sister's wedding. The weekly report will be done before I go.”",
+        format: "📝 Subject: Leave request, 14 and 15 October. 62 words, ready to paste into an email.",
+      },
+      warm: ["Here's a polite, professional letter:", "Signed off with “Thank you for considering this.”"],
+      plain: "Here is a leave letter.",
+    },
+    topic: {
+      base: "Explain photosynthesis.",
+      adds: { who: "I'm in Class 8.", details: "I know it needs sunlight, but not what happens inside the leaf.", format: "Use 3 short steps and one everyday example.", tone: "Friendly, like a tutor." },
+      generic: "Photosynthesis is the process by which green plants use sunlight, water and carbon dioxide to make glucose and oxygen, with the help of chlorophyll.",
+      lines: {
+        who: "🎒 Written for Class 8: no hard words, and it matches your textbook chapter.",
+        details: "🍃 Inside the leaf, tiny green parts called chloroplasts catch sunlight and use it to join water and carbon dioxide into sugar.",
+        format: "① Roots bring water up. ② Leaves take in carbon dioxide. ③ Sunlight turns them into sugar, and oxygen goes out.<br>🌱 Everyday example: a plant kept in a dark cupboard turns pale and weak.",
+      },
+      warm: ["Great question! Let's make it simple 😊", "Want a 3-question quiz to check you've got it?"],
+      plain: "Here is an explanation.",
+    },
+    trip: {
+      base: "Plan a weekend trip to Goa.",
+      adds: { who: "For 4 college friends.", details: "From Mangalore by train, 2 days, ₹3,000 each.", format: "Day by day, with the costs.", tone: "Fun, but realistic." },
+      generic: "Goa has beaches, forts and markets. Book your travel and a stay, plan some activities, and keep an eye on your budget.",
+      lines: {
+        who: "🎒 Made for friends: beaches, cheap food spots and one night market.",
+        details: "🚆 Train both ways and a shared stay, all within ₹3,000 each.",
+        format: "Day 1: Early train · beach · night market<br>Day 2: Old fort · lunch · train home at 5 pm<br>💰 Train ₹600 · stay ₹1,200 · food ₹900 · local travel ₹300",
+      },
+      warm: ["Here's a fun plan that fits the budget. Pack light! 🏖️", "Want a packing list too?"],
+      plain: "Here is a plan for the trip.",
+    },
+  };
+  const ADD_ORDER = ["who", "details", "format", "tone"];
+  const SCORES = [2, 4, 6, 8, 9];
+  document.querySelectorAll("[data-asker]").forEach((root) => {
+    const prompt = $(root, "[data-ask-prompt]");
+    const me = $(root, "[data-ask-me]");
+    const answer = $(root, "[data-ask-answer]");
+    const bar = $(root, "[data-ask-bar]");
+    const score = $(root, "[data-ask-score]");
+    const state = { task: "party", on: new Set() };
+    let run = 0;
+
+    async function render(fresh) {
+      const id = ++run;
+      const t = ASKS[state.task];
+      const on = ADD_ORDER.filter((k) => state.on.has(k));
+      prompt.innerHTML = [t.base, ...on.map((k) => `<mark${k === fresh ? ' class="is-new"' : ""}>${t.adds[k]}</mark>`)].join(" ");
+      me.textContent = [t.base, ...on.map((k) => t.adds[k])].join(" ");
+      const n = SCORES[on.length];
+      bar.style.width = `${n * 10}%`;
+      bar.classList.toggle("is-good", n >= 8);
+      score.textContent = `${n}/10`;
+      answer.innerHTML = '<span class="ask-dots" aria-label="Thinking"><i></i><i></i><i></i></span>';
+      await wait(650);
+      if (id !== run) return;
+      const tone = state.on.has("tone");
+      const parts = [`<p class="ask-intro">${tone ? t.warm[0] : t.plain}</p>`];
+      if (on.filter((k) => k !== "tone").length < 2) parts.push(`<p class="ask-generic">${t.generic}</p>`);
+      ["who", "details", "format"].forEach((k) => {
+        if (state.on.has(k)) parts.push(`<p class="ask-line${k === fresh ? " is-new" : ""}">${t.lines[k]}</p>`);
+      });
+      if (tone) parts.push(`<p class="ask-line${fresh === "tone" ? " is-new" : ""}">${t.warm[1]}</p>`);
+      answer.innerHTML = parts.join("");
+    }
+
+    $$(root, "[data-ask-task] button").forEach((b, _, all) => b.addEventListener("click", () => {
+      buzz(6);
+      all.forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+      state.task = b.dataset.v;
+      render();
+    }));
+    $$(root, "[data-add]").forEach((b) => b.addEventListener("click", () => {
+      buzz(8);
+      const k = b.dataset.add;
+      const now = !state.on.has(k);
+      if (now) state.on.add(k); else state.on.delete(k);
+      b.setAttribute("aria-pressed", String(now));
+      render(now ? k : null);
+    }));
+    render();
+    // Once it's seen, add two details by itself so people watch the answer improve
+    whenSeen(root, async () => {
+      if (reduce || state.on.size) return;
+      await wait(900);
+      for (const k of ["who", "details"]) {
+        if (state.on.size >= 2) return;
+        $(root, `[data-add="${k}"]`).click();
+        await wait(1500);
+      }
+    }, "0px 0px -25% 0px", 60000);
+  });
+
+  /* ---------- I. For everyone: ask a spreadsheet a question ---------- */
+  const SHEET = [["Apr", 42000, 140], ["May", 38500, 128], ["Jun", 51200, 171], ["Jul", 47800, 159], ["Aug", 63400, 211], ["Sep", 55100, 184]];
+  const money = (n) => "₹" + Math.round(n).toLocaleString("en-IN");
+  document.querySelectorAll("[data-sheet]").forEach((root) => {
+    const grid = $(root, "[data-sheet-grid]");
+    const out = $(root, "[data-sheet-answer]");
+    const formula = $(root, "[data-sheet-formula]");
+    const avg = SHEET.reduce((a, r) => a + r[1], 0) / SHEET.length;
+    const best = SHEET.reduce((a, r) => (r[1] > a[1] ? r : a));
+    // A straight-line trend through the six months, one month ahead (what Excel's FORECAST.LINEAR does)
+    const xs = SHEET.map((_, i) => i + 1), mx = (SHEET.length + 1) / 2;
+    const slope = xs.reduce((a, x, i) => a + (x - mx) * (SHEET[i][1] - avg), 0) / xs.reduce((a, x) => a + (x - mx) ** 2, 0);
+    const forecast = avg + slope * (SHEET.length + 1 - mx);
+    const cell = (text, cls = "", role = "cell") => `<span class="${cls}" role="${role}">${text}</span>`;
+    grid.innerHTML = `<div class="sheet-row sheet-letters" aria-hidden="true">${cell("")}${cell("A")}${cell("B")}${cell("C")}</div>`
+      + `<div class="sheet-row" role="row">${cell("1", "sheet-n")}${cell("Month", "sheet-h", "columnheader")}${cell("Sales", "sheet-h", "columnheader")}${cell("Orders", "sheet-h", "columnheader")}</div>`
+      + SHEET.map((r, i) => `<div class="sheet-row" role="row" data-row="${i}">${cell(i + 2, "sheet-n")}${cell(r[0])}${cell(money(r[1]), "sheet-v")}${cell(r[2])}</div>`).join("")
+      + `<div class="sheet-chart" aria-hidden="true">${SHEET.map((r) => `<span style="--h:${((r[1] / best[1]) * 100).toFixed(1)}%"${r === best ? ' class="top"' : ""}><i></i><small>${r[0]}</small></span>`).join("")}</div>`;
+    const rows = $$(grid, "[data-row]");
+    const ANSWERS = {
+      best: { f: "=MAX(B2:B7)", text: `<b>August</b> was your best month: <b>${money(best[1])}</b> from ${best[2]} orders. That's ${Math.round((best[1] / SHEET[0][1] - 1) * 100)}% more than April.`, rows: [SHEET.indexOf(best)] },
+      avg: { f: "=AVERAGE(B2:B7)", text: `On average you sell <b>${money(avg)}</b> a month. Three months beat it: June, August and September.`, rows: SHEET.map((r, i) => (r[1] > avg ? i : -1)).filter((i) => i >= 0) },
+      chart: { f: "Insert → Chart → Column", text: "Here it is. Sales dipped in May, then climbed, with <b>August</b> on top.", rows: [], chart: true },
+      next: { f: "=FORECAST.LINEAR(8, B2:B7, ROW(B2:B7))", text: `If the trend holds, October could reach about <b>${money(Math.round(forecast / 1000) * 1000)}</b>. A rough guide, not a promise.`, rows: [3, 4, 5] },
+    };
+    let run = 0;
+    async function ask(q) {
+      const id = ++run;
+      const a = ANSWERS[q];
+      root.classList.remove("show-chart");
+      rows.forEach((r) => r.classList.remove("is-hit", "is-scan"));
+      formula.textContent = "";
+      out.innerHTML = '<span class="ask-dots" aria-label="Reading the sheet"><i></i><i></i><i></i></span>';
+      for (const r of rows) {
+        if (id !== run) return;
+        r.classList.add("is-scan");
+        await wait(110);
+        r.classList.remove("is-scan");
+      }
+      if (id !== run) return;
+      a.rows.forEach((i) => rows[i].classList.add("is-hit"));
+      if (a.chart) root.classList.add("show-chart");
+      out.innerHTML = a.text;
+      formula.textContent = a.f;
+    }
+    $$(root, "[data-sheet-qs] button").forEach((b, _, all) => b.addEventListener("click", () => {
+      buzz(6);
+      all.forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+      ask(b.dataset.q);
+    }));
+    whenSeen(root, () => { if (!run) $(root, '[data-q="best"]').click(); }, "0px 0px -25% 0px", 60000);
+  });
+
+  /* ---------- J. For everyone: rough notes become a clear email ---------- */
+  const MAIL = {
+    subject: { boss: "Weekly report: new date, Friday", client: "Your project report: arriving Friday", teacher: "Assignment: request for two more days" },
+    hello: {
+      boss: { polite: "Dear Ma'am,", warm: "Hi Priya,", direct: "Hi Priya," },
+      client: { polite: "Dear Mr Rao,", warm: "Hello Mr Rao,", direct: "Dear Mr Rao," },
+      teacher: { polite: "Dear Ma'am,", warm: "Good morning Ma'am,", direct: "Dear Ma'am," },
+    },
+    open: { polite: "I hope you are well. I'm writing about a short delay.", warm: "Hope your week is going well! A quick update from my side.", direct: "A quick update on timing." },
+    core: {
+      boss: "The sales data reached me later than planned, so the weekly report needs two more days. I'll send it by Friday, complete and checked.",
+      client: "The data we needed arrived later than expected, so your report will reach you on Friday instead of Wednesday. It will be complete and fully checked.",
+      teacher: "The survey data for my assignment came in late, so I'd like to ask for two more days. I can submit it by Friday.",
+    },
+    close: { polite: "I'm sorry for the delay, and thank you for your patience.", warm: "Thank you so much for understanding. Happy to talk if that helps.", direct: "Please let me know if Friday doesn't work." },
+    sign: { polite: "Regards,", warm: "Warm wishes,", direct: "Thanks," },
+  };
+  document.querySelectorAll("[data-mailer]").forEach((root) => {
+    const subject = $(root, "[data-mail-subject]");
+    const body = $(root, "[data-mail-body]");
+    const count = $(root, "[data-mail-count]");
+    const state = { to: "boss", tone: "polite" };
+    let run = 0;
+    async function write() {
+      const id = ++run;
+      const paras = [MAIL.hello[state.to][state.tone], `${MAIL.open[state.tone]} ${MAIL.core[state.to]}`, MAIL.close[state.tone], `${MAIL.sign[state.tone]}<br>Your name`];
+      subject.textContent = MAIL.subject[state.to];
+      const words = paras.join(" ").replace(/<br>/g, " ").split(/\s+/).filter(Boolean).length;
+      body.innerHTML = paras.map(() => "<p></p>").join("");
+      const ps = $$(body, "p");
+      count.textContent = `${words} words`;
+      for (let i = 0; i < paras.length; i++) {
+        if (id !== run) return;
+        if (reduce || paras[i].includes("<br>")) { ps[i].innerHTML = paras[i]; continue; }
+        ps[i].classList.add("is-typing");
+        for (let c = 2; c <= paras[i].length; c += 3) {
+          if (id !== run) return;
+          ps[i].textContent = paras[i].slice(0, c);
+          await wait(9);
+        }
+        ps[i].textContent = paras[i];
+        ps[i].classList.remove("is-typing");
+      }
+    }
+    ["to", "tone"].forEach((g) => $$(root, `[data-mail-${g}] button`).forEach((b, _, all) => b.addEventListener("click", () => {
+      buzz(6);
+      all.forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+      state[g] = b.dataset.v;
+      write();
+    })));
+    whenSeen(root, write, "0px 0px -20% 0px", 60000);
+  });
+
+  /* ---------- K. For everyone: an invitation, designed in seconds ---------- */
+  const INVITES = {
+    birthday: {
+      art: "🎂", when: "Saturday, 12 October · 5 pm", where: "At our home",
+      classic: ["You're invited", "Riya's 10th birthday"],
+      fun: ["Riya is turning 10! 🎉", "Cake, games and lots of noise"],
+      elegant: ["Please join us", "as Riya turns ten"],
+    },
+    home: {
+      art: "🏡", when: "Sunday, 20 October · 11 am", where: "At our new home, lunch included",
+      classic: ["You're invited", "Our housewarming"],
+      fun: ["We moved! 📦", "Come and see the new place"],
+      elegant: ["With joy, we invite you", "to bless our new home"],
+    },
+    shop: {
+      art: "🛍️", when: "Friday, 1 November · 10 am", where: "Sample Stores, Main Road",
+      classic: ["Grand opening", "Sample Stores opens its doors"],
+      fun: ["Doors open Friday! 🎁", "First 50 customers get a gift"],
+      elegant: ["An invitation", "to our grand opening"],
+    },
+  };
+  // Three colour sets per style; "New colours" steps through them
+  const INV_COLOURS = {
+    classic: [["#FFFDF7", "#F51E2B", "#111111"], ["#F6FBF7", "#1B7A45", "#10301F"], ["#F7F8FE", "#2D4BC9", "#121A3D"]],
+    fun: [["#FFD166", "#F51E2B", "#111111"], ["#9BE7D8", "#6C2BD9", "#1A1A1A"], ["#FFB3C7", "#0E7C86", "#111111"]],
+    elegant: [["#141414", "#D8B26E", "#F4EBDD"], ["#0F2A2A", "#E0C28C", "#EEF3EE"], ["#2A1030", "#E7B9D8", "#FBEFF7"]],
+  };
+  document.querySelectorAll("[data-invite]").forEach((root) => {
+    const card = $(root, "[data-inv-card]");
+    const shared = $(root, "[data-inv-shared]");
+    const els = { art: $(root, "[data-inv-art]"), kicker: $(root, "[data-inv-kicker]"), title: $(root, "[data-inv-title]"), when: $(root, "[data-inv-when]"), where: $(root, "[data-inv-where]") };
+    const state = { occasion: "birthday", style: "classic", colour: 0 };
+    let run = 0;
+    async function render() {
+      const id = ++run;
+      shared.hidden = true;
+      card.classList.add("is-generating");
+      await wait(550);
+      if (id !== run) return;
+      const o = INVITES[state.occasion];
+      const [bg, accent, ink] = INV_COLOURS[state.style][state.colour % 3];
+      card.className = `inv-card inv-${state.style}`;
+      card.style.setProperty("--inv-bg", bg);
+      card.style.setProperty("--inv-accent", accent);
+      card.style.setProperty("--inv-ink", ink);
+      els.art.textContent = o.art;
+      [els.kicker.textContent, els.title.textContent] = o[state.style];
+      els.when.textContent = o.when;
+      els.where.textContent = o.where;
+    }
+    ["occasion", "style"].forEach((g) => $$(root, `[data-inv-${g}] button`).forEach((b, _, all) => b.addEventListener("click", () => {
+      buzz(6);
+      all.forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+      state[g] = b.dataset.v;
+      state.colour = 0;
+      render();
+    })));
+    $(root, "[data-inv-new]").addEventListener("click", () => { buzz(6); state.colour += 1; render(); });
+    $(root, "[data-inv-share]").addEventListener("click", () => {
+      buzz([8, 40, 8]);
+      shared.hidden = false;
+      shared.animate([{ opacity: 0, transform: "translateY(8px)" }, { opacity: 1, transform: "none" }], { duration: reduce ? 0 : 450, easing: "cubic-bezier(.16,1,.3,1)" });
+    });
+    render();
+  });
+
+  /* ---------- L. For everyone: practise with an AI interviewer ---------- */
+  const INTERVIEW = [
+    {
+      q: "Tell me about yourself.",
+      answers: [
+        { label: "Short and safe", text: "I'm from Mangalore. I did my BCom. I'm hard-working and a team player.", score: 4, tips: ["It lists facts, but doesn't say what you can do for them.", "“Hard-working” and “team player” are on every CV. Show it instead."] },
+        { label: "With a real example", text: "I finished my BCom this year. In my final year I led sponsorships for our college fest and raised ₹40,000. I enjoy talking to customers, which is why this role excites me.", score: 8, tips: ["A real result with a number makes you memorable.", "You linked your story to this job. Next: keep it under a minute."] },
+      ],
+    },
+    {
+      q: "Why should we hire you?",
+      answers: [
+        { label: "From the heart", text: "Because I really need this job and I'll work very hard.", score: 3, tips: ["It's about what you need, not what they need.", "Name one skill that solves a problem for them."] },
+        { label: "About their needs", text: "You need someone who replies to customers quickly. In my internship I handled 40 customer messages a day and halved our reply time with simple templates.", score: 9, tips: ["It starts with their need, then proves you can meet it.", "Numbers like “40 a day” make it believable."] },
+      ],
+    },
+    {
+      q: "What is your biggest weakness?",
+      answers: [
+        { label: "The classic", text: "I'm a perfectionist.", score: 4, tips: ["Interviewers hear this one all the time.", "Pick a real weakness and show how you're fixing it."] },
+        { label: "Honest, with progress", text: "Public speaking used to make me nervous. So I joined a weekend speaking club, and last month I presented our project to 60 people.", score: 9, tips: ["Honest, and it shows you acting on it.", "It ends on progress, which is what they want to hear."] },
+      ],
+    },
+  ];
+  document.querySelectorAll("[data-interview]").forEach((root) => {
+    const question = $(root, "[data-iv-question]");
+    const counter = $(root, "[data-iv-count]");
+    const picks = $$(root, "[data-pick]");
+    const feedback = $(root, "[data-iv-feedback]");
+    const scoreEl = $(root, "[data-iv-score]");
+    const tips = $(root, "[data-iv-tips]");
+    let at = 0, run = 0;
+    function show() {
+      run += 1;
+      const item = INTERVIEW[at];
+      question.textContent = item.q;
+      counter.textContent = `Question ${at + 1} of ${INTERVIEW.length}`;
+      picks.forEach((b, i) => {
+        b.setAttribute("aria-pressed", "false");
+        b.querySelector("small").textContent = `Answer ${"AB"[i]} · ${item.answers[i].label}`;
+        b.querySelector("span").textContent = item.answers[i].text;
+      });
+      feedback.hidden = true;
+      root.classList.remove("is-scored");
+    }
+    async function pick(i) {
+      const id = ++run;
+      const a = INTERVIEW[at].answers[i];
+      picks.forEach((b, j) => b.setAttribute("aria-pressed", String(i === j)));
+      feedback.hidden = false;
+      root.classList.add("is-scored");
+      scoreEl.classList.toggle("is-good", a.score >= 7);
+      tips.innerHTML = '<li class="iv-thinking"><span class="ask-dots" aria-label="Checking your answer"><i></i><i></i><i></i></span></li>';
+      scoreEl.style.setProperty("--s", "0");
+      scoreEl.querySelector("b").textContent = "…";
+      await wait(700);
+      if (id !== run) return;
+      scoreEl.style.setProperty("--s", String(a.score));
+      scoreEl.querySelector("b").textContent = String(a.score);
+      tips.innerHTML = a.tips.map((t, k) => `<li class="${a.score >= 7 && k === 0 ? "good" : a.score < 7 && k === 1 ? "fix" : ""}">${t}</li>`).join("");
+    }
+    picks.forEach((b, i) => b.addEventListener("click", () => { buzz(8); pick(i); }));
+    $(root, "[data-iv-next]").addEventListener("click", () => { buzz(6); at = (at + 1) % INTERVIEW.length; show(); });
+    show();
+  });
+
+  /* ---------- M. For everyone: research your competitors (made-up shops) ---------- */
+  const RIVALS = {
+    bakery: {
+      log: ["Reading 214 Google reviews", "Checking 3 Instagram pages", "Comparing menus and prices", "Finding the gap"],
+      rows: [
+        ["Sweet Crumbs", "₹550 a kg", "4.3", "Chocolate truffle", "Slow on weekends"],
+        ["The Oven Door", "₹700 a kg", "4.6", "Beautiful designs", "Too pricey for birthdays"],
+        ["Daily Bread Co.", "₹480 a kg", "3.9", "Cheap, always open", "Dry sponge, no eggless"],
+      ],
+      gap: "31 reviews ask for eggless cakes. Only one shop makes them, at ₹700 a kilo.",
+      moves: ["Launch an eggless range at ₹600 a kilo", "Post one cake video a day on Instagram", "Offer same-day delivery until 9 pm"],
+    },
+    tuition: {
+      log: ["Reading 156 Google reviews", "Checking 4 Instagram pages", "Comparing fees and timings", "Finding the gap"],
+      rows: [
+        ["BrightMinds Classes", "₹2,500 a month", "4.4", "Small batches", "No weekend classes"],
+        ["TopRank Academy", "₹4,000 a month", "4.1", "Board exam focus", "40 students a batch"],
+        ["Study Point", "₹1,800 a month", "3.8", "Close to schools", "Teachers keep changing"],
+      ],
+      gap: "22 parents say they never hear how their child is doing. None of the three send updates.",
+      moves: ["Send a two-line WhatsApp report every Friday", "Keep batches under 12", "Add a Sunday doubt-clearing hour"],
+    },
+    boutique: {
+      log: ["Reading 188 Google reviews", "Checking 5 Instagram pages", "Comparing prices and styles", "Finding the gap"],
+      rows: [
+        ["Threads & Co.", "₹1,200 to ₹2,500", "4.5", "Trendy kurtis", "Nothing above XL"],
+        ["Mira Styles", "₹2,000 to ₹4,000", "4.2", "Party wear", "Alterations take 2 weeks"],
+        ["Fab Corner", "₹600 to ₹1,500", "3.7", "Low prices", "Colours fade after a wash"],
+      ],
+      gap: "27 reviews complain about sizes. Nobody nearby stocks trendy styles above XL.",
+      moves: ["Stock trendy styles up to 4XL", "Promise free alterations in 3 days", "Post try-on reels with real customers"],
+    },
+  };
+  document.querySelectorAll("[data-rival]").forEach((root) => {
+    const go = $(root, "[data-rv-go]");
+    const log = $(root, "[data-rv-log]");
+    const rows = $(root, "[data-rv-rows]");
+    const gap = $(root, "[data-rv-gap]");
+    let biz = "bakery", run = 0;
+    const esc = (t) => t.replace(/&/g, "&amp;");
+    async function research() {
+      const id = ++run;
+      const d = RIVALS[biz];
+      go.disabled = true;
+      log.innerHTML = "";
+      rows.innerHTML = '<tr class="rv-empty"><td colspan="5"><span class="ask-dots" aria-label="Researching"><i></i><i></i><i></i></span></td></tr>';
+      gap.hidden = true;
+      for (const step of d.log) {
+        if (id !== run) return;
+        const li = document.createElement("li");
+        li.textContent = step;
+        li.className = "is-working";
+        log.appendChild(li);
+        await wait(520);
+        li.className = "is-done";
+      }
+      if (id !== run) return;
+      rows.innerHTML = "";
+      for (const r of d.rows) {
+        if (id !== run) return;
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<th scope="row">${esc(r[0])}</th><td>${r[1]}</td><td><span class="rv-star">${r[2]} ★</span></td><td class="rv-love">${r[3]}</td><td class="rv-hate">${r[4]}</td>`;
+        rows.appendChild(tr);
+        await wait(260);
+      }
+      if (id !== run) return;
+      gap.innerHTML = `<p class="rv-gap-k">The gap nobody is filling</p><p class="rv-gap-t">${d.gap}</p><p class="rv-gap-k">Your first three moves</p><ol>${d.moves.map((m) => `<li>${m}</li>`).join("")}</ol>`;
+      gap.hidden = false;
+      go.disabled = false;
+      go.innerHTML = 'Run it again <span aria-hidden="true">↻</span>';
+    }
+    go.addEventListener("click", () => { buzz(8); research(); });
+    $$(root, "[data-rv-biz] button").forEach((b, _, all) => b.addEventListener("click", () => {
+      buzz(6);
+      all.forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+      biz = b.dataset.v;
+      research();
+    }));
+    whenSeen(root, () => { if (!run) research(); }, "0px 0px -25% 0px", 60000);
+  });
+
+  /* ---------- N. For everyone: read a company like an analyst (a made-up company) ---------- */
+  const STOCK = {
+    years: ["FY21", "FY22", "FY23", "FY24", "FY25"],
+    sales: [420, 470, 540, 610, 700],
+    profit: [21, 26, 32, 38, 46],
+    answers: {
+      growth: { mark: "good", word: "Strong", focus: "sales", text: "Yes. Sales grew from <b>₹420 crore to ₹700 crore</b> in four years, about <b>14% a year</b>. Profit grew even faster, from ₹21 crore to ₹46 crore.", src: "Annual report, pages 12 and 58" },
+      profit: { mark: "ok", word: "Thin", focus: "profit", text: "Yes, but thinly. It keeps about <b>₹6.60 of every ₹100</b> it sells. Similar food companies keep ₹8 to ₹10.", src: "Annual report, page 64" },
+      price: { mark: "warn", word: "Pricey", focus: "", text: "Above its peers. The share costs <b>38 times</b> a year's profit, while similar companies cost about <b>32 times</b>. Buyers are expecting fast growth to continue.", src: "Share price data, and annual report page 58" },
+      risk: { mark: "warn", word: "Watch", focus: "", text: "Debt jumped from <b>₹80 crore to ₹210 crore</b> to build a new factory, and <b>40% of sales</b> come from one state. If the factory runs late, profits could slip.", src: "Annual report, pages 97 and 141" },
+    },
+  };
+  document.querySelectorAll("[data-stock]").forEach((root) => {
+    const chart = $(root, "[data-st-chart]");
+    const out = $(root, "[data-st-answer]");
+    const src = $(root, "[data-st-source]");
+    const max = Math.max(...STOCK.sales);
+    chart.innerHTML = STOCK.years.map((y, i) => `<span class="st-col"><i class="st-sales" style="--h:${(STOCK.sales[i] / max) * 100}%"><em>₹${STOCK.sales[i]}</em></i><i class="st-profit" style="--h:${(STOCK.profit[i] / max) * 100}%"><em>₹${STOCK.profit[i]}</em></i><small>${y}</small></span>`).join("")
+      + '<span class="st-legend"><i class="st-k-sales"></i>Sales, ₹ crore<i class="st-k-profit"></i>Profit</span>';
+    let run = 0;
+    async function ask(q) {
+      const id = ++run;
+      const a = STOCK.answers[q];
+      chart.dataset.focus = a.focus;
+      out.innerHTML = '<span class="ask-dots" aria-label="Reading the report"><i></i><i></i><i></i></span>';
+      src.textContent = "";
+      await wait(700);
+      if (id !== run) return;
+      out.innerHTML = a.text;
+      src.textContent = "Source: " + a.src;
+      const li = $(root, `[data-st-score] [data-k="${q}"]`);
+      li.className = "is-" + a.mark;
+      li.querySelector("b").textContent = a.word;
+    }
+    $$(root, "[data-st-qs] button").forEach((b, _, all) => b.addEventListener("click", () => {
+      buzz(6);
+      all.forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+      ask(b.dataset.q);
+    }));
+    whenSeen(root, () => { if (!run) $(root, '[data-q="growth"]').click(); }, "0px 0px -25% 0px", 60000);
+  });
+
+  /* ---------- O. For everyone: turn a skill into side income ---------- */
+  const EARN = {
+    writing: { service: "CV and cover letter makeovers for graduates", who: "Final-year students and job seekers", price: "₹400 a CV", rate: 400, ai: "AI drafts. You polish and make it personal.",
+      steps: ["Redo 3 friends' CVs free, and ask for reviews", "Post before-and-after examples on LinkedIn", "Share a ₹400 offer in college WhatsApp groups"] },
+    photos: { service: "Product photos and reels for local shops", who: "Bakeries, boutiques and cafés", price: "₹2,000 a month for 8 reels", rate: 400, ai: "AI writes captions, cleans backgrounds and suggests trending audio.",
+      steps: ["Shoot 5 free reels for one shop you like", "Show their views to the next 5 shops", "Offer a monthly package, paid in advance"] },
+    maths: { service: "Online doubt-solving for Class 8 to 10", who: "Parents of Class 8 to 10 students", price: "₹300 an hour", rate: 300, ai: "AI makes practice sheets and checks answers in seconds.",
+      steps: ["Teach one free trial class", "Ask happy parents to share in school WhatsApp groups", "Teach small groups of 3 to earn more per hour"] },
+  };
+  document.querySelectorAll("[data-earn]").forEach((root) => {
+    const range = $(root, "[data-earn-range]");
+    const hOut = $(root, "[data-earn-h]");
+    const total = $(root, "[data-earn-total]");
+    const card = $(root, ".earn-card");
+    const f = { service: $(root, "[data-earn-service]"), who: $(root, "[data-earn-who]"), price: $(root, "[data-earn-price]"), ai: $(root, "[data-earn-ai]") };
+    const steps = $(root, "[data-earn-steps]");
+    let skill = "writing", shown = 0, frame = 0;
+    function count() {
+      const target = +range.value * 4 * EARN[skill].rate;
+      hOut.textContent = range.value;
+      cancelAnimationFrame(frame);
+      const from = shown, start = performance.now();
+      const tick = (now) => {
+        const t = reduce ? 1 : Math.min(1, (now - start) / 500);
+        shown = Math.round(from + (target - from) * (1 - Math.pow(1 - t, 3)));
+        total.textContent = "₹" + shown.toLocaleString("en-IN");
+        if (t < 1) frame = requestAnimationFrame(tick);
+      };
+      frame = requestAnimationFrame(tick);
+    }
+    function render() {
+      const d = EARN[skill];
+      Object.keys(f).forEach((k) => { f[k].textContent = d[k]; });
+      steps.innerHTML = d.steps.map((s, i) => `<li><b>Week ${i + 1}</b>${s}</li>`).join("");
+      if (!reduce) card.animate([{ opacity: 0, transform: "translateY(8px)" }, { opacity: 1, transform: "none" }], { duration: 420, easing: "cubic-bezier(.16,1,.3,1)" });
+      count();
+    }
+    $$(root, "[data-earn-skill] button").forEach((b, _, all) => b.addEventListener("click", () => {
+      buzz(6);
+      all.forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+      skill = b.dataset.v;
+      render();
+    }));
+    range.addEventListener("input", () => { count(); if (+range.value % 2 === 0) buzz(5); });
+    render();
+  });
+
+  /* ---------- Try the demos page: light up the group you're looking at ---------- */
+  document.querySelectorAll("[data-demo-jumps]").forEach((bar) => {
+    const links = $$(bar, "a");
+    const groups = links.map((a) => document.querySelector(a.getAttribute("href"))).filter(Boolean);
+    if (!("IntersectionObserver" in window) || !groups.length) return;
+    const light = (id) => links.forEach((a) => {
+      const on = a.getAttribute("href") === "#" + id;
+      a.classList.toggle("is-active", on);
+      if (on) a.setAttribute("aria-current", "true"); else a.removeAttribute("aria-current");
+    });
+    const io = new IntersectionObserver((entries) => entries.forEach((e) => { if (e.isIntersecting) light(e.target.id); }), { rootMargin: "-40% 0px -55% 0px" });
+    groups.forEach((g) => io.observe(g));
+  });
+
+  /* ---------- Home: switch between the Class 8–12, BBA and For everyone demos ---------- */
   document.querySelectorAll("[data-demo-switch]").forEach((sw) => {
     const tabs = $$(sw, "[role=tab]");
     const panels = tabs.map((t) => document.getElementById(t.getAttribute("aria-controls")));
@@ -854,6 +1388,10 @@ ${caption.textContent}`;
     sw.classList.add("is-ready");
     tabs.forEach((t, j) => { t.tabIndex = j ? -1 : 0; panels[j].hidden = j !== 0; });
     requestAnimationFrame(() => place(tabs[0]));
+    // A link like index.html#demos-everyone opens that tab
+    const fromHash = () => { const k = panels.findIndex((p) => "#" + p.id === location.hash); if (k > -1) { select(k); panels[k].closest("section").scrollIntoView(); } };
+    fromHash();
+    addEventListener("hashchange", fromHash);
     addEventListener("resize", () => place(tabs.find((t) => t.getAttribute("aria-selected") === "true")));
     document.fonts && document.fonts.ready.then(() => place(tabs.find((t) => t.getAttribute("aria-selected") === "true")));
   });
