@@ -37,7 +37,7 @@ const SITE = {
   // Meetup registrations: a SEPARATE Apps Script web app that saves them to its own
   // sheet (it ends in /exec). See meetup-backend/SETUP.md.
   // While it's empty, registrations are handed to WhatsApp instead.
-  meetupRsvps: "",
+  meetupRsvps: "https://script.google.com/macros/s/AKfycbwaAVmwiorP8rLMYOIk96gg5mmv2ZTzQKsDTUpYh8HCm_DNrYDpWJQBSJXEKEjEojFXJA/exec",
 };
 
 (function () {
