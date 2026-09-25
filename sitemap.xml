@@ -2,47 +2,47 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://pacsai.pacsglobal.in/</loc>
-    <lastmod>2026-09-24</lastmod>
+    <lastmod>2026-09-25</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://pacsai.pacsglobal.in/song-challenge.html</loc>
-    <lastmod>2026-09-24</lastmod>
+    <loc>https://pacsai.pacsglobal.in/learn.html</loc>
+    <lastmod>2026-09-25</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://pacsai.pacsglobal.in/class-8-12.html</loc>
-    <lastmod>2026-09-24</lastmod>
+    <lastmod>2026-09-25</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://pacsai.pacsglobal.in/bba.html</loc>
-    <lastmod>2026-09-24</lastmod>
+    <lastmod>2026-09-25</lastmod>
     <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://pacsai.pacsglobal.in/learn.html</loc>
-    <lastmod>2026-09-24</lastmod>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://pacsai.pacsglobal.in/meetup.html</loc>
-    <lastmod>2026-09-24</lastmod>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://pacsai.pacsglobal.in/contact.html</loc>
-    <lastmod>2026-09-24</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://pacsai.pacsglobal.in/terms.html</loc>
-    <lastmod>2026-09-24</lastmod>
-    <priority>0.3</priority>
   </url>
   <url>
     <loc>https://pacsai.pacsglobal.in/demos.html</loc>
     <lastmod>2026-09-25</lastmod>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://pacsai.pacsglobal.in/meetup.html</loc>
+    <lastmod>2026-09-25</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://pacsai.pacsglobal.in/song-challenge.html</loc>
+    <lastmod>2026-09-25</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://pacsai.pacsglobal.in/contact.html</loc>
+    <lastmod>2026-09-25</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://pacsai.pacsglobal.in/terms.html</loc>
+    <lastmod>2026-09-25</lastmod>
+    <priority>0.3</priority>
   </url>
 </urlset>

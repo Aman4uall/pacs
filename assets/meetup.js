@@ -187,6 +187,9 @@
         "@type": "Place",
         name: "PACS Office",
         address: { "@type": "PostalAddress", streetAddress: cfg.address || "", addressLocality: "Mangalore", addressRegion: "Karnataka", postalCode: "575003", addressCountry: "IN" },
+        // The office pin on Google Maps, so the meetup lands in the right place
+        geo: { "@type": "GeoCoordinates", latitude: 12.8760212, longitude: 74.8418633 },
+        hasMap: "https://maps.google.com/?cid=4620462856664289988",
       },
       organizer: { "@type": "Organization", name: "PACS AI", url: "https://pacsai.pacsglobal.in/" },
     });

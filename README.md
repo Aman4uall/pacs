@@ -51,9 +51,27 @@ Checked on 24 September 2026: Google had **not indexed a single page** of this s
 (`site:pacsai.pacsglobal.in` returns nothing), and the live copy was still the version from
 21 September. The Instagram account already ranks for "PACS AI Mangalore"; the website does not.
 
-The site itself is ready for search engines. Every page carries a title, a description, a
-canonical address, share images and structured data (organisation, breadcrumbs, courses, the
-FAQs and the skills list), plus `robots.txt` and `sitemap.xml`. What is left is not code.
+The site itself is ready for search engines. Every page carries a title, a description under
+160 characters, a canonical address, share images, a `robots` meta tag and structured data:
+
+| Page | What the structured data says |
+|---|---|
+| Home | The organisation: address, map pin, phone, email, Instagram, PACS Global as parent, what we teach |
+| Class 8–12 | Both programmes as courses, with length and hours, and the 7 real FAQs |
+| BBA & BBM | The Sprint, the Bootcamp and the Studio as courses, and the 5 real FAQs |
+| AI for everyone | All 36 skills as a list |
+| Try the demos | All 25 demos as a list |
+| Meetup | The next meetup as a dated event, free, with the map pin, written by `assets/meetup.js` so the date is never stale |
+| Song Challenge | The 7 real FAQs |
+| Every page | Breadcrumbs back to the home page |
+
+Also in place: `robots.txt`, `sitemap.xml` (all 9 pages), a `404.html` that points people back
+into the site, and `class-8-10.html` forwarding to `class-8-12.html`.
+
+The structured data is generated from the pages themselves, so it can never claim something a
+page doesn't say. If a page's FAQs, courses or skills change, regenerate rather than hand-edit.
+
+What is left is not code.
 
 **Do these in order:**
 
