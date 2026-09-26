@@ -139,6 +139,6 @@
 const stickyBar = document.querySelector('.catalog-sticky');
 if (stickyBar) {
   const setH = () => document.documentElement.style.setProperty('--filter-h', `${stickyBar.offsetHeight}px`);
-  setH();
-  if ('ResizeObserver' in window) new ResizeObserver(setH).observe(stickyBar); else addEventListener('resize', setH);
+  // ResizeObserver reports the height once the page has laid out, so nothing is measured before the first paint
+  if ('ResizeObserver' in window) new ResizeObserver(setH).observe(stickyBar); else { requestAnimationFrame(setH); addEventListener('resize', setH); }
 }

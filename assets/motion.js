@@ -516,7 +516,7 @@
 
   /* Home: the "What if you could…" board tips back gently as you scroll past it */
   const tilt = document.querySelector('.possibilities');
-  if (tilt && innerWidth > 880) {
+  if (tilt && matchMedia('(min-width: 881px)').matches) { // a media query doesn't force a layout; innerWidth would
     let queued = false;
     const lean = () => {
       queued = false;
