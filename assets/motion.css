@@ -551,3 +551,47 @@ body:not(.motion-enabled) .session-front small,body:not(.motion-enabled) .sessio
   :root .skill-card { gap: 10px; padding: 20px 20px 18px; }
   :root .skill-add { padding-top: 6px; }
 }
+
+/* =========================================================================
+   More white space, and no tiny text on bigger screens either
+   The refresh squeezed the spacing tokens (sections 88px at most, heading
+   blocks 30px). Text reads better with room around it, so sections, heading
+   blocks, cards and groups breathe again. Phones get a little more room too.
+   ========================================================================= */
+:root { --section: clamp(64px, 9vw, 128px); }
+.head { gap: 1rem; margin-bottom: clamp(32px, 4vw, 56px); }
+.section-intro { margin-bottom: clamp(32px, 4vw, 56px); }
+.section-intro .head { margin-bottom: 0; }
+.head .lede, .head p:not(.eyebrow) { line-height: 1.6; }
+.challenge-invite { padding-block: clamp(56px, 7vw, 96px); }
+.skill-group + .skill-group { margin-top: clamp(48px, 6vw, 80px); }
+.group-heading { margin-bottom: 26px; }
+.group-heading p { margin-top: 10px; }
+.build-hint { max-width: 68ch; }
+.after-note { max-width: 68ch; }
+
+@media (min-width: 621px) {
+  /* Labels: 12px, spaced */
+  :root .eyebrow, :root .footer-brand .tagline, :root .skill-category, :root .course-kicker, :root .closing-picks legend,
+  :root .next-kicker, :root .date-tag, :root .player-top, :root .mock-label, :root .mock-top, :root .stepper li,
+  :root .pm-label, :root .stats-heading, :root .session-back span { font-size: .75rem; letter-spacing: .12em; }
+  :root .mock-top span { white-space: nowrap; }
+
+  /* Buttons, chips, small links and captions: 14px */
+  :root .skill-add, :root .skill-demo, :root .outcome-link, :root .course-other, :root .course-jumps a, :root .opening-note,
+  :root .course-facts span, :root .stat span, :root .story-controls a, :root .goal-filter, :root .plan-foot p { font-size: .875rem; }
+  :root .audience-routes small, :root .possibilities small, :root .possibilities-bottom span, :root .session-front small,
+  :root .session-back small, :root .plan-foot small, :root .catalog-size { font-size: .8125rem; }
+  :root .song-stamp span { font-size: .625rem; }
+  :root .route-number { font-size: .75rem; }
+  :root .art figcaption span { font-size: .6875rem; }
+
+  /* Supporting copy: 15 to 16px with an easy line height */
+  :root .skill-description, :root .outcome-card p, :root .group-heading p { font-size: .9375rem; line-height: 1.6; }
+
+  /* Cards get more room inside */
+  :root .outcome-card { padding: 30px 28px; }
+  :root .outcome-card p { margin: 10px 0 22px; }
+  :root .skill-card { padding: 24px 24px 22px; gap: 10px; }
+  :root .skill-grid { gap: 16px; }
+}
