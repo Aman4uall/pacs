@@ -1,0 +1,36 @@
+# PACS AI – how long phones may keep each file (LiteSpeed / Apache)
+# Pages, styles and scripts: phones keep a copy but check with the server on every
+# visit ("no-cache"). Unchanged files cost a tiny "not modified" reply, and after an
+# update everyone gets the new files at once, so a new page never meets old styles.
+# Images and icons rarely change, so they're kept for a week.
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.(html|css|js|json|xml|txt|webmanifest)$">
+    Header set Cache-Control "no-cache"
+    Header unset Expires
+  </FilesMatch>
+  <FilesMatch "^sw\.js$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+  <FilesMatch "\.(png|jpe?g|webp|svg|ico|woff2?)$">
+    Header set Cache-Control "public, max-age=604800"
+  </FilesMatch>
+</IfModule>
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType text/css "access plus 0 seconds"
+  ExpiresByType application/javascript "access plus 0 seconds"
+  ExpiresByType text/javascript "access plus 0 seconds"
+</IfModule>
+
+# Always use the secure address (the offline mode only works on https)
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>
+
+ErrorDocument 404 /404.html

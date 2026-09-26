@@ -7,9 +7,11 @@
    - Fonts and the camera-demo AI files are saved once and reused.
    - Never touches form submissions (Google Sheets, WhatsApp).
    When you change the site, the network-first rule means visitors get the new
-   files automatically. Bump VERSION only to clear everything that's saved.
+   files automatically: every check skips the phone's own browser cache, and
+   files are saved without their ?v= tag. Bump VERSION only to clear
+   everything that's saved.
    ========================================================================= */
-const VERSION = "pacs-v1";
+const VERSION = "pacs-v2";
 const SITE = `${VERSION}-site`;
 const LIBS = `${VERSION}-libs`;
 const CORE = [
@@ -27,7 +29,7 @@ const LIB_HOSTS = ["fonts.gstatic.com", "cdn.jsdelivr.net", "storage.googleapis.
 const NETWORK_WAIT = 3500;
 
 self.addEventListener("install", (event) => {
-  event.waitUntil(caches.open(SITE).then((c) => c.addAll(CORE)).then(() => self.skipWaiting()));
+  event.waitUntil(caches.open(SITE).then((c) => c.addAll(CORE.map((u) => new Request(u, { cache: "reload" })))).then(() => self.skipWaiting()));
 });
 
 self.addEventListener("activate", (event) => {
@@ -54,7 +56,7 @@ self.addEventListener("fetch", (event) => {
   const url = new URL(req.url);
   if (!/^https?:$/.test(url.protocol)) return;
   if (url.origin === self.location.origin) {
-    event.respondWith(networkFirst(event, req));
+    event.respondWith(networkFirst(event, req, url));
   } else if (LIB_HOSTS.includes(url.hostname)) {
     event.respondWith(cacheFirst(req));
   } else if (url.hostname === "fonts.googleapis.com") {
@@ -63,11 +65,15 @@ self.addEventListener("fetch", (event) => {
   // Everything else (Google Sheets, WhatsApp, maps) goes straight to the network
 });
 
-async function networkFirst(event, req) {
+async function networkFirst(event, req, url) {
   const cache = await caches.open(SITE);
-  const saved = await cache.match(req, { ignoreSearch: req.mode === "navigate" });
-  const fresh = fetch(req).then((res) => {
-    if (res.ok && res.type === "basic") cache.put(req, res.clone());
+  // One saved copy per file: "styles.css?v=…" and "learn.html?utm=…" share it
+  const key = url.origin + url.pathname;
+  const saved = await cache.match(key);
+  // "no-cache" asks the server whether the file changed, so an old copy in the
+  // phone's browser cache can never pair a new page with last week's styles
+  const fresh = fetch(new Request(req, { cache: "no-cache" })).then((res) => {
+    if (res.ok && res.type === "basic") cache.put(key, res.clone());
     return res;
   });
   event.waitUntil(fresh.then(() => {}, () => {}));
