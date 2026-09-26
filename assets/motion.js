@@ -554,7 +554,7 @@
       });
     };
     addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(light); } }, { passive: true });
-    light();
+    requestAnimationFrame(light); // after the first frame, so it doesn't force a layout before the first paint
   }
 
   /* Class 8–12: the eight session cards flip from white to black in a wave (one by one on phones) */
@@ -605,7 +605,7 @@
 
   /* Home: the two course cards drift at different speeds as you scroll past */
   const doors = [...document.querySelectorAll('.course-door')];
-  if (doors.length && innerWidth > 740) {
+  if (doors.length && matchMedia('(min-width: 741px)').matches) {
     let queued = false;
     const drift = () => {
       queued = false;
@@ -617,7 +617,7 @@
       });
     };
     addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(drift); } }, { passive: true });
-    drift();
+    requestAnimationFrame(drift);
   }
 })();
 
@@ -632,7 +632,7 @@
     const run = () => { queued = false; fn(); };
     addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(run); } }, { passive: true });
     addEventListener('resize', run);
-    run();
+    requestAnimationFrame(run);
   };
 
   /* Bootcamp: a red line runs along each weekend and switches the sessions on as you scroll */
