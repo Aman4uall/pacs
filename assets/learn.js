@@ -32,12 +32,6 @@
     document.querySelectorAll('[data-pick-guidance]').forEach(el => {
       el.textContent = selected.length > 4 ? "A good wish list. We'll help you choose what fits into a month." : selected.length ? 'You can change these before you send.' : 'Three or four skills are a good starting point.';
     });
-    cards.forEach(card => {
-      const checked = card.querySelector('input').checked;
-      const label = card.querySelector('.skill-add');
-      label.firstChild.textContent = checked ? 'Added to my list ' : 'Add to my list ';
-      label.querySelector('b').textContent = checked ? '✓' : '+';
-    });
     document.querySelectorAll('[data-selected-list]').forEach(list => {
       list.replaceChildren();
       selected.forEach(box => {

@@ -595,3 +595,12 @@ body:not(.motion-enabled) .session-front small,body:not(.motion-enabled) .sessio
   :root .skill-card { padding: 24px 24px 22px; gap: 10px; }
   :root .skill-grid { gap: 16px; }
 }
+
+/* Learn: with the category label gone, the title sits beside the checkbox */
+.skill-card strong { padding-right: 38px; }
+
+/* Home: the "I wish I could" cards keep only an arrow, in the corner like the route cards */
+.outcome-card { position: relative; }
+:root .outcome-card .outcome-link { position: absolute; top: 22px; right: 22px; width: auto; margin: 0; }
+:root .outcome-card p { margin-bottom: 0; }
+:root .outcome-card h3 { padding-right: 30px; }
