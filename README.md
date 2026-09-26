@@ -60,7 +60,7 @@ The site itself is ready for search engines. Every page carries a title, a descr
 | Class 8–12 | Both programmes as courses, with length and hours, and the 7 real FAQs |
 | BBA & BBM | The Sprint, the Bootcamp and the Studio as courses, and the 5 real FAQs |
 | AI for everyone | All 36 skills as a list |
-| Try the demos | All 25 demos as a list |
+| Try the demos | All 42 demos as a list |
 | Meetup | The next meetup as a dated event, free, with the map pin, written by `assets/meetup.js` so the date is never stale |
 | Song Challenge | The 7 real FAQs |
 | Every page | Breadcrumbs back to the home page |
@@ -107,7 +107,8 @@ in a way that matters.
 | Phone, WhatsApp, email, address, Instagram, Demo Day date, meetup dates and times, Google Sheet links | `assets/site.js` (the `SITE` settings at the top) |
 | Styles | `assets/styles.css`, `assets/refresh.css` for layout, and `assets/motion.css` for animation |
 | Card journeys, entrances, flip cards, hover lighting, BBA portfolio, reading progress and mobile enquiry bar | `assets/motion.js` (native browser APIs; no external animation libraries) |
-| The Try the demos page (25 demos, grouped for Class 8–12, BBA & BBM and For everyone; the home page shows 3 per tab) | `demos.html` |
+| The Try the demos page (42 demos: 8 for Class 8–12, 7 for BBA & BBM, and 27 for everyone, in sections that match the AI for everyone skills; the home page shows 3 per tab) | `demos.html` |
+| One demo for every AI for everyone skill that had none: tool finder, spot the mistake, clearer writing, explain at my level, meeting summary, prompt-to-picture, voiceover, content calendar, product listing, customer replies, study plan, sources, question paper, website builder, automation, your own assistant, household spending. Every skill card on learn.html links to its demo. | `assets/skills.js` |
 | The live demos on that page: Rock Paper Scissors vs AI, Train your own AI, Cricket shot coach, Present without a clicker (camera, using Google's MediaPipe loaded from jsDelivr only when someone taps Start camera; nothing leaves the device), Live subtitles (the browser's speech recognition), Pitch to the AI Sharks, Fantasy XI analyst, Haggle, Brand in 10 seconds | `assets/live.js` |
 | The working demos (mango sorter, study coach, Python game, revision app, film storyboard, campaign post, break-even, pitch deck) and the home page Class 8–12 / BBA demo tabs | `assets/builds.js` |
 | The Song Challenge idea machine and entry form | `assets/challenge.js` |

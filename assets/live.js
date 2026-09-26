@@ -222,9 +222,10 @@
   /* ---------------- 2. Train your own AI in 30 seconds ---------------- */
   document.querySelectorAll("[data-trainer]").forEach((root) => {
     const classes = $$(root, "[data-class]").map((card, i) => ({
-      card, i, emoji: card.dataset.emoji, samples: [],
+      card, i, color: card.dataset.color, samples: [], input: $(card, "[data-label]"),
       count: $(card, "[data-count]"), bar: $(root, `[data-conf="${i}"]`), rec: $(card, "[data-rec]"),
     }));
+    const nameOf = (c) => (c.input.value.trim() || `Sign ${c.i + 1}`).replace(/[&<>"]/g, "");
     const big = $(root, "[data-train-out]");
     const hint = $(root, "[data-train-hint]");
     const MAX = 60, K = 5;
@@ -262,7 +263,7 @@
     camera(root, "gesture", (res, canvas) => {
       const pts = res.landmarks && res.landmarks[0];
       draw(canvas, pts, HAND, "#FFD166");
-      if (!pts) { big.textContent = ""; big.classList.add("is-dim"); return; }
+      if (!pts) { big.classList.add("is-dim"); lastClass = -1; return; }
       const f = features(pts);
       if (recording && recording.samples.length < MAX) { recording.samples.push(f); update(); }
       if (!ready()) return;
@@ -270,9 +271,11 @@
       conf.forEach((v, i) => { if (classes[i].bar) classes[i].bar.style.width = `${Math.round(v * 100)}%`; });
       const best = conf.indexOf(Math.max(...conf));
       if (conf[best] >= 0.6 && classes[best].samples.length) {
-        big.textContent = classes[best].emoji; big.classList.remove("is-dim");
+        const c = classes[best];
+        big.innerHTML = `<i style="background:${c.color}"></i><span><small>AI sees</small><b>${nameOf(c)}</b></span><em>${Math.round(conf[best] * 100)}%</em>`;
+        big.classList.remove("is-dim");
         if (best !== lastClass) { tone(best); big.classList.remove("pop"); void big.offsetWidth; big.classList.add("pop"); lastClass = best; }
-      } else { big.classList.add("is-dim"); lastClass = -1; }
+      } else { big.innerHTML = '<i></i><span><small>AI sees</small><b>Not sure yet</b></span>'; big.classList.remove("is-dim"); lastClass = -1; }
     });
     classes.forEach((c) => {
       const on = (e) => { e.preventDefault(); recording = c; c.card.classList.add("is-recording"); buzz(); };
@@ -282,7 +285,7 @@
       c.rec.addEventListener("keydown", (e) => { if (e.key === " " || e.key === "Enter") on(e); });
       c.rec.addEventListener("keyup", off);
     });
-    $(root, "[data-train-reset]").addEventListener("click", () => { classes.forEach((c) => { c.samples.length = 0; if (c.bar) c.bar.style.width = "0%"; }); big.textContent = ""; update(); });
+    $(root, "[data-train-reset]").addEventListener("click", () => { classes.forEach((c) => { c.samples.length = 0; if (c.bar) c.bar.style.width = "0%"; }); big.classList.add("is-dim"); update(); });
     update();
   });
 
@@ -812,7 +815,7 @@
         <div class="br-hero" style="background:${soft}">${logo}<div><strong style="font-family:${font};${serif ? "font-style:italic;font-weight:400;" : ""}color:${ink}">${safe}</strong><span style="color:${main}">${tagline}</span></div></div>
         <div class="br-palette">${[main, soft, pop, ink].map((c, i) => `<span style="background:${c}"><small style="color:${i === 1 ? ink : "#fff"}">${["Main", "Soft", "Pop", "Ink"][i]}</small></span>`).join("")}</div>
         <div class="br-grid" aria-label="Sample Instagram grid">${logo.replace('class="br-logo"', 'class="br-tile br-tile-logo"')}${tiles}</div>
-        <div class="br-card" style="background:${ink};color:#fff"><b style="font-family:${font}">${safe}</b><small style="color:${pop}">${tagline}</small><span>hello@${name.toLowerCase().replace(/[^a-z0-9]/g, "") || "brand"}.in</span></div>`;
+        <div class="br-card" style="background:${ink};color:#fff"><b style="font-family:${font}">${safe}</b><small style="color:${pop}">${tagline}</small><span>hello@${name.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]/g, "") || "brand"}.in</span></div>`;
       out.classList.remove("is-new"); void out.offsetWidth; out.classList.add("is-new");
     }
     let t = 0;

@@ -263,7 +263,7 @@
     const count = cv.querySelector('[data-cv-count]');
     const track = section.querySelector('.cv-steps');
     const steps = [...section.querySelectorAll('.cv-steps li')];
-    let timers = [], selected = 0, mode = 'static';
+    let selected = 0, mode = 'static';
     const highlight = stage => rows.forEach(row => row.classList.toggle('portfolio-highlight', Number(row.dataset.stage) === stage));
     const buttons = steps.map((step, i) => {
       const button = document.createElement('button');
@@ -292,6 +292,7 @@
       const written = rows.filter((row, k) => p >= .34 + k * .054);
       rows.forEach(row => row.classList.toggle('is-written', written.includes(row)));
       count.textContent = String(written.length);
+      if (count.nextSibling) count.nextSibling.textContent = written.length === 1 ? ' item' : ' items';
       const last = written.length ? Number(written[written.length - 1].dataset.stage) : 0;
       steps.forEach((step, j) => {
         step.classList.toggle('on', j + 1 === last && written.length < rows.length);
@@ -303,38 +304,30 @@
     };
 
     const setMode = () => {
-      timers.forEach(clearTimeout); timers = [];
-      const canScroll = preference.matches && innerWidth > 960 && innerHeight >= 740;
-      mode = !preference.matches ? 'static' : canScroll ? 'scroll' : 'timed';
+      // Tall laptop screens pin the CV while you scroll. Shorter screens and phones let it
+      // scroll normally, but the story still follows your scrolling, and scrolling back undoes it.
+      const pinned = preference.matches && innerWidth > 960 && innerHeight >= 740;
+      mode = !preference.matches ? 'static' : pinned ? 'scroll' : 'flow';
       section.classList.toggle('cv-scrolly', mode === 'scroll');
       cv.classList.toggle('cv-armed', mode !== 'static');
       if (mode === 'static') { paintCV(1); return; }
-      if (mode === 'scroll') onScroll(); else paintCV(0);
+      onScroll();
     };
     let queued = false;
     const onScroll = () => {
       queued = false;
-      if (mode !== 'scroll') return;
-      const r = scroller.getBoundingClientRect();
-      const run = r.height - innerHeight;
-      paintCV(run > 0 ? clamp(-r.top / run) : 1);
+      if (mode === 'scroll') {
+        const r = scroller.getBoundingClientRect();
+        const run = r.height - innerHeight;
+        paintCV(run > 0 ? clamp(-r.top / run) : 1);
+      } else if (mode === 'flow') {
+        // Starts as the card's top passes 70% of the screen; finishes as its bottom comes into view
+        const r = cv.getBoundingClientRect();
+        paintCV(clamp((innerHeight * .7 - r.top) / Math.max(300, r.height - innerHeight * .25)));
+      }
     };
-    addEventListener('scroll', () => { if (!queued && mode === 'scroll') { queued = true; requestAnimationFrame(onScroll); } }, { passive:true });
-    addEventListener('resize', () => { const before = mode; setMode(); if (before !== mode && mode === 'timed') played = false; });
-
-    // On phones and short screens it plays by itself once, when the CV comes into view
-    let played = false;
-    if ('IntersectionObserver' in window) {
-      new IntersectionObserver(entries => {
-        if (mode !== 'timed' || played || !entries.some(entry => entry.isIntersecting)) return;
-        played = true;
-        let t = 500;
-        for (let step = 1; step <= 60; step++) {
-          timers.push(setTimeout(() => paintCV(step / 60), t));
-          t += step < 20 ? 70 : 55;
-        }
-      }, { threshold:.35 }).observe(cv);
-    }
+    addEventListener('scroll', () => { if (!queued && mode !== 'static') { queued = true; requestAnimationFrame(onScroll); } }, { passive:true });
+    addEventListener('resize', setMode);
     setMode();
     preference.addEventListener('change', setMode);
   });
@@ -645,9 +638,25 @@
     const cards = [...board.querySelectorAll('.bc-card')];
     const rows = [...board.querySelectorAll('.bc-grid')];
     const count = board.querySelector('[data-bc-count]');
+    // Phones: the cards are sticky and stack like a deck; each one's place in the stack sets its offset
+    const phone = matchMedia('(max-width: 640px)');
+    rows.forEach(row => [...row.children].forEach((c, k) => c.style.setProperty('--i', k)));
+    const stack = () => rows.forEach(row => {
+      const cs = [...row.children];
+      cs.forEach((c, k) => {
+        const next = cs[k + 1];
+        if (!phone.matches || !next) { c.style.setProperty('--stack-s', 1); c.style.setProperty('--stack-dim', 0); return; }
+        // As the next card slides over this one, this one shrinks a little and darkens
+        const a = c.getBoundingClientRect(), b = next.getBoundingClientRect();
+        const covered = clamp(1 - (b.top - a.top) / a.height);
+        c.style.setProperty('--stack-s', (1 - covered * .06).toFixed(3));
+        c.style.setProperty('--stack-dim', (covered * .32).toFixed(3));
+      });
+    });
     if (!moving()) return;
     board.classList.add('bc-armed');
     onScroll(() => {
+      stack();
       const r = board.getBoundingClientRect();
       const p = clamp((innerHeight * .82 - r.top) / (r.height * .8));
       const n = Math.round(p * cards.length);
@@ -729,6 +738,23 @@
     }));
     front.addEventListener('click', () => { set(true); back.querySelector('.case-flip').focus({ preventScroll: true }); });
   });
+  // Phones: show two example briefs, and the rest on request (laptops show all four side by side)
+  const casesBox = document.querySelector('.cases');
+  const moreBtn = document.querySelector('[data-cases-more]');
+  if (casesBox && moreBtn) {
+    const phoneView = matchMedia('(max-width: 640px)');
+    casesBox.classList.add('can-collapse');
+    const sync = () => { moreBtn.hidden = !phoneView.matches; };
+    sync();
+    phoneView.addEventListener('change', sync);
+    moreBtn.addEventListener('click', () => {
+      const open = casesBox.classList.toggle('is-open');
+      moreBtn.setAttribute('aria-expanded', String(open));
+      moreBtn.innerHTML = open ? 'Show fewer <span aria-hidden="true">↑</span>' : 'Show 2 more examples <span aria-hidden="true">↓</span>';
+      if (open && moving()) [...casesBox.children].slice(2).forEach((c, i) => c.animate([{ opacity: 0, transform: 'translateY(16px)' }, { opacity: 1, transform: 'none' }], { duration: 450, delay: i * 90, easing: 'cubic-bezier(.16,1,.3,1)', fill: 'backwards' }));
+      if (!open) casesBox.scrollIntoView({ block: 'nearest', behavior: moving() ? 'smooth' : 'auto' });
+    });
+  }
   if (cases.length && moving() && 'IntersectionObserver' in window) {
     // The first card lifts a corner once, so people know the cards turn over
     const io = new IntersectionObserver(([e]) => {

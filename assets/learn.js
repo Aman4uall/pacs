@@ -140,3 +140,11 @@
   const jumpTo = requestedGoal && document.querySelector(`.skill-group[data-category="${requestedGoal}"]`);
   if (jumpTo) requestAnimationFrame(() => jumpTo.scrollIntoView({ block: 'start' }));
 })();
+
+// The filter bar stays in view; tell the sidebar how tall it is so they never overlap
+const stickyBar = document.querySelector('.catalog-sticky');
+if (stickyBar) {
+  const setH = () => document.documentElement.style.setProperty('--filter-h', `${stickyBar.offsetHeight}px`);
+  setH();
+  if ('ResizeObserver' in window) new ResizeObserver(setH).observe(stickyBar); else addEventListener('resize', setH);
+}
