@@ -154,7 +154,8 @@
   window.addEventListener('resize', configureStories);
   document.addEventListener('toggle', schedule, true);
   document.fonts?.ready.then(configureStories);
-  configureStories();
+  // Measure after the first frame: reading the window size now would force a layout before the first paint
+  if (stories.length) requestAnimationFrame(configureStories);
 
   // Hero words rise individually. Real text remains in the document.
   document.querySelectorAll('h1').forEach(heading => {
@@ -329,7 +330,7 @@
     };
     addEventListener('scroll', () => { if (!queued && mode !== 'static') { queued = true; requestAnimationFrame(onScroll); } }, { passive:true });
     addEventListener('resize', setMode);
-    setMode();
+    requestAnimationFrame(setMode);
     preference.addEventListener('change', setMode);
   });
   preference.addEventListener('change', () => {
