@@ -23,10 +23,14 @@
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@1,400&display=swap">
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+  <link rel="dns-prefetch" href="https://storage.googleapis.com">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300..900&family=Playfair+Display:ital,wght@1,400&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300..900&family=Playfair+Display:ital,wght@1,400&display=swap"></noscript>
   <link rel="stylesheet" href="assets/styles.css">
   <link rel="stylesheet" href="assets/refresh.css">
   <link rel="stylesheet" href="assets/motion.css">
+  <link rel="stylesheet" href="assets/demos.css">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -344,7 +348,7 @@
 <header class="site-header">
   <div class="wrap nav">
     <a class="brand" href="index.html" aria-label="PACS AI home">
-      <img class="brand-logo" src="assets/logo-horizontal.png" alt="PACS AI" width="433" height="124">
+      <picture><source srcset="assets/logo-horizontal.webp" type="image/webp"><img class="brand-logo" src="assets/logo-horizontal.png" alt="PACS AI" width="433" height="124"></picture>
     </a>
     <nav class="site-nav" aria-label="Main"><ul class="nav-links" id="nav-links"><li><a href="class-8-12.html" data-note="School students & parents">Class 8–12</a></li><li><a href="bba.html" data-note="Build work for your portfolio">BBA & BBM</a></li><li><a href="learn.html" data-note="Find a skill for your life">AI for everyone</a></li><li><a href="demos.html" data-note="A taste of learning by doing" aria-current="page">Try the demos</a></li><li><a href="meetup.html" data-note="Every alternate Saturday">Meetup</a></li><li><a href="contact.html" data-note="Let us help you choose">Contact</a></li></ul></nav>
     <a class="btn btn-dark btn-sm nav-cta" href="contact.html" data-wa="Hi PACS AI, I'd like to know more about your courses.">WhatsApp us</a>
@@ -579,7 +583,7 @@
         <article class="build" id="try-brand">
           <header class="build-head"><span class="build-tag">BBA &amp; BBM · Branding</span><h3>Your brand in 10 seconds</h3></header>
           <div class="build-demo">
-            <div class="brand" data-brand>
+            <div class="brandkit" data-brand>
               <label class="br-input"><span class="pm-label">Business name</span><input type="text" data-br-name maxlength="22" value="Monsoon Café" autocomplete="off" spellcheck="false"></label>
               <div class="chip-row" data-br-cat role="group" aria-label="Choose a type of business">
                 <button class="chip" type="button" data-v="cafe" aria-pressed="true">Café</button>
@@ -1283,7 +1287,7 @@
   <div class="wrap footer-grid">
     <div class="footer-brand">
       <a class="brand" href="index.html" aria-label="PACS AI home">
-        <img class="brand-logo" src="assets/logo-horizontal.png" alt="PACS AI" width="433" height="124">
+        <picture><source srcset="assets/logo-horizontal.webp" type="image/webp"><img class="brand-logo" src="assets/logo-horizontal.png" alt="PACS AI" width="433" height="124" loading="lazy" decoding="async"></picture>
       </a>
       <p class="tagline">Learn. Create. Put AI to work.</p>
       <p class="footer-about">PACS AI is a hands-on AI lab in Mangalore, run by PACS Global. Class 8–12 and BBA students build apps, AI models and real client work; everyone else picks the AI skills they want and learns those.</p>

@@ -1,8 +1,9 @@
 /* =========================================================================
    PACS AI – live demos on the Try the demos page
    Camera demos run Google's MediaPipe models on the visitor's own device:
-   nothing is recorded or uploaded. The model files load only when someone
-   taps "Start camera". Everything else here is plain JavaScript.
+   nothing is recorded or uploaded. The model files download quietly in the
+   background once a camera demo is close on screen (not on data saver or 2G),
+   and start working when someone taps "Start camera".
    ========================================================================= */
 (function () {
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -32,6 +33,26 @@
       : build(m.GestureRecognizer, fs, { baseOptions: { modelAssetPath: MODELS.gesture }, runningMode: "VIDEO", numHands: 1 })));
   }
 
+  // On a slow connection "Start camera" would mean a long wait for the AI files, so when a
+  // camera demo scrolls close, download them quietly in the background (never on data
+  // saver or 2G). The browser and the service worker keep them, so the tap is quick.
+  const fetched = new Set();
+  function prefetch(kind) {
+    const net = navigator.connection || {};
+    if (net.saveData || /2g/.test(net.effectiveType || "")) return;
+    [`${MP}/vision_bundle.mjs`, `${MP}/wasm/vision_wasm_internal.js`, `${MP}/wasm/vision_wasm_internal.wasm`, MODELS[kind]].forEach((url) => {
+      if (fetched.has(url)) return;
+      fetched.add(url);
+      fetch(url, { mode: "cors", priority: "low" }).then((r) => r.arrayBuffer()).catch(() => fetched.delete(url));
+    });
+  }
+  const near = "IntersectionObserver" in window && new IntersectionObserver((entries) => entries.forEach((e) => {
+    if (!e.isIntersecting) return;
+    near.unobserve(e.target);
+    const go = () => prefetch(e.target.dataset.camKind);
+    "requestIdleCallback" in window ? requestIdleCallback(go, { timeout: 3000 }) : setTimeout(go, 1200);
+  }), { rootMargin: "1200px 0px" });
+
   let activeCam = null; // only one camera demo runs at a time
   const HAND = [[0, 1], [1, 2], [2, 3], [3, 4], [0, 5], [5, 6], [6, 7], [7, 8], [5, 9], [9, 10], [10, 11], [11, 12], [9, 13], [13, 14], [14, 15], [15, 16], [13, 17], [0, 17], [17, 18], [18, 19], [19, 20]];
   const BODY = [[11, 12], [11, 13], [13, 15], [12, 14], [14, 16], [11, 23], [12, 24], [23, 24], [23, 25], [25, 27], [24, 26], [26, 28]];
@@ -59,6 +80,8 @@
   // Wires a .cam box: start/stop buttons, status line, the frame loop, and clean-up
   function camera(root, kind, onResult, onState) {
     const box = $(root, ".cam");
+    box.dataset.camKind = kind;
+    if (near) near.observe(box);
     const video = $(box, "video");
     const canvas = $(box, "canvas");
     const status = $(box, "[data-cam-status]");
@@ -824,4 +847,16 @@
     $$(root, "[data-br-cat] button").forEach((b, _, all) => b.addEventListener("click", () => { buzz(5); all.forEach((x) => x.setAttribute("aria-pressed", String(x === b))); cat = b.dataset.v; spin = 0; render(); }));
     render();
   });
+
+  /* ---------------- Links straight to one demo (demos.html#try-budget) ----------------
+     Cards above the linked demo finish drawing after the browser's first jump and push it
+     down, so settle on it again once the page has loaded, unless the visitor has scrolled. */
+  const linked = location.hash.startsWith("#try-") && document.getElementById(location.hash.slice(1));
+  if (linked) {
+    let moved = false;
+    ["wheel", "touchstart", "keydown", "pointerdown"].forEach((t) => addEventListener(t, () => { moved = true; }, { once: true, passive: true }));
+    const settle = () => { if (!moved) linked.scrollIntoView({ block: "start", behavior: "instant" }); };
+    const settleAll = () => { settle(); if (document.fonts) document.fonts.ready.then(() => requestAnimationFrame(settle)); setTimeout(settle, 700); setTimeout(settle, 1600); };
+    document.readyState === "complete" ? settleAll() : addEventListener("load", settleAll, { once: true });
+  }
 })();

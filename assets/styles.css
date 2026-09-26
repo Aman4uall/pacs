@@ -1227,3 +1227,6 @@ body.has-pickbar { padding-bottom: 76px; }
   .date-tag { grid-column: 2; grid-row: 1; }
   .date-day { grid-column: 1 / -1; grid-row: 2; }
 }
+
+/* The logo sits in a <picture> (a small WebP with a PNG fallback); keep the layout as if it were the bare image */
+picture { display: contents; }

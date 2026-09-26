@@ -196,3 +196,18 @@ const SITE = {
     });
   });
 })();
+
+/* Save the site on the visitor's phone so repeat visits open at once, slow
+   connections fall back to the saved copy, and pages still open offline.
+   Once the page is idle, the rest of the site downloads in the background
+   (skipped on data saver and 2G). See sw.js. */
+if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost" || location.hostname === "127.0.0.1")) {
+  addEventListener("load", () => {
+    navigator.serviceWorker.register("sw.js").then(() => navigator.serviceWorker.ready).then((reg) => {
+      const net = navigator.connection || {};
+      if (net.saveData || /2g/.test(net.effectiveType || "")) return;
+      const warm = () => reg.active && reg.active.postMessage("warm");
+      "requestIdleCallback" in window ? requestIdleCallback(warm, { timeout: 8000 }) : setTimeout(warm, 4000);
+    }).catch(() => { /* The site works the same without it. */ });
+  });
+}

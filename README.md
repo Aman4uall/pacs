@@ -13,6 +13,18 @@ This is a plain static website. There's no build step, no server code and no dat
 - **Domain:** point the subdomain `pacsai.pacsglobal.in` at the host (usually a CNAME record at whoever manages `pacsglobal.in`), and turn on HTTPS.
 - **If the address changes,** update it in the `<link rel="canonical">` and `og:` tags of every page, in `robots.txt` and in `sitemap.xml`. The QR code on the printed flyer also points to `https://pacsai.pacsglobal.in/song-challenge.html`.
 
+## Slow connections and offline
+
+The site is built to open well on slow or patchy mobile data, without cutting any demo.
+
+- **`sw.js` (the service worker)** saves the core files on the first visit. When the page is idle it quietly downloads the other pages in the background, except on data saver or 2G. Pages always try the network first; if it takes more than 3.5 seconds, the saved copy shows at once. Offline, saved pages still open, and anything not saved yet shows `offline.html`. Fonts and the camera-demo AI files are saved once and reused. Form submissions (Google Sheets, WhatsApp) are never touched.
+- **Updating the site needs nothing extra:** visitors get changed files automatically. Change `VERSION` at the top of `sw.js` only to clear everything visitors have saved. When you add a page or a script, add it to the `LATER` list in `sw.js`.
+- **Camera demos:** when one scrolls close on screen, the MediaPipe files (about 20 MB) download in the background, not on data saver or 2G, so "Start camera" is quick.
+- **Only the demo pages load the demo styles** (`assets/demos.css`). The home and Class 8–12 pages load them without holding up the first paint.
+- **Google Fonts load without blocking the page,** as two variable font files.
+- **The logo is WebP** (`assets/logo-horizontal.webp`, 10 KB) with the PNG as a fallback. If you change the logo, replace both files.
+- **On the demos page,** cards far off screen aren't drawn until they're near. Links to one demo (`demos.html#try-…`) settle on the right card once the page has loaded.
+
 ## After it's live
 
 1. Open https://pacsai.pacsglobal.in/song-challenge.html and send a test entry. It should appear in the "PACS AI – AI Song Challenge entries" Google Sheet. Delete the test row afterwards.
@@ -105,11 +117,12 @@ in a way that matters.
 | What | Where |
 |---|---|
 | Phone, WhatsApp, email, address, Instagram, Demo Day date, meetup dates and times, Google Sheet links | `assets/site.js` (the `SITE` settings at the top) |
-| Styles | `assets/styles.css`, `assets/refresh.css` for layout, and `assets/motion.css` for animation |
+| Styles | `assets/styles.css`, `assets/refresh.css` for layout, `assets/motion.css` for animation, and `assets/demos.css` for the demos (loaded only on the home, Class 8–12, BBA and demos pages) |
+| Offline and slow-connection support | `sw.js`, registered at the bottom of `assets/site.js`; `offline.html` |
 | Card journeys, entrances, flip cards, hover lighting, BBA portfolio, reading progress and mobile enquiry bar | `assets/motion.js` (native browser APIs; no external animation libraries) |
 | The Try the demos page (42 demos: 8 for Class 8–12, 7 for BBA & BBM, and 27 for everyone, in sections that match the AI for everyone skills; the home page shows 3 per tab) | `demos.html` |
 | One demo for every AI for everyone skill that had none: tool finder, spot the mistake, clearer writing, explain at my level, meeting summary, prompt-to-picture, voiceover, content calendar, product listing, customer replies, study plan, sources, question paper, website builder, automation, your own assistant, household spending. Every skill card on learn.html links to its demo. | `assets/skills.js` |
-| The live demos on that page: Rock Paper Scissors vs AI, Train your own AI, Cricket shot coach, Present without a clicker (camera, using Google's MediaPipe loaded from jsDelivr only when someone taps Start camera; nothing leaves the device), Live subtitles (the browser's speech recognition), Pitch to the AI Sharks, Fantasy XI analyst, Haggle, Brand in 10 seconds | `assets/live.js` |
+| The live demos on that page: Rock Paper Scissors vs AI, Train your own AI, Cricket shot coach, Present without a clicker (camera, using Google's MediaPipe from jsDelivr, downloaded in the background once a camera demo is close on screen; nothing leaves the device), Live subtitles (the browser's speech recognition), Pitch to the AI Sharks, Fantasy XI analyst, Haggle, Brand in 10 seconds | `assets/live.js` |
 | The working demos (mango sorter, study coach, Python game, revision app, film storyboard, campaign post, break-even, pitch deck) and the home page Class 8–12 / BBA demo tabs | `assets/builds.js` |
 | The Song Challenge idea machine and entry form | `assets/challenge.js` |
 | The meetup: next date, countdown, upcoming dates, calendar file and registration form | `meetup.html`, with `assets/meetup.js` |
