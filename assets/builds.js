@@ -4,6 +4,9 @@
    the Class 8–12 and BBA pages. Everything works without the animation libraries.
    ========================================================================= */
 (function () {
+  // Restart a CSS animation without forcing the page to re-measure itself (the old
+  // remove-class, read offsetWidth, add-class trick costs a full layout, which hurts on slow phones)
+  const replayAnim = (el, cls) => { if (el.classList.contains(cls) && el.getAnimations) el.getAnimations({ subtree: true }).forEach((a) => { a.cancel(); a.play(); }); else el.classList.add(cls); };
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const touch = window.matchMedia("(pointer: coarse)").matches;
   const wait = (ms) => new Promise((r) => setTimeout(r, reduce ? 0 : ms));
@@ -676,9 +679,7 @@
       if (liked) return;
       liked = 1;
       likes.textContent = (POSTS[state.biz].likes + 1).toLocaleString("en-IN");
-      heartBurst.classList.remove("is-on");
-      void heartBurst.offsetWidth;
-      heartBurst.classList.add("is-on");
+      replayAnim(heartBurst, "is-on");
       buzz(10);
     }
     img.addEventListener("dblclick", like);
@@ -757,9 +758,7 @@ ${caption.textContent}`;
       art.textContent = sc.art;
       shot.textContent = `Scene ${k + 1} · ${sc.shot}`;
       line.textContent = sc.line;
-      frame.classList.remove("is-cut");
-      void frame.offsetWidth;
-      frame.classList.add("is-cut");
+      replayAnim(frame, "is-cut");
       $$(strip, "button").forEach((b, j) => { b.classList.toggle("on", j === k); b.classList.toggle("seen", j < k); });
     }
     function buildStrip() {

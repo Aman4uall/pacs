@@ -621,3 +621,35 @@ body:not(.motion-enabled) .session-front small,body:not(.motion-enabled) .sessio
 @media (max-width: 880px) and (max-height: 700px) { .nav-links .menu-extra a.menu-song { display: none; } }
 /* Home course cards: the two facts stay on one line on phones */
 @media (max-width: 620px) { :root .course-facts { gap: 6px; } :root .course-facts span { padding: 5px 8px; font-size: .8125rem; white-space: nowrap; } }
+
+/* =========================================================================
+   Faster first paint on slow phones: sections below the first screen are laid out
+   and drawn only when they come near. Sections with pinned or stacking scenes, or
+   the slide deck (whose Present mode fills the screen), are left alone. Jump links
+   settle on their target once the sections on the way have drawn (site.js).
+   ========================================================================= */
+main > .section:not(:has(.stack-cards, .cv-scrolly, .bc-card, .deck, .catalog-sticky, .plan-sidebar, .demo-jumps-bar, [data-story])),
+.skill-group, .catalog-reassurance, .site-footer {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
+}
+
+/* Home: the rotating phrase ("a reel you made", "a website with your name"...) changes length.
+   On phones the line keeps room for two lines, so the page below never jumps when it changes. */
+@media (max-width: 620px) { :root .opening-note { min-height: 3.2em; } }
+
+/* =========================================================================
+   Lightweight mode for slow phones (site.js adds html.lite on phones with little
+   memory or 2 cores, with data saver on, or when the page measures itself
+   running below about 40 frames a second). Decorative loops pause and see-through
+   blurred bars become solid; everything you can tap or read works the same.
+   ========================================================================= */
+.lite .skill-band-track, .lite .possibilities, .lite .possibility-icon i, .lite .post-art, .lite .song-stamp::before,
+.lite .spark, .lite .plan-mark, .lite .start-builds li, .lite .topbar-eq i, .lite .player-halo i, .lite .note-float,
+.lite .player:not(.is-playing) .wave i, .lite .spot, .lite .scene-code, .lite .scene-code i, .lite .scene-film, .lite .scene-phone,
+.lite .scene-line circle, .lite .scene-line polyline, .lite .song-badge-ring, .lite .song-banner-wave i, .lite .art.is-active .v-stage::before,
+.lite .demo-invite span, .lite .player-top i, .lite .live-badge::before, .lite .player-lyric span,
+.lite .player:not(.is-playing) .player-play::after { animation-play-state: paused !important; }
+.lite .site-header, .lite .catalog-sticky, .lite .demo-jumps-bar { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+.lite .site-header, .lite .catalog-sticky { background: #fff; }
+.lite .demo-jumps-bar { background: #fdfcf9; }

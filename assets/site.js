@@ -211,3 +211,50 @@ if ("serviceWorker" in navigator && (location.protocol === "https:" || location.
     }).catch(() => { /* The site works the same without it. */ });
   });
 }
+
+/* Jump links (#register, "The courses ↓" and so on). Sections far down are drawn only when
+   they come near (see content-visibility in motion.css), so the first jump can land a little
+   off. Once the scroll ends, settle on the target, unless the visitor has scrolled themselves. */
+window.settleOn = function (target) {
+  let moved = false, tries = 0;
+  const mark = () => { moved = true; };
+  addEventListener("wheel", mark, { once: true, passive: true });
+  addEventListener("touchstart", mark, { once: true, passive: true });
+  const pad = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
+  const check = () => {
+    if (moved || tries++ > 3) return;
+    const off = target.getBoundingClientRect().top - pad;
+    if (Math.abs(off) > 8) target.scrollIntoView({ block: "start", behavior: tries > 1 ? "instant" : "smooth" });
+    setTimeout(check, 700);
+  };
+  if ("onscrollend" in window) addEventListener("scrollend", () => setTimeout(check, 60), { once: true });
+  setTimeout(check, 1300);
+};
+document.addEventListener("click", (e) => {
+  const a = e.target.closest && e.target.closest('a[href^="#"]');
+  const id = a && decodeURIComponent(a.getAttribute("href").slice(1));
+  const target = id && document.getElementById(id);
+  if (target) window.settleOn(target);
+});
+
+/* Lightweight mode for slow phones (see the end of motion.css): on phones that say they are
+   small (2 GB of memory or less, 2 cores, data saver), or that turn out slow once the page has loaded,
+   decorative loops pause and blurred bars go solid. */
+(function () {
+  const root = document.documentElement, n = navigator;
+  const lite = () => root.classList.add("lite");
+  if ((n.deviceMemory && n.deviceMemory <= 2) || (n.hardwareConcurrency && n.hardwareConcurrency <= 2) || (n.connection && n.connection.saveData)) return lite();
+  // Otherwise time 45 frames soon after load; a slow median frame means a slow phone
+  addEventListener("load", () => setTimeout(() => {
+    if (document.hidden) return;
+    const gaps = []; let last = 0;
+    const tick = (t) => {
+      if (last) gaps.push(t - last);
+      last = t;
+      if (gaps.length < 45) return requestAnimationFrame(tick);
+      gaps.sort((a, b) => a - b);
+      if (gaps[22] > 24) lite();
+    };
+    requestAnimationFrame(tick);
+  }, 1200), { once: true });
+})();

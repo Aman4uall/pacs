@@ -1,3 +1,9 @@
+/* Fonts are served from this site (subset to the characters the site uses) and preloaded in
+   each page head, so they arrive with the styles: the page lays out once, in Inter, with
+   no extra connection to another server. Inter and Playfair Display: SIL Open Font License. */
+@font-face { font-family: "Inter"; src: url("fonts/inter.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
+@font-face { font-family: "Playfair Display"; src: url("fonts/playfair-italic.woff2") format("woff2"); font-weight: 400; font-style: italic; font-display: swap; }
+
 /* =========================================================================
    PACS AI – shared styles
    Brand kit: PACS Red, Ink Black, Charcoal, greys; Inter; italic serif accents.

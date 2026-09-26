@@ -11,18 +11,18 @@
    files are saved without their ?v= tag. Bump VERSION only to clear
    everything that's saved.
    ========================================================================= */
-const VERSION = "pacs-v2";
+const VERSION = "pacs-v3";
 const SITE = `${VERSION}-site`;
 const LIBS = `${VERSION}-libs`;
 const CORE = [
   "./", "index.html", "offline.html",
   "assets/styles.css", "assets/refresh.css", "assets/motion.css", "assets/demos.css",
   "assets/site.js", "assets/motion.js", "assets/builds.js",
-  "assets/logo-horizontal.webp", "assets/logo-horizontal.png", "assets/favicon-32.png",
+  "assets/logo-horizontal.webp", "assets/logo-horizontal.png", "assets/favicon-32.png", "assets/fonts/inter.woff2",
 ];
 const LATER = [
   "class-8-12.html", "bba.html", "learn.html", "demos.html", "contact.html", "meetup.html", "song-challenge.html", "terms.html",
-  "assets/live.js", "assets/skills.js", "assets/learn.js", "assets/meetup.js", "assets/challenge.js", "assets/song.css", "assets/songplayer.js", "assets/apple-touch-icon.png",
+  "assets/live.js", "assets/skills.js", "assets/learn.js", "assets/meetup.js", "assets/challenge.js", "assets/song.css", "assets/songplayer.js", "assets/fonts/playfair-italic.woff2", "assets/apple-touch-icon.png",
 ];
 // Files from other sites that never change once published, so the saved copy is always right
 const LIB_HOSTS = ["fonts.gstatic.com", "cdn.jsdelivr.net", "storage.googleapis.com"];

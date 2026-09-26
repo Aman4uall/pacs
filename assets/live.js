@@ -6,6 +6,9 @@
    and start working when someone taps "Start camera".
    ========================================================================= */
 (function () {
+  // Restart a CSS animation without forcing the page to re-measure itself (the old
+  // remove-class, read offsetWidth, add-class trick costs a full layout, which hurts on slow phones)
+  const replayAnim = (el, cls) => { if (el.classList.contains(cls) && el.getAnimations) el.getAnimations({ subtree: true }).forEach((a) => { a.cancel(); a.play(); }); else el.classList.add(cls); };
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const wait = (ms) => new Promise((r) => setTimeout(r, reduce ? Math.min(ms, 60) : ms));
   const $ = (root, sel) => root.querySelector(sel);
@@ -205,7 +208,7 @@
       el.verdict.dataset.result = cls;
       el.youScore.textContent = you; el.aiScore.textContent = ai;
       el.brain.textContent = history.length > 1 && guess.sure ? `The AI guessed you'd play ${MOVES[guess.move]} (${Math.round(guess.sure * 100)}% sure). ${insight()}` : insight();
-      root.classList.remove("rps-flash"); void root.offsetWidth; root.classList.add("rps-flash");
+      replayAnim(root, "rps-flash");
       buzz(cls === "win" ? 20 : [10, 40, 10]);
     }
     // Camera: count "Rock, paper, scissors, shoot!", then read your hand
@@ -223,7 +226,7 @@
       busy = true; buzz();
       const guess = predict(); // the AI commits before it sees your hand
       el.verdict.textContent = "The AI has locked in its move."; el.verdict.dataset.result = "";
-      for (const word of ["Rock…", "Paper…", "Scissors…", "Shoot!"]) { el.count.textContent = word; el.count.classList.remove("pop"); void el.count.offsetWidth; el.count.classList.add("pop"); await wait(650); }
+      for (const word of ["Rock…", "Paper…", "Scissors…", "Shoot!"]) { el.count.textContent = word; replayAnim(el.count, "pop"); await wait(650); }
       recent = [];
       await wait(450);
       el.count.textContent = "";
@@ -297,7 +300,7 @@
         const c = classes[best];
         big.innerHTML = `<i style="background:${c.color}"></i><span><small>AI sees</small><b>${nameOf(c)}</b></span><em>${Math.round(conf[best] * 100)}%</em>`;
         big.classList.remove("is-dim");
-        if (best !== lastClass) { tone(best); big.classList.remove("pop"); void big.offsetWidth; big.classList.add("pop"); lastClass = best; }
+        if (best !== lastClass) { tone(best); replayAnim(big, "pop"); lastClass = best; }
       } else { big.innerHTML = '<i></i><span><small>AI sees</small><b>Not sure yet</b></span>'; big.classList.remove("is-dim"); lastClass = -1; }
     });
     classes.forEach((c) => {
@@ -401,7 +404,7 @@
       if (!cam.live) return;
       buzz();
       frozen = false;
-      for (const n of ["3", "2", "1"]) { count.textContent = n; count.classList.remove("pop"); void count.offsetWidth; count.classList.add("pop"); await wait(800); }
+      for (const n of ["3", "2", "1"]) { count.textContent = n; replayAnim(count, "pop"); await wait(800); }
       count.textContent = "Snap!";
       frozen = true;
       render(latest, true);
@@ -442,7 +445,7 @@
     let at = 0, trail = [], cooldown = 0, palmSince = 0, thumbAt = 0;
     function go(n, how) {
       const next = Math.max(0, Math.min(slides.length - 1, n));
-      if (next === at) { stage.classList.remove("bump"); void stage.offsetWidth; stage.classList.add("bump"); return; }
+      if (next === at) { replayAnim(stage, "bump"); return; }
       slides[at].classList.remove("is-on");
       slides[at].classList.add(next > at ? "out-left" : "out-right");
       const prev = slides[at];
@@ -839,7 +842,7 @@
         <div class="br-palette">${[main, soft, pop, ink].map((c, i) => `<span style="background:${c}"><small style="color:${i === 1 ? ink : "#fff"}">${["Main", "Soft", "Pop", "Ink"][i]}</small></span>`).join("")}</div>
         <div class="br-grid" aria-label="Sample Instagram grid">${logo.replace('class="br-logo"', 'class="br-tile br-tile-logo"')}${tiles}</div>
         <div class="br-card" style="background:${ink};color:#fff"><b style="font-family:${font}">${safe}</b><small style="color:${pop}">${tagline}</small><span>hello@${name.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]/g, "") || "brand"}.in</span></div>`;
-      out.classList.remove("is-new"); void out.offsetWidth; out.classList.add("is-new");
+      replayAnim(out, "is-new");
     }
     let t = 0;
     input.addEventListener("input", () => { clearTimeout(t); t = setTimeout(render, 180); });

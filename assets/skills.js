@@ -5,6 +5,9 @@
    own speech. People, shops, products and numbers are made up.
    ========================================================================= */
 (function () {
+  // Restart a CSS animation without forcing the page to re-measure itself (the old
+  // remove-class, read offsetWidth, add-class trick costs a full layout, which hurts on slow phones)
+  const replayAnim = (el, cls) => { if (el.classList.contains(cls) && el.getAnimations) el.getAnimations({ subtree: true }).forEach((a) => { a.cancel(); a.play(); }); else el.classList.add(cls); };
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const wait = (ms) => new Promise((r) => setTimeout(r, reduce ? Math.min(ms, 40) : ms));
   const $ = (root, sel) => root.querySelector(sel);
@@ -135,7 +138,7 @@
       const t = CLEAR[sample][+range.value];
       label.textContent = LEVELS[+range.value];
       text.textContent = t;
-      text.classList.remove("is-new"); void text.offsetWidth; text.classList.add("is-new");
+      replayAnim(text, "is-new");
       // Real measurements of the text on screen
       const words = t.split(/\s+/).filter(Boolean);
       const sentences = t.split(/[.!?]+/).filter((x) => x.trim()).length || 1;
@@ -179,7 +182,7 @@
       const lvl = +range.value;
       label.textContent = WHO[lvl];
       out.textContent = EXPLAIN[topic].levels[lvl];
-      out.classList.remove("is-new"); void out.offsetWidth; out.classList.add("is-new");
+      replayAnim(out, "is-new");
       check.textContent = EXPLAIN[topic].ask;
       root.style.setProperty("--lvl", lvl);
     }
@@ -215,7 +218,7 @@
       await wait(900);
       if (id !== run) return;
       out.innerHTML = `<p class="mt-stat">9 messages in. 1 decision, 4 jobs and 1 open question out.</p>${SUMMARY[fmt]}`;
-      out.classList.remove("is-new"); void out.offsetWidth; out.classList.add("is-new");
+      replayAnim(out, "is-new");
     }
     go.addEventListener("click", () => { buzz(); summarise(); });
     radio($(root, "[data-mt-fmt]"), (v) => { fmt = v; if (done) summarise(); });
@@ -380,7 +383,7 @@
       const pass = version === "before" ? p.pass[0] : p.pass[1];
       const score = version === "before" ? 2 + pass : 9;
       card.innerHTML = `<span class="ls-img" aria-hidden="true">${p.after.title.split(" ").slice(0, 2).map((w) => w[0]).join("")}</span><div class="ls-body"><b class="ls-title">${esc(v.title)}</b><span class="ls-stars" aria-label="Rated 4.3 out of 5">★★★★☆ <small>4.3</small></span><span class="ls-price">${p.price}</span><ul>${v.bullets.map((b) => `<li>${esc(b)}</li>`).join("")}</ul><p>${esc(v.desc)}</p></div>`;
-      card.classList.remove("is-new"); void card.offsetWidth; card.classList.add("is-new");
+      replayAnim(card, "is-new");
       checks.innerHTML = LIST_CHECKS.map((c, i) => `<li class="${version === "after" || i < pass ? "ok" : ""}">${c}</li>`).join("");
       meter.innerHTML = `<b>${score}</b><small>/10</small>`;
       meter.dataset.good = String(score >= 7);
@@ -519,7 +522,7 @@
         <div class="pp-mix" aria-label="Difficulty: 40% easy, 40% medium, 20% hard"><i style="width:40%">Easy 40%</i><i style="width:40%">Medium 40%</i><i style="width:20%">Hard 20%</i></div>
         <ol class="pp-qs">${BANK[st.subject].map((q, i) => `<li><small>Section ${SECTIONS[i][0]} · ${SECTIONS[i][2]} mark${SECTIONS[i][2] > 1 ? "s" : ""}</small>${esc(q)}</li>`).join("")}</ol>
         <p class="pp-key">Sample questions shown. The full paper comes with an answer key and a marking scheme.</p>`;
-      out.classList.remove("is-new"); void out.offsetWidth; out.classList.add("is-new");
+      replayAnim(out, "is-new");
     }
     radio($(root, "[data-pp-class]"), (v) => { st.cls = v; render(); });
     radio($(root, "[data-pp-subject]"), (v) => { st.subject = v; render(); });

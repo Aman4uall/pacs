@@ -6,6 +6,9 @@
    entry to WhatsApp instead, so nothing is ever lost.
    ========================================================================= */
 (function () {
+  // Restart a CSS animation without forcing the page to re-measure itself (the old
+  // remove-class, read offsetWidth, add-class trick costs a full layout, which hurts on slow phones)
+  const replayAnim = (el, cls) => { if (el.classList.contains(cls) && el.getAnimations) el.getAnimations({ subtree: true }).forEach((a) => { a.cancel(); a.play(); }); else el.classList.add(cls); };
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const cfg = typeof SITE !== "undefined" ? SITE : {};
   const $ = (root, sel) => root.querySelector(sel);
@@ -76,9 +79,7 @@
         out[k].textContent = next[k];
         if (flash && !reduce) {
           const box = out[k].closest(".mock-field");
-          box.classList.remove("is-new");
-          void box.offsetWidth; // restart the flash
-          box.classList.add("is-new");
+          replayAnim(box, "is-new");
         }
       });
     }
