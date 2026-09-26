@@ -653,3 +653,23 @@ main > .section:not(:has(.stack-cards, .cv-scrolly, .bc-card, .deck, .catalog-st
 .lite .site-header, .lite .catalog-sticky, .lite .demo-jumps-bar { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
 .lite .site-header, .lite .catalog-sticky { background: #fff; }
 .lite .demo-jumps-bar { background: #fdfcf9; }
+
+/* =========================================================================
+   The Song Challenge strip stays pinned at the top, with the header pinned
+   right under it. site.js keeps --topbar-h equal to the strip's real height
+   (it changes with screen width and text size), and everything that sits
+   under the header moves down by that much.
+   ========================================================================= */
+body > .topbar { position: sticky; top: 0; z-index: 60; }
+body > .topbar ~ .site-header { top: var(--topbar-h, 36px); }
+html:has(body > .topbar) { scroll-padding-top: calc(96px + var(--topbar-h, 36px)); }
+html:has(.demos-page):has(body > .topbar) { scroll-padding-top: calc(150px + var(--topbar-h, 36px)); }
+body > .topbar ~ main .demo-jumps-bar { top: calc(72px + var(--topbar-h, 36px)); }
+@media (max-width: 880px) {
+  body > .topbar ~ .site-header .nav-links { height: calc(100vh - 100% - var(--topbar-h, 36px)); height: calc(100dvh - 100% - var(--topbar-h, 36px)); }
+}
+/* Once you scroll, the strip slims down (text stays the same size); back at the top it returns */
+body > .topbar.is-compact { min-height: 0; padding-block: .2rem; }
+body > .topbar.is-compact .topbar-new { padding-block: .1em; }
+body > .topbar.is-compact .topbar-go::after { width: 1.6em; height: 1.6em; }
+@media (min-width: 761px) { body > .topbar.is-compact { min-height: 28px; } }

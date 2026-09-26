@@ -258,3 +258,23 @@ document.addEventListener("click", (e) => {
     requestAnimationFrame(tick);
   }, 1200), { once: true });
 })();
+
+/* The pinned Song Challenge strip: tell the page how tall it is (see the end of motion.css).
+   ResizeObserver reports after layout, so nothing is measured before the first paint. */
+(function () {
+  const strip = document.querySelector("body > .topbar");
+  if (!strip || !("ResizeObserver" in window)) return;
+  new ResizeObserver(([e]) => {
+    const h = e.borderBoxSize && e.borderBoxSize[0] ? e.borderBoxSize[0].blockSize : strip.offsetHeight;
+    document.documentElement.style.setProperty("--topbar-h", `${Math.round(h)}px`);
+  }).observe(strip, { box: "border-box" }); // the outer box, padding included
+  // Slim down once the visitor scrolls, full size again near the top (two thresholds, so it never flickers)
+  let compact = false, queued = false;
+  const check = () => {
+    queued = false;
+    const next = compact ? scrollY > 20 : scrollY > 80;
+    if (next !== compact) { compact = next; strip.classList.toggle("is-compact", next); }
+  };
+  addEventListener("scroll", () => { if (!queued) { queued = true; requestAnimationFrame(check); } }, { passive: true });
+  requestAnimationFrame(check);
+})();

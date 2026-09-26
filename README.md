@@ -65,8 +65,10 @@ Until that is done the form hands each registration to WhatsApp instead, so nobo
 ## Getting found on Google
 
 Checked on 24 September 2026: Google had **not indexed a single page** of this site
-(`site:pacsai.pacsglobal.in` returns nothing), and the live copy was still the version from
-21 September. The Instagram account already ranks for "PACS AI Mangalore"; the website does not.
+(`site:pacsai.pacsglobal.in` returns nothing). On 27 September the live copy was up to date
+(published 26 September), answers `index, follow`, serves `robots.txt` and `sitemap.xml`, and
+sends `http://` to `https://`. The Instagram account already ranks for "PACS AI Mangalore"; the
+website does not yet.
 
 The site itself is ready for search engines. Every page carries a title, a description under
 160 characters, a canonical address, share images, a `robots` meta tag and structured data:
@@ -82,6 +84,9 @@ The site itself is ready for search engines. Every page carries a title, a descr
 | Song Challenge | The 7 real FAQs |
 | Every page | Breadcrumbs back to the home page |
 
+The test copy on Vercel (`pacsai.vercel.app`) sends `X-Robots-Tag: noindex` (see `vercel.json`,
+which only matches `*.vercel.app` addresses), so it never competes with the real address.
+
 Also in place: `robots.txt`, `sitemap.xml` (all 9 pages), a `404.html` that points people back
 into the site, and `class-8-10.html` forwarding to `class-8-12.html`.
 
@@ -92,9 +97,8 @@ What is left is not code.
 
 **Do these in order:**
 
-1. **Publish the current files.** Nothing else on this list matters until the live site matches
-   this repository. `class-8-12.html`, `learn.html` and the new pages don't exist on the live
-   site yet.
+1. **Keep the live site in step with this repository.** Publish each change, including
+   `.htaccess` and `sitemap.xml`.
 2. **Verify the site in [Google Search Console](https://search.google.com/search-console).**
    Choose the URL-prefix property `https://pacsai.pacsglobal.in/`, then verify with the HTML
    file or the meta tag it gives you (the meta tag goes just under `<meta charset="utf-8">` in

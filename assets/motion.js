@@ -127,7 +127,7 @@
         story.chapters.forEach(chapter => { chapter.removeAttribute('aria-hidden'); chapter.classList.remove('is-current'); });
         return;
       }
-      story.top = (document.querySelector('.site-header')?.offsetHeight || 72) + 12;
+      story.top = (document.querySelector('.site-header')?.offsetHeight || 72) + (document.querySelector('body > .topbar')?.offsetHeight || 0) + 12;
       const small = innerWidth <= 740;
       const reserve = innerWidth <= 620 && document.body.classList.contains('course-page') ? 100 : 26;
       const height = Math.min(700, innerHeight - story.top - reserve);
