@@ -1244,3 +1244,49 @@ svg.br-tile { width: 100%; height: auto; padding: 14%; box-sizing: border-box; b
 /* Try the demos: the browser skips drawing demo cards that are far off screen, so the long
    page opens and scrolls smoothly on slower phones. The reserved height stops the scrollbar jumping. */
 .demos-page .build { content-visibility: auto; contain-intrinsic-size: auto 640px; }
+
+/* =========================================================================
+   Phones: demo text on the same scale as the rest of the site (see the end of
+   motion.css). Labels 12px, buttons and chips 14px, notes and chat 14 to 15px,
+   and at least 11px for text inside the little drawings of phones, posts and charts.
+   ========================================================================= */
+@media (max-width: 620px) {
+  /* Labels */
+  :root .build-tag, :root .pm-label, :root .app-count, :root .prompt-label, :root .film-shot, :root .ai-tag,
+  :root .au-node small, :root .cc-day, :root .ex-check small, :root .im-prompt small, :root .iv-answer small,
+  :root .wave-slide small, :root .earn-card small, :root .so-name small, :root .inv-kicker, :root .inv-rsvp,
+  :root .ask-chat-top span, :root .wall-sub small, :root .slide small, :root .bc-make small, :root .case-face small,
+  :root .case-top small, :root .case-metric span, :root .tag, :root .three-hour, :root .studio-pick .when,
+  :root .bc-label b, :root .cv-label, :root .cv-label b, :root .tr-score, :root .build th, :root .pp-qs small,
+  :root .st-score span, :root .rps-board small, :root .earn-steps li > b { font-size: .75rem; letter-spacing: .08em; }
+
+  /* Stat captions under numbers in the demos */
+  :root .hg-shop small, :root .fx-bar small, :root .cl-metrics small, :root .cap-stats small,
+  :root .st-head small, :root .as-title small { font-size: .75rem; }
+  :root .br-palette small, :root .sheet-chart small { font-size: .6875rem; }
+
+  /* Buttons, chips and small links */
+  :root .app-options button, :root .case-flip, :root .cases-more { font-size: .875rem; }
+  :root .pm-tool { font-size: .8125rem; }
+  :root .term-toggle, :root .cam-cover small, :root .bc-try, :root .deck-tool, :root .fx-meta span, :root .tr-name small,
+  :root .sh-card small, :root .film-sound span, :root .studio-chips li, :root .post-cta, :root .post-likes,
+  :root .rps-tap span, :root .slide-label, :root .hg-offer, :root .earn-calc label, :root .ask-meter span { font-size: .8125rem; }
+
+  /* Notes, chat lines and lists inside demos */
+  :root .st-note, :root .pp-key, :root .cc-stats, :root .build-hint { font-size: .8125rem; line-height: 1.5; }
+  :root .mt-log p, :root .pm-brief p, :root .pm-checks li, :root .ls-checks li, :root .fx-rules, :root .build dd,
+  :root .build dt, :root .slide p, :root .earn-steps li, :root .post figcaption, :root .pp-qs li, :root .rps-brain,
+  :root .iv-answer span, :root .ex-check span, :root .mail-notes p, :root .cc-detail p, :root .build td,
+  :root .wave-slide p, :root .so-name { font-size: .875rem; line-height: 1.5; }
+
+  /* Inside the little drawings: never below 11px */
+  :root .sp-cell span, :root .sp-cell small, :root .sp-cell b, :root .sp-cell em, :root .st-legend, :root .st-col small,
+  :root .fx-role, :root .cc-post small, :root .hg-mood small, :root .cr-score small, :root .ls-score small,
+  :root .pp-mix i, :root .tf-fit small, :root .studio-weeks i, :root .post-sticker, :root .ws-bar span,
+  :root .ls-stars small, :root .iv-who i, :root .post-who small, :root .br-tile, :root .tf-tags em,
+  :root .ws-quote small { font-size: .6875rem; }
+
+  /* The mango picker: all five mangoes on one row */
+  :root .sorter-pick { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
+  :root .sorter-pick > * { width: auto; min-width: 0; }
+}

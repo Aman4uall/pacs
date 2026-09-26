@@ -101,7 +101,9 @@ async function cacheFirst(req) {
 async function staleWhileRevalidate(event, req) {
   const cache = await caches.open(LIBS);
   const saved = await cache.match(req);
-  const fresh = fetch(req).then((res) => { if (res.ok) cache.put(req, res.clone()); return res; });
+  // The page asks for the font list in "no-cors" mode, so the reply is opaque (unreadable, status 0).
+  // It still works as a stylesheet, so save it anyway, or offline pages lose the fonts.
+  const fresh = fetch(req).then((res) => { if (res.ok || res.type === "opaque") cache.put(req, res.clone()); return res; });
   event.waitUntil(fresh.then(() => {}, () => {}));
   return saved || fresh;
 }

@@ -476,3 +476,78 @@ body:not(.motion-enabled) .session-front small,body:not(.motion-enabled) .sessio
 @container topbar (max-width: 30.4em) { .tn-ai { display: none; } }
 @container topbar (max-width: 29.1em) { .tn-class { display: none; } }
 @container topbar (max-width: 22.7em) { .tn-prize { display: none; } .tn-short { display: inline; } }
+
+/* =========================================================================
+   Phones: one type scale and calmer spacing
+   The phone rules above grew one size at a time (some as small as 9px).
+   Every piece of text now takes one of four sizes by what it does:
+     labels (uppercase, spaced)    12px
+     buttons, chips, small links   13 to 14px
+     supporting copy               15px
+     body                          16px
+   Demo-specific sizes follow the same scale at the end of demos.css.
+   ========================================================================= */
+@media (max-width: 620px) {
+  /* Labels */
+  :root .eyebrow, :root .footer-brand .tagline, :root .skill-category, :root .course-kicker,
+  :root .closing-picks legend, :root .challenge-invite .eyebrow, :root .next-kicker, :root .date-tag,
+  :root .player-top, :root .mock-label, :root .mock-top, :root .mock-top span, :root .stepper li,
+  :root .pm-label, :root .session-back span { font-size: .75rem; letter-spacing: .1em; }
+  :root .mock-top { letter-spacing: .06em; }
+  :root .mock-top span { white-space: nowrap; }
+
+  /* Buttons, chips and small links */
+  :root .skill-add, :root .skill-demo, :root .outcome-link, :root .course-other, :root .course-jumps a,
+  :root .story-controls a, :root .opening-note, :root .course-facts span, :root .stat span { font-size: .875rem; }
+  :root .goal-filter { font-size: .8125rem; }
+  :root .opening-copy .btn { font-size: .9375rem; }
+  :root .session-front small, :root .session-back small { font-size: .8125rem; }
+  :root .mobile-plan-bar span { font-size: .8125rem; }
+  :root .plan-steps { font-size: .75rem; }
+
+  /* Supporting copy */
+  :root .skill-description, :root .group-heading p, :root .outcome-card p, :root .simple-steps p,
+  :root .challenge-invite p, :root .next-closed, :root .course-door p, :root .catalog-hero .lede { font-size: .9375rem; line-height: 1.55; }
+  :root .closing-section p, :root .opening-copy .lede { font-size: 1rem; line-height: 1.55; }
+  :root .lede { line-height: 1.55; }
+
+  /* Home: the four routes under the hero */
+  :root .audience-routes small { font-size: .75rem; line-height: 1.3; }
+  :root .audience-routes strong { font-size: 1rem; }
+  :root .audience-routes a { padding: 14px 12px; }
+
+  /* Home: "I wish I could" cards read as a list, one per row, icon on the left */
+  :root .outcome-grid { grid-template-columns: 1fr; gap: 10px; }
+  :root .outcome-card { display: grid; grid-template-columns: 40px 1fr; column-gap: 14px; padding: 18px 16px; }
+  :root .outcome-card > * { grid-column: 2; }
+  :root .outcome-card .outcome-symbol { grid-column: 1; grid-row: 1 / span 3; margin: 0; }
+  :root .outcome-card h3 br { display: none; }
+  :root .outcome-card p { margin: 6px 0 12px; }
+
+  /* Home: journey cards (small phone drawings) */
+  :root .art figcaption { font-size: .8125rem; }
+  :root .art figcaption span { font-size: .6875rem; }
+  :root .journey-count { font-size: .8125rem; }
+
+  /* Home: the Song Challenge band. The record sits beside the heading only, and the
+     sentence and button below use the full width instead of a narrow column */
+  :root .challenge-invite .wrap { display: grid; grid-template-columns: minmax(0, 1fr) 78px; column-gap: 16px; align-items: center; }
+  :root .challenge-invite .wrap > div:first-child { display: contents; }
+  :root .challenge-invite .wrap > div > p, :root .challenge-invite .btn { grid-column: 1 / -1; padding-right: 0; }
+  :root .challenge-invite h2 { grid-column: 1; padding-right: 0; }
+  :root .challenge-invite .song-stamp { position: relative; right: auto; top: auto; grid-column: 2; grid-row: 2; width: 78px; height: 78px; }
+  :root .song-stamp span { font-size: .625rem; }
+
+  /* Home: the label under "You don't need to have it figured out" gets room to breathe */
+  :root .closing-picks { margin-top: 26px; gap: 18px; }
+  :root .closing-picks legend { margin-bottom: 12px; }
+
+  /* The Song Challenge strip: 12px text (its steps are in em, so they follow) */
+  :root .topbar { font-size: .75rem; }
+  /* Home: the moving strip of skills */
+  :root .skill-band-track span { font-size: .875rem; }
+
+  /* Learn: two links on each skill card get a little air */
+  :root .skill-card { gap: 10px; padding: 20px 20px 18px; }
+  :root .skill-add { padding-top: 6px; }
+}
