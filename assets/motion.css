@@ -452,3 +452,27 @@ body:not(.motion-enabled) .session-front small,body:not(.motion-enabled) .sessio
 
 .bd-tips ul { list-style: disc; }
 .bd-tips li::marker { color: var(--red); }
+
+/* =========================================================================
+   Phones: the Song Challenge strip always sits on one tidy line
+   Prize tag on the left, the challenge in the middle, a round red arrow on
+   the right. When space runs short (a narrow phone, or a larger text size in
+   the phone's settings) the least important words step out in turn:
+   "Enter", then "AI", then "Class 8–12". Sizes are in em, so the steps
+   follow the text size, not just the screen width.
+   ========================================================================= */
+@media (max-width: 760px) {
+  .topbar { container: topbar / inline-size; justify-content: space-between; gap: .7em; padding-block: .45rem; overflow: hidden; white-space: nowrap; }
+  .topbar-new { flex: none; padding: .3em .6em; font-size: 1.15em; line-height: 1.2; border-radius: 6px; }
+  .topbar-text { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; text-align: left; font-size: 1.05em; }
+  .topbar-go { flex: none; gap: .5em; text-decoration: none; }
+  .tn-enter { text-decoration: underline; text-decoration-color: var(--red); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+  .topbar-go::after { display: grid; place-items: center; width: 2em; height: 2em; background: var(--red); border-radius: 50%; color: #fff; font-weight: 700; line-height: 1; }
+}
+@media (max-width: 760px) { .tn-now { display: none; } }
+.tn-short { display: none; }
+/* Each step is the width the line before it needs, measured at 100 to 130% text */
+@container topbar (max-width: 33.5em) { .tn-enter { display: none; } }
+@container topbar (max-width: 30.4em) { .tn-ai { display: none; } }
+@container topbar (max-width: 29.1em) { .tn-class { display: none; } }
+@container topbar (max-width: 22.7em) { .tn-prize { display: none; } .tn-short { display: inline; } }
