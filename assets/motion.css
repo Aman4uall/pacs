@@ -673,3 +673,12 @@ body > .topbar.is-compact { min-height: 0; padding-block: .2rem; }
 body > .topbar.is-compact .topbar-new { padding-block: .1em; }
 body > .topbar.is-compact .topbar-go::after { width: 1.6em; height: 1.6em; }
 @media (min-width: 761px) { body > .topbar.is-compact { min-height: 28px; } }
+
+/* Phones: no blue tap box. Android Chrome paints a translucent blue rectangle over anything you
+   tap unless the site turns it off; buttons already give their own feedback, and anything
+   without its own press style darkens slightly while pressed. The blue outline for keyboard
+   users (:focus-visible) stays, and doesn't appear on taps. */
+html { -webkit-tap-highlight-color: transparent; }
+@media (hover: none) {
+  :where(a, button, label, summary, [role="tab"]):active { filter: brightness(.94); }
+}
