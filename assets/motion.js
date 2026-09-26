@@ -11,7 +11,8 @@
     if (!queued) { queued = true; requestAnimationFrame(paint); }
   }, { passive: true });
   window.addEventListener('resize', paint);
-  paint();
+  // Measure on the next frame, so the first paint doesn't wait for a forced layout
+  requestAnimationFrame(paint);
 
   const hero = document.querySelector('.course-page .page-hero');
   const enquiry = hero?.querySelector('.btn-primary[data-wa]');
