@@ -1,0 +1,98 @@
+/* =========================================================================
+   PACS AI – AI Song Challenge page
+   Loaded only on song-challenge.html, after the site-wide styles.
+   Motion stays calm: it only plays when the visitor hasn't asked for reduced
+   motion, and nothing is hidden unless the page script has started
+   (html.song-anim), so the page reads fine without it.
+   ========================================================================= */
+
+/* ---------- Hero: notes drift up beside the player, the chorus lights up word by word ---------- */
+.player-wrap { isolation: isolate; }
+.note-float { position: absolute; z-index: 3; color: var(--red); font-style: normal; font-weight: 700; opacity: 0; pointer-events: none; }
+.note-float.n1 { top: 30%; left: 6%; font-size: 1.9rem; }
+.note-float.n2 { top: 58%; right: 4%; font-size: 1.5rem; color: var(--ink); }
+.note-float.n3 { top: 76%; left: 12%; font-size: 1.2rem; }
+.player-lyric { min-height: 1.4em; margin-top: 12px; color: #6f6e6a; font-size: .95rem; font-weight: 700; letter-spacing: -.01em; }
+.player-lyric span { transition: color .2s ease; }
+@media (prefers-reduced-motion: no-preference) {
+  .note-float { animation: note-rise 5.4s ease-in-out infinite; }
+  .note-float.n2 { animation-delay: 1.8s; }
+  .note-float.n3 { animation-delay: 3.6s; }
+  .player-lyric span { animation: karaoke 3.2s linear infinite; animation-delay: calc(var(--w) * .38s); }
+}
+@media (prefers-reduced-motion: reduce) { .player-lyric span { color: #fff; } .note-float { opacity: .5; } }
+@keyframes note-rise {
+  0% { opacity: 0; transform: translateY(18px) rotate(-8deg); }
+  20% { opacity: .9; }
+  70% { opacity: .6; }
+  100% { opacity: 0; transform: translateY(-70px) rotate(10deg); }
+}
+@keyframes karaoke { 0%, 8% { color: #6f6e6a; } 12%, 60% { color: #fff; } 75%, 100% { color: #6f6e6a; } }
+
+/* ---------- The prize: ₹500 counts up, ten records show the odds ---------- */
+.prize { position: relative; overflow: hidden; padding-block: clamp(56px, 8vw, 104px); }
+.prize::before { content: ""; position: absolute; inset: -40% auto auto -10%; width: 60%; aspect-ratio: 1; background: radial-gradient(circle, rgb(245 30 43 / .22), transparent 62%); pointer-events: none; }
+:root .prize-inner { position: relative; grid-template-columns: auto minmax(0, 1fr) auto; gap: clamp(28px, 5vw, 72px); }
+.prize-amount { font-variant-numeric: tabular-nums; }
+.odds { display: grid; gap: 14px; justify-items: center; }
+.odds-row { display: flex; gap: clamp(6px, 1vw, 12px); }
+.odds-row i { width: clamp(26px, 3.2vw, 42px); aspect-ratio: 1; border-radius: 50%; background: repeating-radial-gradient(circle, #1b1b1a 0 2px, #2c2c2a 3px 4px); box-shadow: inset 0 0 0 1px #3a3a37; transition: transform .45s cubic-bezier(.2, .9, .3, 1.3), box-shadow .45s ease; position: relative; }
+.odds-row i::after { content: ""; position: absolute; inset: 34%; border-radius: 50%; background: #3a3a37; transition: background-color .45s ease; }
+/* Without motion (or before the script runs), the first record is the winner */
+.odds-row:not(:has(.is-win)) i:first-child::after { background: var(--red); }
+.odds-row i.is-win { transform: translateY(-8px) scale(1.18); box-shadow: inset 0 0 0 1px #ff6e78, 0 10px 24px -6px rgb(245 30 43 / .7); }
+.odds-row i.is-win::after { background: var(--red); }
+.odds p { color: var(--on-dark-muted); font-size: .875rem; }
+:root .prize-facts { justify-self: end; gap: .7rem; }
+:root .prize-facts li { font-size: .95rem; }
+@media (max-width: 900px) {
+  :root .prize-inner { grid-template-columns: minmax(0, 1fr); justify-items: start; }
+  .odds { justify-items: start; }
+  :root .prize-facts { justify-self: start; display: flex; flex-wrap: wrap; gap: .6rem 1.4rem; }
+}
+
+/* ---------- How it works: three steps on one line that draws itself ---------- */
+:root .how { position: relative; isolation: isolate; gap: clamp(14px, 2vw, 24px); }
+:root .how a { position: relative; gap: .5rem; padding: clamp(24px, 2.6vw, 32px); background: #fff; border: 1px solid var(--line); border-radius: 22px; }
+:root .how a:hover { background: #fff; border-color: var(--ink); }
+.how-icon { display: grid; place-items: center; width: 52px; height: 52px; margin-bottom: 10px; background: #fde8e9; border-radius: 16px; color: var(--red); }
+.how-icon svg { width: 26px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+:root .how-num { position: absolute; top: clamp(24px, 2.6vw, 32px); right: clamp(24px, 2.6vw, 32px); color: #e7e5e1; font-size: 2.8rem; }
+@media (min-width: 761px) {
+  .how::before { content: ""; position: absolute; z-index: -1; top: 58px; left: 8%; right: 8%; height: 2px; background: linear-gradient(90deg, var(--red) 50%, transparent 0) 0 0 / 14px 2px repeat-x; transform-origin: left; }
+}
+
+/* ---------- Step 2: the Suno guide as numbered cards ---------- */
+:root .howto { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(12px, 1.6vw, 20px); }
+:root .howto li { gap: .4rem; padding: 22px 22px 22px 76px; min-height: 104px; background: var(--grey); border: 0; border-radius: 18px; }
+:root .howto li::before { top: 22px; left: 22px; width: 38px; height: 38px; background: var(--red); font-size: 1rem; }
+:root .howto strong { font-size: 1.05rem; line-height: 1.3; }
+:root .howto p { font-size: .9375rem; }
+@media (max-width: 900px) { :root .howto { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { :root .howto { grid-template-columns: minmax(0, 1fr); } :root .howto li { min-height: 0; } }
+
+.song-rules { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(12px, 1.6vw, 20px); margin-top: clamp(28px, 4vw, 44px); }
+.song-rules li { display: grid; gap: .3rem; padding: 18px 20px; border: 1.5px dashed #d8d5cf; border-radius: 16px; }
+.song-rules b { display: flex; align-items: center; gap: .55rem; color: var(--ink); font-size: 1rem; }
+.song-rules b::before { content: "✓"; display: grid; place-items: center; width: 22px; height: 22px; background: var(--ink); border-radius: 50%; color: #fff; font-size: .75rem; }
+.song-rules span { color: var(--muted); font-size: .9375rem; }
+@media (max-width: 760px) { .song-rules { grid-template-columns: minmax(0, 1fr); } }
+:root .after-note { margin-top: 1.4rem; }
+
+/* ---------- Things rise into place, one after another ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  .song-anim [data-reveal-group] > * { opacity: 0; transform: translateY(22px); transition: opacity .6s ease, transform .7s cubic-bezier(.2, .8, .2, 1); transition-delay: calc(var(--i, 0) * 90ms); }
+  .song-anim [data-reveal-group].is-in > * { opacity: 1; transform: none; }
+  .song-anim .how::before { transform: scaleX(0); transition: transform 1.2s cubic-bezier(.6, 0, .2, 1) .2s; }
+  .song-anim .how.is-in::before { transform: scaleX(1); }
+  .song-anim .how.is-in .how-icon { animation: icon-pop .6s cubic-bezier(.2, .9, .3, 1.4) both; animation-delay: calc(var(--i, 0) * 90ms + .25s); }
+}
+@keyframes icon-pop { from { transform: scale(.6) rotate(-10deg); } }
+
+/* Phones: the three steps are compact rows, icon on the left */
+@media (max-width: 760px) {
+  :root .how a { grid-template-columns: 48px minmax(0, 1fr); column-gap: 16px; align-items: center; padding: 18px 20px; }
+  :root .how-icon { grid-row: 1 / span 2; width: 48px; height: 48px; margin: 0; }
+  :root .how-num { display: none; }
+  :root .how strong, :root .how span:last-child { grid-column: 2; }
+}

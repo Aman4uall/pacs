@@ -28,6 +28,7 @@
   <link rel="stylesheet" href="assets/styles.css?v=20260926">
   <link rel="stylesheet" href="assets/refresh.css?v=20260926">
   <link rel="stylesheet" href="assets/motion.css?v=20260926e">
+  <link rel="stylesheet" href="assets/song.css?v=20260926e">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -82,26 +83,10 @@
         },
         {
           "@type": "Question",
-          "name": "Does it cost anything?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "No. Entry is free, and Suno's free plan is enough to make your song."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "How many songs can I send?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "One song per person. If you make a better version later, send it again and we'll judge your latest entry."
-          }
-        },
-        {
-          "@type": "Question",
           "name": "How are songs judged?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "By the PACS AI team, on three things: the idea, the words, and how well the style fits the song. Songs where students wrote the words themselves stand out."
+            "text": "By the PACS AI team, on the idea, the words and how well the style fits. Songs with the student's own words stand out."
           }
         },
         {
@@ -109,23 +94,7 @@
           "name": "What's the prize, and when are the results?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "One in every 10 songs wins ₹500, so the more songs come in, the more winners there are: 50 songs means 5 winners. The winners are the best songs, picked by the PACS AI team. Results are announced on this page."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Which AI music websites can I use?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Any, as long as you follow its rules, including its age rules, and can send us a link. We show Suno because it's free and easy to use."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "What happens to our details?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Only the PACS AI team sees them, and we use them only to run this challenge. We never sell them. The Terms and Conditions explain exactly what we keep and for how long."
+            "text": "One in every 10 songs wins ₹500, so 50 songs means 5 winners. The PACS AI team picks the best songs, and results are announced on this page."
           }
         }
       ]
@@ -156,23 +125,24 @@
   <section class="hero song-hero">
     <div class="wrap hero-grid">
       <div class="hero-copy">
-        <p class="eyebrow">AI Song Challenge · For Classes 8–12</p>
+        <p class="eyebrow">AI Song Challenge · Class 8–12</p>
         <h1>Make your first AI song. <span class="accent">Win ₹500.</span></h1>
-        <p class="lede">No singing. No instruments. Just your idea. Write a few lines, let AI turn them into a real song, and send it in.</p>
+        <p class="lede">No singing. No instruments. Write a few lines, and AI turns them into a real song.</p>
         <div class="actions">
           <a class="btn btn-primary" href="#idea">Start my song</a>
           <a class="btn btn-outline" href="#submit">Submit my song</a>
         </div>
-        <p class="note">Free to enter. One in every 10 valid entries wins ₹500.</p>
       </div>
 
       <div class="player-wrap" aria-hidden="true">
         <p class="scribble">Your ideas can sound real.</p>
+        <i class="note-float n1">♪</i><i class="note-float n2">♫</i><i class="note-float n3">♪</i>
         <div class="player">
           <p class="player-top"><i></i>Now playing</p>
           <div class="player-art"><div class="wave"><i style="--h:38%;--d:-0.00s"></i><i style="--h:62%;--d:-0.37s"></i><i style="--h:80%;--d:-0.74s"></i><i style="--h:55%;--d:-0.01s"></i><i style="--h:92%;--d:-0.38s"></i><i style="--h:70%;--d:-0.75s"></i><i style="--h:45%;--d:-0.02s"></i><i style="--h:85%;--d:-0.39s"></i><i style="--h:60%;--d:-0.76s"></i><i style="--h:100%;--d:-0.03s"></i><i style="--h:72%;--d:-0.40s"></i><i style="--h:50%;--d:-0.77s"></i><i style="--h:88%;--d:-0.04s"></i><i style="--h:66%;--d:-0.41s"></i><i style="--h:40%;--d:-0.78s"></i><i style="--h:78%;--d:-0.05s"></i><i style="--h:95%;--d:-0.42s"></i><i style="--h:58%;--d:-0.79s"></i><i style="--h:74%;--d:-0.06s"></i><i style="--h:48%;--d:-0.43s"></i><i style="--h:90%;--d:-0.80s"></i><i style="--h:64%;--d:-0.07s"></i><i style="--h:82%;--d:-0.44s"></i><i style="--h:52%;--d:-0.81s"></i><i style="--h:70%;--d:-0.08s"></i><i style="--h:96%;--d:-0.45s"></i><i style="--h:60%;--d:-0.82s"></i><i style="--h:44%;--d:-0.09s"></i></div></div>
           <p class="player-title" data-player-title>One More Page</p>
           <p class="player-by" data-player-by>Your name · Class 9</p>
+          <p class="player-lyric" data-player-lyric><span style="--w:0">One</span> <span style="--w:1">more</span> <span style="--w:2">page,</span> <span style="--w:3">then</span> <span style="--w:4">I'm</span> <span style="--w:5">done</span></p>
           <div class="player-bar"><i></i></div>
           <div class="player-controls">
             <span>0:42</span>
@@ -184,20 +154,21 @@
     </div>
   </section>
 
-  <!-- The prize -->
-  <section class="prize">
+  <!-- The prize: 1 in 10 -->
+  <section class="prize" data-prize>
     <div class="wrap prize-inner">
-      <div class="prize-cup" aria-hidden="true">
-        <svg viewBox="0 0 64 64"><path d="M18 8h28v6h10v6c0 8-6 14-13 15-2 5-6 8-9 9v7h9v7H21v-7h9v-7c-3-1-7-4-9-9-7-1-13-7-13-15v-6h10V8Zm-4 12c0 4 2 7 5 8-1-2-1-5-1-8h-4Zm36 0h-4c0 3 0 6-1 8 3-1 5-4 5-8Z" fill="currentColor"/></svg>
-      </div>
-      <div>
+      <div class="prize-copy">
         <p class="eyebrow">1 in 10 songs wins</p>
-        <p class="prize-amount">₹500</p>
+        <p class="prize-amount">₹<span data-count-to="500">500</span></p>
+      </div>
+      <div class="odds" aria-hidden="true" data-odds>
+        <div class="odds-row"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <p>Any song could be the one.</p>
       </div>
       <ul class="prize-facts">
-        <li>More songs, more winners</li>
         <li>Free to enter</li>
-        <li>One song per person</li>
+        <li>One song each</li>
+        <li>More songs, more winners</li>
       </ul>
     </div>
   </section>
@@ -207,12 +178,11 @@
     <div class="wrap">
       <div class="head">
         <h2>You can do this tonight.</h2>
-        <p class="lede">Pick an idea, turn it into a song with AI, and send it in. No singing, no instruments and no fees.</p>
       </div>
-      <ol class="how">
-        <li><a href="#idea"><span class="how-num">01</span><strong>Get an idea</strong><span>Pick a topic, a mood and a style.</span></a></li>
-        <li><a href="#make"><span class="how-num">02</span><strong>Make it on Suno</strong><span>A free AI music website sings your words.</span></a></li>
-        <li><a href="#submit"><span class="how-num">03</span><strong>Send it in</strong><span>In about two minutes.</span></a></li>
+      <ol class="how" data-reveal-group>
+        <li><a href="#idea"><span class="how-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3Z"/></svg></span><span class="how-num">01</span><strong>Get an idea</strong><span>A topic, a mood, a style.</span></a></li>
+        <li><a href="#make"><span class="how-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 10v4M8 7v10M12 4v16M16 8v8M20 11v2"/></svg></span><span class="how-num">02</span><strong>Make it on Suno</strong><span>Free AI that sings your words.</span></a></li>
+        <li><a href="#submit"><span class="how-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M21 3 10 14M21 3l-7 18-4-7-7-4 18-7Z"/></svg></span><span class="how-num">03</span><strong>Send it in</strong><span>Two minutes, one link.</span></a></li>
       </ol>
     </div>
   </section>
@@ -223,7 +193,7 @@
       <div class="head">
         <p class="eyebrow">Step 1 · Your idea</p>
         <h2>Start with something you actually care about.</h2>
-        <p class="lede">Pick a topic, a mood and a style. We'll set up the song. You write the words.</p>
+        <p class="lede">Pick three things. We set up the song. You write the words.</p>
       </div>
       <div class="machine" data-machine>
         <div class="machine-picks">
@@ -296,22 +266,22 @@ One more page, then I'm done
       <div class="head">
         <p class="eyebrow">Step 2 · Make it</p>
         <h2>Turn it into a song on Suno.</h2>
-        <p class="lede">Suno is an AI music website. You give it your words and a style, and it sings them back as a full song. The free plan is enough.</p>
+        <p class="lede">Suno sings your words back as a full song. The free plan is enough.</p>
       </div>
-      <ol class="howto">
-        <li><strong>Sign up at suno.com</strong><p>Create a free account. The free plan gives you about 10 songs a day.</p></li>
-        <li><strong>Open Create, then Custom</strong><p>Custom mode lets you use your own words instead of letting the AI write them.</p></li>
-        <li><strong>Paste your lyrics</strong><p>Use your starter from Step 1, with every ✎ line replaced. Keep the [Verse] and [Chorus] labels: they tell Suno how to shape the song.</p></li>
-        <li><strong>Add the style and a title</strong><p>The style tells Suno how the song should sound. Don't use real singers' names.</p></li>
-        <li><strong>Press Create and listen</strong><p>You get two versions. Change a word or the style and try again. Great songs usually take a few tries.</p></li>
-        <li><strong>Copy your song's link</strong><p>In your Library, find your best version and tap Copy link (or ⋯ then Share). Leave it on "Link only". It doesn't need to be public.</p></li>
+      <ol class="howto" data-reveal-group>
+        <li><strong>Sign up at suno.com</strong><p>Free, about 10 songs a day.</p></li>
+        <li><strong>Open Create, then Custom</strong><p>So it sings your words.</p></li>
+        <li><strong>Paste your lyrics</strong><p>Keep the [Verse] and [Chorus] labels.</p></li>
+        <li><strong>Add the style and title</strong><p>No real singers' names.</p></li>
+        <li><strong>Press Create</strong><p>Try a few versions.</p></li>
+        <li><strong>Copy your song's link</strong><p>Library, then Copy link.</p></li>
       </ol>
-      <div class="grid cols-3 tips">
-        <div class="feature"><h3>Your words, your idea</h3><p>Write the lyrics yourself. If AI helped, that's fine. Just tell us how much when you send it.</p></div>
-        <div class="feature"><h3>Nothing copied</h3><p>No lyrics from existing songs, and no real singers' names in the style.</p></div>
-        <div class="feature"><h3>Keep it kind</h3><p>No real names of classmates or teachers, and nothing hurtful.</p></div>
-      </div>
-      <p class="note after-note">Using a different AI music website? That's fine, as long as you follow its rules and can send us a link to your song.</p>
+      <ul class="song-rules" data-reveal-group>
+        <li><b>Your words</b><span>AI help is fine. Just tell us.</span></li>
+        <li><b>Nothing copied</b><span>No existing lyrics or singers.</span></li>
+        <li><b>Keep it kind</b><span>No real names, nothing hurtful.</span></li>
+      </ul>
+      <p class="note after-note">Another AI music website is fine too, if you can send us a link.</p>
     </div>
   </section>
 
@@ -321,7 +291,7 @@ One more page, then I'm done
       <div class="head">
         <p class="eyebrow">Step 3 · Send it</p>
         <h2>Enter your song.</h2>
-        <p class="lede">For Class 8–12 students. It takes about two minutes; keep your song's link handy.</p>
+        <p class="lede">For Class 8–12. Two minutes. Keep your song's link handy.</p>
       </div>
 
       <form class="form entry" id="song-entry" novalidate data-entry>
@@ -460,17 +430,13 @@ One more page, then I'm done
   <section class="section" id="rules">
     <div class="wrap split">
       <div class="head">
-        <h2>Rules, prize and privacy</h2>
+        <h2>Rules and prize</h2>
         <a class="link" href="terms.html">Read the full Terms and Conditions</a>
       </div>
       <div class="faq">
         <details><summary>Who can enter?</summary><p>Only students currently in Classes 8–12, including PUC students, from any school or board. If you're under 18, a parent or guardian must agree to the terms.</p></details>
-        <details><summary>Does it cost anything?</summary><p>No. Entry is free, and Suno's free plan is enough to make your song.</p></details>
-        <details><summary>How many songs can I send?</summary><p>One song per person. If you make a better version later, send it again and we'll judge your latest entry.</p></details>
-        <details><summary>How are songs judged?</summary><p>By the PACS AI team, on three things: the idea, the words, and how well the style fits the song. Songs where students wrote the words themselves stand out.</p></details>
-        <details><summary>What's the prize, and when are the results?</summary><p>One in every 10 songs wins ₹500, so the more songs come in, the more winners there are: 50 songs means 5 winners. The winners are the best songs, picked by the PACS AI team. Results are announced on this page.</p></details>
-        <details><summary>Which AI music websites can I use?</summary><p>Any, as long as you follow its rules, including its age rules, and can send us a link. We show Suno because it's free and easy to use.</p></details>
-        <details><summary>What happens to our details?</summary><p>Only the PACS AI team sees them, and we use them only to run this challenge. We never sell them. The <a href="terms.html">Terms and Conditions</a> explain exactly what we keep and for how long.</p></details>
+        <details><summary>How are songs judged?</summary><p>By the PACS AI team, on the idea, the words and how well the style fits. Songs with the student's own words stand out.</p></details>
+        <details><summary>What's the prize, and when are the results?</summary><p>One in every 10 songs wins ₹500, so 50 songs means 5 winners. The PACS AI team picks the best songs, and results are announced on this page.</p></details>
       </div>
     </div>
   </section>
@@ -514,7 +480,7 @@ One more page, then I'm done
 </footer>
 
 <script src="assets/site.js?v=20260926"></script>
-<script src="assets/challenge.js?v=20260926"></script>
+<script src="assets/challenge.js?v=20260926e"></script>
 <script src="assets/motion.js?v=20260926"></script>
 </body>
 </html>

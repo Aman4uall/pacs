@@ -14,6 +14,18 @@
   const TERMS_VERSION = "2026-09-23-v2";
 
   /* ---------- Now playing: the card cycles through song ideas ---------- */
+  // The chorus line under the title lights up word by word, karaoke style
+  const playerLyric = document.querySelector("[data-player-lyric]");
+  const HOOKS = { "One More Page": "One more page, then I'm done", "Monsoon Mode": "Rain on the roof, chai in my hand", "Same Bench": "Same bench since Class 1", "Last Ball Six": "Six on the last ball", "Build Tomorrow": "Watch me build tomorrow" };
+  function setLyric(title) {
+    if (!playerLyric || !HOOKS[title]) return;
+    playerLyric.replaceChildren(...HOOKS[title].split(" ").flatMap((w, i) => {
+      const s = document.createElement("span");
+      s.style.setProperty("--w", i);
+      s.textContent = w;
+      return i ? [" ", s] : [s];
+    }));
+  }
   const playerTitle = document.querySelector("[data-player-title]");
   const playerBy = document.querySelector("[data-player-by]");
   if (playerTitle && !reduce) {
@@ -25,6 +37,7 @@
       setTimeout(() => {
         playerTitle.textContent = songs[n][0];
         playerBy.textContent = `Your name · ${songs[n][1]}`;
+        setLyric(songs[n][0]);
         playerTitle.classList.remove("is-out");
       }, 300);
     }, 3200);
@@ -336,4 +349,42 @@
   });
 
   show(0, false);
+})();
+
+/* ---------- Page motion: things rise in as they arrive, ₹500 counts up, the winning record moves ---------- */
+(function () {
+  const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (calm || !("IntersectionObserver" in window)) return;
+  document.documentElement.classList.add("song-anim");
+  const seen = (el, fn, opts) => new IntersectionObserver((entries, io) => entries.forEach((e) => { if (e.isIntersecting) { io.unobserve(e.target); fn(e.target); } }), opts || { threshold: .25 }).observe(el);
+
+  document.querySelectorAll("[data-reveal-group]").forEach((group) => {
+    [...group.children].forEach((child, i) => child.style.setProperty("--i", i));
+    seen(group, (g) => g.classList.add("is-in"), { threshold: .15 });
+  });
+
+  const count = document.querySelector("[data-count-to]");
+  if (count) {
+    const to = +count.dataset.countTo;
+    count.textContent = "0";
+    seen(count, () => {
+      const start = performance.now(), ms = 1300;
+      const step = (now) => {
+        const t = Math.min(1, (now - start) / ms);
+        count.textContent = String(Math.round(to * (1 - Math.pow(1 - t, 3))));
+        if (t < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    }, { threshold: .6 });
+  }
+
+  // One of ten records lights up at a time: any song could be the one
+  const odds = document.querySelector("[data-odds]");
+  if (odds) {
+    const discs = [...odds.querySelectorAll("i")];
+    let n = 0, timer = 0;
+    const tick = () => { discs.forEach((d, i) => d.classList.toggle("is-win", i === n)); n = (n + 3) % discs.length; };
+    tick();
+    new IntersectionObserver(([e]) => { clearInterval(timer); if (e.isIntersecting) timer = setInterval(tick, 900); }).observe(odds);
+  }
 })();
