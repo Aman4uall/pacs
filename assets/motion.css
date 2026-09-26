@@ -604,3 +604,20 @@ body:not(.motion-enabled) .session-front small,body:not(.motion-enabled) .sessio
 :root .outcome-card .outcome-link { position: absolute; top: 22px; right: 22px; width: auto; margin: 0; }
 :root .outcome-card p { margin-bottom: 0; }
 :root .outcome-card h3 { padding-right: 30px; }
+
+/* Phone menu: rows never squash into each other. On short screens (an iPhone with
+   Safari's bars showing) the rows scale with the screen height, and if they still
+   don't fit, the menu scrolls instead of overlapping. */
+@media (max-width: 880px) {
+  .nav-links > li { flex-shrink: 0; }
+  .nav-links { overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+  .nav-links li:not(.menu-extra) > a, .nav-links li:not(.menu-extra) > a:not([aria-current]) {
+    padding-block: min(18px, 2dvh);
+    font-size: min(clamp(2rem, 1.2rem + 4.5vw, 2.6rem), 5.2dvh);
+  }
+  .nav-links .menu-extra { padding-top: min(28px, 3dvh); }
+}
+/* Short screens: the Song Challenge already sits in the red strip above, so the menu skips it and fits */
+@media (max-width: 880px) and (max-height: 700px) { .nav-links .menu-extra a.menu-song { display: none; } }
+/* Home course cards: the two facts stay on one line on phones */
+@media (max-width: 620px) { :root .course-facts { gap: 6px; } :root .course-facts span { padding: 5px 8px; font-size: .8125rem; white-space: nowrap; } }
