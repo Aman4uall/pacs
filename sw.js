@@ -22,7 +22,7 @@ const CORE = [
 ];
 const LATER = [
   "class-8-12.html", "bba.html", "learn.html", "demos.html", "contact.html", "meetup.html", "song-challenge.html", "terms.html",
-  "assets/live.js", "assets/skills.js", "assets/learn.js", "assets/meetup.js", "assets/challenge.js", "assets/song.css", "assets/apple-touch-icon.png",
+  "assets/live.js", "assets/skills.js", "assets/learn.js", "assets/meetup.js", "assets/challenge.js", "assets/song.css", "assets/songplayer.js", "assets/apple-touch-icon.png",
 ];
 // Files from other sites that never change once published, so the saved copy is always right
 const LIB_HOSTS = ["fonts.gstatic.com", "cdn.jsdelivr.net", "storage.googleapis.com"];

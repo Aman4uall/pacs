@@ -127,6 +127,7 @@ in a way that matters.
 | The live demos on that page: Rock Paper Scissors vs AI, Train your own AI, Cricket shot coach, Present without a clicker (camera, using Google's MediaPipe from jsDelivr, downloaded in the background once a camera demo is close on screen; nothing leaves the device), Live subtitles (the browser's speech recognition), Pitch to the AI Sharks, Fantasy XI analyst, Haggle, Brand in 10 seconds | `assets/live.js` |
 | The working demos (mango sorter, study coach, Python game, revision app, film storyboard, campaign post, break-even, pitch deck) and the home page Class 8–12 / BBA demo tabs | `assets/builds.js` |
 | The Song Challenge idea machine and entry form | `assets/challenge.js` |
+| The Song Challenge's playable card (play, pause, skip, seek) and Step 1's "Hear this style": music made on the device with the Web Audio API, six styles, no audio files | `assets/songplayer.js`, styled in `assets/song.css` |
 | The meetup: next date, countdown, upcoming dates, calendar file and registration form | `meetup.html`, with `assets/meetup.js` |
 | AI for Everyone: 36 skills in seven categories, search and plan review | `learn.html`, with `assets/learn.js` |
 | Share images for WhatsApp and social media | `assets/og-home.png`, `assets/og-song.png` |

@@ -1,6 +1,6 @@
 /* =========================================================================
    PACS AI – AI Song Challenge
-   The "now playing" card, the idea machine and the entry form.
+   The idea machine and the entry form (the playable card is songplayer.js).
    Entries go to a Google Sheet through SITE.songEntries (see site.js and
    song-challenge-backend/SETUP.md). Until that is set, the form hands the
    entry to WhatsApp instead, so nothing is ever lost.
@@ -12,36 +12,6 @@
   const $$ = (root, sel) => [...root.querySelectorAll(sel)];
   // Change this whenever terms.html changes, so the sheet records which version each entry agreed to
   const TERMS_VERSION = "2026-09-23-v2";
-
-  /* ---------- Now playing: the card cycles through song ideas ---------- */
-  // The chorus line under the title lights up word by word, karaoke style
-  const playerLyric = document.querySelector("[data-player-lyric]");
-  const HOOKS = { "One More Page": "One more page, then I'm done", "Monsoon Mode": "Rain on the roof, chai in my hand", "Same Bench": "Same bench since Class 1", "Last Ball Six": "Six on the last ball", "Build Tomorrow": "Watch me build tomorrow" };
-  function setLyric(title) {
-    if (!playerLyric || !HOOKS[title]) return;
-    playerLyric.replaceChildren(...HOOKS[title].split(" ").flatMap((w, i) => {
-      const s = document.createElement("span");
-      s.style.setProperty("--w", i);
-      s.textContent = w;
-      return i ? [" ", s] : [s];
-    }));
-  }
-  const playerTitle = document.querySelector("[data-player-title]");
-  const playerBy = document.querySelector("[data-player-by]");
-  if (playerTitle && !reduce) {
-    const songs = [["One More Page", "Class 9"], ["Monsoon Mode", "Class 11"], ["Same Bench", "Class 10"], ["Last Ball Six", "Class 8"], ["Build Tomorrow", "Class 12"]];
-    let n = 0;
-    setInterval(() => {
-      n = (n + 1) % songs.length;
-      playerTitle.classList.add("is-out");
-      setTimeout(() => {
-        playerTitle.textContent = songs[n][0];
-        playerBy.textContent = `Your name · ${songs[n][1]}`;
-        setLyric(songs[n][0]);
-        playerTitle.classList.remove("is-out");
-      }, 300);
-    }, 3200);
-  }
 
   /* ---------- Step 1: the idea machine ---------- */
   const TOPICS = {

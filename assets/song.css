@@ -8,7 +8,7 @@
 
 /* ---------- Hero: notes drift up beside the player, the chorus lights up word by word ---------- */
 .player-wrap { isolation: isolate; }
-.note-float { position: absolute; z-index: 3; color: var(--red); font-style: normal; font-weight: 700; opacity: 0; pointer-events: none; }
+.note-float { position: absolute; z-index: 0; color: var(--red); font-style: normal; font-weight: 700; opacity: 0; pointer-events: none; }
 .note-float.n1 { top: 30%; left: 6%; font-size: 1.9rem; }
 .note-float.n2 { top: 58%; right: 4%; font-size: 1.5rem; color: var(--ink); }
 .note-float.n3 { top: 76%; left: 12%; font-size: 1.2rem; }
@@ -95,4 +95,50 @@
   :root .how-icon { grid-row: 1 / span 2; width: 48px; height: 48px; margin: 0; }
   :root .how-num { display: none; }
   :root .how strong, :root .how span:last-child { grid-column: 2; }
+}
+
+/* ---------- The playable card ---------- */
+.player-top { display: flex; align-items: center; gap: .5rem; }
+.player-top em { margin-left: auto; color: #ff8a92; font-style: normal; letter-spacing: .08em; }
+/* Until play, the bars breathe; while playing, the music moves them (--a comes from the sound) */
+.player .wave i { transform-origin: center; }
+.player:not(.is-playing) .wave i { animation: breathe 2.6s ease-in-out var(--d) infinite alternate; }
+.player.is-playing .wave i { animation: none; transform: scaleY(var(--a, .2)); transition: transform .07s linear; }
+@keyframes breathe { from { transform: scaleY(.18); } to { transform: scaleY(.48); } }
+/* Karaoke: a gentle loop until play, then the words light up on the beat */
+.player.is-playing .player-lyric span { animation: none; color: #6f6e6a; }
+.player.is-playing .player-lyric span.is-sung { color: #fff; }
+
+.player-bar { position: relative; height: 6px; margin: 18px 0 12px; overflow: visible; border-radius: 3px; cursor: pointer; touch-action: none; }
+.player-bar::before { content: ""; position: absolute; inset: -12px 0; }
+.player-bar i { width: 100%; border-radius: 3px; animation: none; transform: scaleX(0); }
+.player-bar::after { content: ""; position: absolute; top: 50%; left: calc(var(--p, 0) * 100%); width: 14px; height: 14px; background: #fff; border-radius: 50%; box-shadow: 0 2px 8px rgb(0 0 0 / .4); transform: translate(-50%, -50%) scale(.8); transition: transform .2s ease; }
+.player-bar:hover::after, .player-bar:focus-visible::after, .player.is-playing .player-bar::after { transform: translate(-50%, -50%) scale(1); }
+.player-bar:focus-visible { outline: 2px solid #fff; outline-offset: 6px; }
+
+.player-buttons { display: flex; align-items: center; gap: 14px; }
+.player-controls button { display: grid; place-items: center; padding: 0; border: 0; cursor: pointer; }
+.player-skip { width: 40px; height: 40px; background: transparent; border-radius: 50%; color: #fff; transition: background-color .2s ease; }
+.player-skip:hover { background: rgb(255 255 255 / .1); }
+.player-skip svg { width: 20px; fill: currentColor; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.player-play { transition: transform .15s ease; }
+.player-play:active { transform: scale(.94); }
+.player-play .i-pause, .player.is-playing .player-play .i-play { display: none; }
+.player.is-playing .player-play .i-pause { display: block; }
+.player-controls button:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+@media (prefers-reduced-motion: no-preference) {
+  .player:not(.is-playing) .player-play { animation: invite 2.2s ease-out infinite; }
+}
+@keyframes invite { 0% { box-shadow: 0 0 0 0 rgb(245 30 43 / .6); } 100% { box-shadow: 0 0 0 16px rgb(245 30 43 / 0); } }
+.no-audio .player-buttons, .no-audio .player-bar { opacity: .4; pointer-events: none; }
+
+/* ---------- Step 1: hear the style you picked ---------- */
+.machine-buttons { display: flex; flex-wrap: wrap; gap: 10px; margin-top: .8rem; }
+:root .machine-buttons .btn { margin-top: 0; }
+.hear-btn { display: inline-flex; align-items: center; gap: .55rem; }
+.hear-btn b::before { content: "▶"; font-size: .8em; }
+.hear-btn[aria-pressed="true"] { background: var(--red); border-color: var(--red); }
+.hear-btn[aria-pressed="true"] b::before { content: "■"; }
+@media (prefers-reduced-motion: no-preference) {
+  .hear-btn[aria-pressed="true"] b { animation: pulse 1s ease-in-out infinite; }
 }
