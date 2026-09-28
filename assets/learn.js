@@ -10,7 +10,10 @@
   const dialog = document.getElementById('plan-dialog');
   const note = document.getElementById('plan-note');
   const status = document.getElementById('plan-status');
-  const storageKey = 'pacs-ai-skill-plan-v2';
+  const tracks = [...document.querySelectorAll('[data-track]')];
+  const byId = new Map(boxes.map(box => [box.dataset.skillId, box]));
+  // The catalog changed shape, so old saved picks would restore skills that no longer exist.
+  const storageKey = 'pacs-ai-skill-plan-v3';
   const goals = filters.map(button => button.dataset.goal);
   const requestedGoal = new URLSearchParams(location.search).get('goal');
   // Every skill shows by default, in one scrolling list. A link like ?goal=work jumps to that group.
@@ -54,6 +57,18 @@
       });
     });
     status.textContent = '';
+    tracks.forEach(button => {
+      const ids = button.dataset.track.split(',');
+      const full = ids.every(id => byId.get(id)?.checked);
+      button.setAttribute('aria-pressed', String(full));
+      const label = button.querySelector('[data-track-add]');
+      if (!label) return;
+      label.textContent = full ? 'Added to your list ' : `Add ${ids.length} skills `;
+      const mark = document.createElement('b');
+      mark.setAttribute('aria-hidden', 'true');
+      mark.textContent = full ? '✓' : '+';
+      label.append(mark);
+    });
     try { sessionStorage.setItem(storageKey, JSON.stringify(selected.map(box => box.dataset.skillId))); } catch (_) { /* Optional persistence. */ }
   }
 
@@ -85,6 +100,17 @@
   search.addEventListener('search', filter);
   clear.addEventListener('click', () => { search.value = ''; filter(); search.focus(); });
   boxes.forEach(box => box.addEventListener('change', updatePicks));
+  // A track is a shortcut, not a lock: it ticks its skills, and a second press clears them again.
+  tracks.forEach(button => button.addEventListener('click', () => {
+    const ids = button.dataset.track.split(',');
+    const adding = !ids.every(id => byId.get(id)?.checked);
+    ids.forEach(id => { const box = byId.get(id); if (box) box.checked = adding; });
+    updatePicks();
+    const names = ids.map(id => byId.get(id)?.value).filter(Boolean);
+    document.getElementById('filter-status').textContent = adding
+      ? `${names.length} skills added to your list: ${names.join(', ')}.`
+      : 'Track removed from your list.';
+  }));
   document.querySelectorAll('[data-review]').forEach(button => button.addEventListener('click', () => {
     opener = button;
     status.textContent = '';

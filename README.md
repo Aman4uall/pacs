@@ -1,6 +1,6 @@
 # PACS AI website
 
-The website for PACS AI: hands-on AI courses in Mangalore for Class 8–12 and BBA/BBM students, a 36-skill AI for Everyone catalogue, a Class 8–12 AI Song Challenge, and the Innovators & Hustlers Meetup.
+The website for PACS AI: hands-on AI courses in Mangalore for Class 8–12 and BBA/BBM students, a seven-project AI for Everyone page with a learning basket, a Class 8–12 AI Song Challenge, and the Innovators & Hustlers Meetup.
 
 **Live address:** https://pacsai.pacsglobal.in
 
@@ -33,7 +33,7 @@ The site is built to open well on slow or patchy mobile data, without cutting an
 ## After it's live
 
 1. Open https://pacsai.pacsglobal.in/song-challenge.html and send a test entry. It should appear in the "PACS AI – AI Song Challenge entries" Google Sheet. Delete the test row afterwards.
-2. Open https://pacsai.pacsglobal.in/learn.html, tick a couple of things and send the list. It should open WhatsApp, and (once the separate learn-requests script is set up, see `../learn-requests-backend/SETUP.md`) the same message and list number appear in the **PACS AI Learn requests** sheet. Delete the test row afterwards.
+2. Open https://pacsai.pacsglobal.in/learn.html, choose a project, preview the enquiry and continue to WhatsApp. It should open WhatsApp, and (once the separate learn-requests script is set up, see `../learn-requests-backend/SETUP.md`) the same message and enquiry reference appear in the **PACS AI Learn requests** sheet. Delete the test row afterwards.
 3. Open https://pacsai.pacsglobal.in/meetup.html and register once. It should appear in the
    "PACS AI Meetup registrations" Google Sheet (see `../meetup-backend/SETUP.md`). Delete the
    test row afterwards.
@@ -78,8 +78,8 @@ The site itself is ready for search engines. Every page carries a title, a descr
 | Home | The organisation: address, map pin, phone, email, Instagram, PACS Global as parent, what we teach |
 | Class 8–12 | Both programmes as courses, with length and hours, and the 7 real FAQs |
 | BBA & BBM | The Sprint, the Bootcamp and the Studio as courses, and the 5 real FAQs |
-| AI for everyone | All 36 skills as a list |
-| Try the demos | All 42 demos as a list |
+| AI for everyone | Seven practical projects with learning plans |
+| Examples | Student demos, teacher examples and seven adult project samples |
 | Meetup | The next meetup as a dated event, free, with the map pin, written by `assets/meetup.js` so the date is never stale |
 | Song Challenge | The 7 real FAQs |
 | Every page | Breadcrumbs back to the home page |
@@ -129,14 +129,14 @@ in a way that matters.
 | Styles | `assets/styles.css`, `assets/refresh.css` for layout, `assets/motion.css` for animation, and `assets/demos.css` for the demos (loaded only on the home, Class 8–12, BBA and demos pages) |
 | Offline and slow-connection support | `sw.js`, registered at the bottom of `assets/site.js`; `offline.html` |
 | Card journeys, entrances, flip cards, hover lighting, BBA portfolio, reading progress and mobile enquiry bar | `assets/motion.js` (native browser APIs; no external animation libraries) |
-| The Try the demos page (42 demos: 8 for Class 8–12, 7 for BBA & BBM, and 27 for everyone, in sections that match the AI for everyone skills; the home page shows 3 per tab) | `demos.html` |
-| One demo for every AI for everyone skill that had none: tool finder, spot the mistake, clearer writing, explain at my level, meeting summary, prompt-to-picture, voiceover, content calendar, product listing, customer replies, study plan, sources, question paper, website builder, automation, your own assistant, household spending. Every skill card on learn.html links to its demo. | `assets/skills.js` |
+| Examples: 8 Class 8–12 demos, 7 BBA demos, four teacher examples and seven adult project samples | `demos.html` |
+| Existing teacher examples and legacy skill demo controls | `assets/skills.js` |
 | The live demos on that page: Rock Paper Scissors vs AI, Train your own AI, Cricket shot coach, Present without a clicker (camera, using Google's MediaPipe from jsDelivr, downloaded in the background once a camera demo is close on screen; nothing leaves the device), Live subtitles (the browser's speech recognition), Pitch to the AI Sharks, Fantasy XI analyst, Haggle, Brand in 10 seconds | `assets/live.js` |
 | The working demos (mango sorter, study coach, Python game, revision app, film storyboard, campaign post, break-even, pitch deck) and the home page Class 8–12 / BBA demo tabs | `assets/builds.js` |
 | The Song Challenge idea machine and entry form | `assets/challenge.js` |
 | The Song Challenge's playable card (play, pause, skip, seek) and Step 1's "Hear this style": music made on the device with the Web Audio API, six styles, no audio files | `assets/songplayer.js`, styled in `assets/song.css` |
 | The meetup: next date, countdown, upcoming dates, calendar file and registration form | `meetup.html`, with `assets/meetup.js` |
-| AI for Everyone: 36 skills in seven categories, search and plan review | `learn.html`, with `assets/learn.js` |
+| AI for everyone: seven projects, Earn/Create/Business/Work/Invest filters, inline details and a persistent basket | `learn.html`, `assets/project-data.js`, `assets/project-previews.js`, `assets/project-learn.js`, `assets/learn.css` |
 | Share images for WhatsApp and social media | `assets/og-home.png`, `assets/og-song.png` |
 | Search data: titles, descriptions, canonicals, structured data | in the `<head>` of every page |
 | Crawling and listing | `robots.txt`, `sitemap.xml` |
@@ -144,7 +144,9 @@ in a way that matters.
 
 Song Challenge entries, Learn requests and meetup registrations are each saved by their own Google Apps Script in the PACS AI Google account, writing to their own sheet. Nothing needs to be installed on the web host for any of them.
 
-Skill choices stay in the current browser tab's session storage. A copy of the WhatsApp message, with its list number, is sent to the separate PACS AI Learn requests sheet only when the visitor explicitly continues from the review dialog to WhatsApp. The site opens a draft; the visitor sends the message in WhatsApp. No booking or payment is completed by these buttons.
+Project choices stay in the browser's local storage under `pacs.ai.project-basket.v1` and survive reloads. Only project IDs are stored there; the optional note is not persisted. A copy of the combined WhatsApp message, with its enquiry reference, is sent to the separate PACS AI Learn requests sheet only when the visitor explicitly continues from the basket to WhatsApp. The site opens a draft; the visitor sends the message in WhatsApp. No booking or payment is completed by these buttons.
+
+To edit project content, update `assets/project-data.js` and previews in `assets/project-previews.js`, then run `node scripts/sync-project-markup.cjs` from the repository root. This refreshes course cards, homepage featured cards, adult examples and structured data. If the number of projects changes, also update the page's visible count labels and basket/browse copy. The old `assets/learn.js` is not loaded by the current course page. The proposed stocks curriculum is in `../design-notes/stocks-learning-plan.md`.
 
 The research and its limits are recorded in `../design-notes/ai-skills-research.md`. Category ordering is editorial, not a measured local popularity ranking. The course and challenge eligibility updates require publishing the website and updating the Apps Script deployment separately.
 

@@ -77,7 +77,7 @@ const SITE = {
     // Phones: the open menu ends with a WhatsApp button and the Song Challenge (hidden on laptops)
     const extra = document.createElement("li");
     extra.className = "menu-extra";
-    extra.innerHTML = `<a class="menu-cta" href="${waLink("Hi PACS AI, I'd like to know more about your courses.")}" target="_blank" rel="noopener">WhatsApp us</a>`
+    extra.innerHTML = `<a class="menu-cta" href="learn.html#your-idea">Help me choose</a>`
       + `<a class="menu-song" href="song-challenge.html"><b>1 in 10 wins ₹500</b><span>AI Song Challenge · Class 8–12</span></a>`;
     links.append(extra);
     const setOpen = (open) => {
@@ -96,7 +96,7 @@ const SITE = {
       if (toggle.getAttribute('aria-expanded') !== 'true') return;
       if (e.key === 'Escape') { setOpen(false); toggle.focus(); }
       if (e.key === 'Tab') {
-        const targets = [toggle, ...links.querySelectorAll('a')];
+        const targets = [toggle, ...links.querySelectorAll('a')].filter(el => el.getClientRects().length && getComputedStyle(el).visibility !== 'hidden');
         const index = targets.indexOf(document.activeElement);
         e.preventDefault();
         targets[(index + (e.shiftKey ? -1 : 1) + targets.length) % targets.length].focus();
@@ -160,6 +160,9 @@ const SITE = {
     const status = document.getElementById("enquiry-status");
     const preset = new URLSearchParams(location.search).get("for");
     if (preset && [...who.options].some((o) => o.value === preset)) who.value = preset;
+    const project = new URLSearchParams(location.search).get("project");
+    const projectNames = {"stocks":"Learn to earn with stocks","product-ads":"Product ads","ai-presenter":"AI presenter","client-websites":"Client websites","sales-assistants":"Sales assistants","reports-on-autopilot":"Reports on autopilot","interactive-lessons":"Interactive lessons"};
+    if (Object.hasOwn(projectNames, project)) form.elements.namedItem("message").value = `I'm interested in the "${projectNames[project]}" learning plan. Please share dates, fees and any extra tool costs.`;
 
     form.addEventListener("submit", (e) => {
       e.preventDefault();
@@ -176,32 +179,25 @@ const SITE = {
     });
   }
 
-  // Home closing: tick a few skills, then "Help me choose" opens WhatsApp with them written in
-  document.querySelectorAll("[data-closing-picks]").forEach((form) => {
-    const status = form.querySelector(".closing-status");
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const picks = [...form.querySelectorAll('input[name="pick"]:checked')].map((b) => b.value);
-      // The same list number goes into the WhatsApp message and the sheet, so the two can be matched
-      const ref = "H-" + (Date.now().toString(36).slice(-5) + Math.random().toString(36).slice(2, 5).padEnd(3, "0")).toUpperCase();
-      const lines = ["Hi PACS AI, I'd like help choosing where to start with AI."];
-      if (picks.length) lines.push("", "I'm interested in:", ...picks.map((p) => "• " + p), "", "My list number: " + ref);
-      const message = lines.join("\n");
-      window.open(waLink(message), "_blank", "noopener");
-      if (picks.length && SITE.learnPicks) {
-        const body = JSON.stringify({ kind: "learn", ref: ref, who: "Home page", count: picks.length, picks: picks.join(" | "), other: "", message: message });
-        try { navigator.sendBeacon(SITE.learnPicks, new Blob([body], { type: "text/plain;charset=UTF-8" })); } catch (err) { /* saving is optional; WhatsApp already opened */ }
-      }
-      status.textContent = "WhatsApp has opened with your message. Press send there to reach us.";
-    });
-  });
 })();
 
 /* Save the site on the visitor's phone so repeat visits open at once, slow
    connections fall back to the saved copy, and pages still open offline.
    Once the page is idle, the rest of the site downloads in the background
    (skipped on data saver and 2G). See sw.js. */
-if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost" || location.hostname === "127.0.0.1")) {
+const isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+// On a local preview the saved copy hides the edit you just made, so it stays off
+// unless you ask for it with ?sw=1. Any worker left over from an earlier visit is
+// removed and its saved pages deleted, so localhost always serves what is on disk.
+if (isLocal && !new URLSearchParams(location.search).has("sw") && "serviceWorker" in navigator) {
+  navigator.serviceWorker.getRegistrations().then((regs) => {
+    if (!regs.length) return;
+    Promise.all(regs.map((r) => r.unregister()))
+      .then(() => caches.keys())
+      .then((keys) => Promise.all(keys.map((k) => caches.delete(k))))
+      .then(() => location.reload());
+  }).catch(() => { /* Nothing saved to clear. */ });
+} else if ("serviceWorker" in navigator && (location.protocol === "https:" || isLocal)) {
   addEventListener("load", () => {
     navigator.serviceWorker.register("sw.js").then(() => navigator.serviceWorker.ready).then((reg) => {
       const net = navigator.connection || {};
