@@ -57,8 +57,6 @@
 .motion-enabled .btn { position:relative; overflow:hidden; isolation:isolate; }
 .motion-enabled .btn-primary::before { content:''; position:absolute; z-index:-1; inset:-80% -50%; background:linear-gradient(100deg,transparent 30%,#ffffff35 45%,transparent 60%); transform:translateX(-80%) rotate(-8deg); transition:transform .65s; pointer-events:none; }
 .motion-enabled .btn-primary:hover::before,.motion-enabled .btn-primary:focus-visible::before { transform:translateX(80%) rotate(-8deg); }.motion-enabled .btn-primary::after { transition:transform .35s var(--ease-out); }.motion-enabled .btn-primary:hover::after { transform:translate(3px,-3px); }
-.click-ring { position:absolute; border:1px solid #ffffffb0; border-radius:50%; pointer-events:none; width:16px; height:16px; margin:-8px; z-index:2; animation:click-ring .65s ease-out both; }
-@keyframes click-ring { to { transform:scale(22); opacity:0; } }
 .motion-enabled .possibility-work .possibility-icon i { transform-origin:bottom; animation:bar-breathe 2.8s ease-in-out infinite alternate; animation-delay:calc(var(--bar-i,0) * -.35s); }.possibility-icon i:nth-child(2) { --bar-i:1; }.possibility-icon i:nth-child(3) { --bar-i:2; }.possibility-icon i:nth-child(4) { --bar-i:3; }
 @keyframes bar-breathe { 0%,20% { transform:scaleY(.5); } 75%,100% { transform:scaleY(1); } }
 .motion-enabled .spark,.motion-enabled .plan-mark { animation:spark-turn 14s linear infinite; }@keyframes spark-turn { to { transform:rotate(360deg); } }

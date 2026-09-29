@@ -77,7 +77,7 @@ const SITE = {
     // Phones: the open menu ends with a WhatsApp button and the Song Challenge (hidden on laptops)
     const extra = document.createElement("li");
     extra.className = "menu-extra";
-    extra.innerHTML = `<a class="menu-cta" href="learn.html#your-idea">Help me choose</a>`
+    extra.innerHTML = `<a class="menu-cta" href="${waLink("Hi PACS AI, I'd like to know more about your courses.")}" target="_blank" rel="noopener">Talk to us</a>`
       + `<a class="menu-song" href="song-challenge.html"><b>1 in 10 wins ₹500</b><span>AI Song Challenge · Class 8–12</span></a>`;
     links.append(extra);
     const setOpen = (open) => {
@@ -232,6 +232,30 @@ document.addEventListener("click", (e) => {
   const target = id && document.getElementById(id);
   if (target) window.settleOn(target);
 });
+
+/* The tap ring (styles in refresh.css): a soft circle spreads from the point where any button,
+   tab or question is pressed. One listener for the whole page, nothing measured until a press. */
+(function () {
+  const calm = matchMedia("(prefers-reduced-motion: reduce)");
+  const HOSTS = '.btn, .px-button, .px-text-button, .menu-cta, .chip, button, [role="tab"], summary';
+  document.addEventListener("pointerdown", (e) => {
+    if (calm.matches || e.button > 0) return;
+    const host = e.target.closest && e.target.closest(HOSTS);
+    if (!host || host.disabled || host.closest(".sc-flip, .app-options, [data-no-ring]")) return;
+    if (getComputedStyle(host).position === "static") host.style.position = "relative";
+    const r = host.getBoundingClientRect();
+    const clip = document.createElement("span");
+    clip.className = "tap-clip";
+    clip.setAttribute("aria-hidden", "true");
+    const ring = document.createElement("span");
+    ring.className = "click-ring";
+    ring.style.left = `${e.clientX - r.left}px`;
+    ring.style.top = `${e.clientY - r.top}px`;
+    clip.append(ring);
+    host.append(clip);
+    setTimeout(() => clip.remove(), 700);
+  }, { passive: true });
+})();
 
 /* Lightweight mode for slow phones (see the end of motion.css): on phones that say they are
    small (2 GB of memory or less, 2 cores, data saver), or that turn out slow once the page has loaded,

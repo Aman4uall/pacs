@@ -219,18 +219,6 @@
       card.style.setProperty('--tilt-y', '0deg');
     });
   });
-  document.querySelectorAll('.btn').forEach(button => button.addEventListener('pointerdown', event => {
-    if (!preference.matches) return;
-    const rect = button.getBoundingClientRect();
-    const ring = document.createElement('span');
-    ring.className = 'click-ring';
-    ring.setAttribute('aria-hidden', 'true');
-    ring.style.left = `${event.clientX - rect.left}px`;
-    ring.style.top = `${event.clientY - rect.top}px`;
-    button.append(ring);
-    ring.addEventListener('animationend', () => ring.remove(), { once:true });
-    setTimeout(() => ring.remove(), 800);
-  }));
 
   // A tap or keyboard activation reveals the same side that desktop hover does.
   const flips = [...document.querySelectorAll('.session-flip')];

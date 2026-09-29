@@ -101,3 +101,9 @@ h2 { font-size:clamp(1.9rem,1.2rem + 2.1vw,2.8rem); line-height:1.12; letter-spa
 @media(min-width:881px){.site-nav .nav-secondary,.site-nav .menu-extra{display:none}.nav-links a{white-space:nowrap}.nav-cta{white-space:nowrap}}
 .projects-page .menu-extra{display:none}
 @media(max-width:880px){.projects-page .nav-links .menu-extra{display:grid;gap:12px;padding-block:16px}.projects-page .menu-extra a{font-size:15px;padding:12px 0}.projects-page .menu-extra a::after{content:none}.projects-page .menu-song{display:none}.projects-page .nav-links a{font-size:21px;padding:12px 0}.projects-page .nav-links a::after{font-size:11px}.projects-page .nav-links{overflow-y:auto;padding-bottom:36px}.projects-page .nav{min-height:70px}}
+
+/* The tap ring: a soft circle spreads from where a button is pressed (site.js adds it; skipped for reduced motion).
+   It takes the button's text colour, so it shows on dark and light buttons alike. */
+.tap-clip { position:absolute; inset:0; overflow:hidden; border-radius:inherit; pointer-events:none; z-index:2; }
+.click-ring { position:absolute; width:16px; height:16px; margin:-8px; border:1.5px solid currentColor; border-radius:50%; opacity:.6; pointer-events:none; animation:click-ring .6s ease-out both; }
+@keyframes click-ring { to { transform:scale(24); opacity:0; } }
