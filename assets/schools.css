@@ -191,35 +191,38 @@
 .bb-ticks li::before{content:'';position:absolute;left:0;top:3px;width:18px;height:18px;border-radius:50%;background:#e1efe3 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Cpath d='M5 9.5l2.6 2.6L13 6.5' fill='none' stroke='%231f7a4d' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/100% no-repeat}
 .bb-option.is-full .bb-ticks li::before{background-color:#33413a}
 .bb-ticks small{display:inline-block;margin-left:6px;padding:1px 8px;border-radius:99px;background:#1f2622;color:#fff;font-size:11px;font-weight:700;letter-spacing:.04em;vertical-align:2px}
-.bb-needs li::before{background-color:#f3e6cf}
 
-.bb-day{margin-top:44px}
-.bb-day-row{display:grid;grid-template-columns:130px minmax(0,1fr);gap:18px;align-items:center;margin-top:14px}
-.bb-day-label{font-size:15px;font-weight:650}.bb-day-label span{display:block;color:var(--bb-muted);font-size:13px;font-weight:500}
-.bb-day-bar{display:flex;gap:4px}
-.bb-day-bar>span{flex:var(--m) 1 0;min-width:92px;display:grid;align-content:center;gap:2px;min-height:64px;padding:10px 12px;border-radius:10px;background:#2f5d44;color:#fff;overflow:hidden;transform-origin:left}
-.bb-day-bar>span:nth-child(2){background:#3a7052}.bb-day-bar>span:nth-child(3){background:#468562}.bb-day-bar>span:nth-child(4){background:#579a73}
-.bb-day-bar.is-full>span{background:#9a3a2f}.bb-day-bar.is-full>span:nth-child(2){background:#b04a3c}.bb-day-bar.is-full>span:nth-child(3){background:#c25c4b}.bb-day-bar.is-full>span:nth-child(4){background:#cf705f}
-.bb-day-bar b{font-size:14px;font-weight:650;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.bb-day-bar i{font-style:normal;font-size:12px;opacity:.85}
-.ex-rise-on .bb-day-bar[data-rise]>*{transform:scaleX(.2)}
-.ex-rise-on .bb-day-bar[data-rise].is-in>*{transform:none}
 
-.bb-gets{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:44px}
-.bb-gets>div{padding:24px;background:#fff;border:1px solid var(--bb-line);border-radius:18px}
 
 /* Booking steps: a little more room now that there are four */
 .bb-school-brief ol[data-rise]>li{transition-delay:calc(var(--i,0) * 110ms)}
 
-@media(max-width:980px){.bb-why-grid{grid-template-columns:1fr}.bb-why-src{grid-column:auto;justify-self:start}.bb-gets{grid-template-columns:1fr 1fr}}
+@media(max-width:980px){.bb-why-grid{grid-template-columns:1fr}.bb-why-src{grid-column:auto;justify-self:start}}
 @media(max-width:650px){
   .bb-why{padding:28px 0}
   .bb-why-facts{grid-template-columns:1fr;gap:12px}
   .bb-why-facts li{grid-template-columns:auto 1fr;align-items:baseline;gap:10px}
-  .bb-options,.bb-gets{grid-template-columns:1fr}
+  .bb-options{grid-template-columns:1fr}
   .bb-option{padding:22px}
   .bb-option-hours b{font-size:52px}
-  .bb-day-row{grid-template-columns:1fr;gap:8px}
-  .bb-day-bar{flex-direction:column;gap:6px}
-  .bb-day-bar>span{flex:none;display:flex;justify-content:space-between;align-items:center;min-height:0;width:calc(38% + var(--m) * .7%);min-width:210px;max-width:100%;padding:10px 12px}
 }
+
+/* Your school gets: four picture tiles */
+.bb-school-gets{margin-top:48px}
+.bb-gets-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:14px}
+.bb-gets-grid article{display:grid;align-content:start;gap:8px;padding:16px 16px 22px;background:#fff;border:1px solid var(--bb-line);border-radius:18px;transition:transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .25s}
+.bb-gets-grid article:hover{transform:translateY(-4px);box-shadow:0 18px 36px -22px rgb(30 40 30 / .4)}
+.bb-gets-art{display:grid;place-items:center;height:120px;margin-bottom:6px;border-radius:12px;background:var(--t)}
+.bb-gets-art svg{width:auto!important;height:92px}
+.bb-gets-grid article:hover .bb-gets-art svg{animation:bb-wiggle .6s ease}
+@keyframes bb-wiggle{30%{transform:rotate(-4deg) scale(1.04)}70%{transform:rotate(3deg)}}
+.bb-gets-grid h3{font-size:19px;letter-spacing:-.025em}
+.bb-gets-grid p{color:var(--bb-muted);font-size:15px;line-height:1.5}
+@media(max-width:980px){.bb-gets-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:650px){.bb-gets-grid{gap:10px}.bb-gets-grid article{padding:12px 12px 16px}.bb-gets-art{height:92px}.bb-gets-art svg{height:70px}.bb-gets-grid h3{font-size:16px}.bb-gets-grid p{font-size:13px}}
+
+/* Every child's language */
+.bb-tongue{margin-top:12px;padding:14px 16px;border:1px solid #e3e3d8;border-radius:12px;background:#fffef9}
+.bb-tongue-top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.bb-tongue-top b{font-size:15px}
+.bb-tongue p{margin-top:6px!important;font-size:16px;line-height:1.65}

@@ -146,3 +146,40 @@ html.ex-open { overflow: hidden; }
 .ex-cta-actions { display: grid; gap: 8px; justify-items: start; }
 .ex-cta .bb-text-link { color: #f3f2ea !important; }
 @media (max-width: 760px) { .ex-cta { grid-template-columns: 1fr; padding: 24px; } }
+
+/* Stories, comics and speeches (English), and switches that stay pressed */
+.ex-btn[aria-pressed="true"] { background: var(--ac); border-color: var(--ac); color: #fff; }
+.ex-story { display: grid; }
+.ex-story svg { display: block; width: 100%; max-height: 190px; }
+.ex-story p { margin: 0; padding: 16px 18px 18px; font-family: Georgia, 'Times New Roman', serif; font-size: 19px; line-height: 1.65; }
+.ex-v, .ex-adj, .ex-doer { display: inline-block; padding: 0 6px; border-radius: 6px; font-family: Inter, Arial, sans-serif; font-size: .92em; font-weight: 700; animation: ex-flip .45s cubic-bezier(.2, .8, .2, 1) both; }
+.ex-v { background: #6a3fb0; color: #fff; }
+.ex-adj { background: #f1e7c9; color: #6b5214; }
+.ex-doer { background: #ffe1e3; color: #a1101c; }
+@keyframes ex-flip { from { opacity: 0; transform: rotateX(80deg); } }
+.ex-big-line { font-size: 22px !important; text-align: center; }
+.ex-comic { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 18px; }
+.ex-comic > div { position: relative; padding: 14px 16px; background: #fff; border: 2.5px solid #252b25; border-radius: 18px; animation: ex-in .4s ease both; }
+.ex-comic > div:nth-child(2) { animation-delay: .15s; }
+.ex-comic > div::after { content: ""; position: absolute; left: 22px; bottom: -12px; width: 18px; height: 18px; background: #fff; border-right: 2.5px solid #252b25; border-bottom: 2.5px solid #252b25; transform: rotate(45deg); }
+.ex-comic b { color: var(--ac); font-size: 13px; letter-spacing: .06em; text-transform: uppercase; }
+.ex-comic p { margin: 4px 0 0; font-size: 17px; font-weight: 600; line-height: 1.4; }
+.ex-report { display: grid; gap: 10px; margin: 18px; padding: 16px 18px; background: #fffdf4; border-left: 5px solid var(--ac); font-family: Georgia, 'Times New Roman', serif; font-size: 18px; line-height: 1.6; animation: ex-in .4s ease both; }
+.ex-report p { margin: 0; }
+.ex-report mark { padding: 0 4px; border-radius: 4px; background: #e6dcf6; color: #4b2a85; font-weight: 700; }
+.ex-speech { margin: 18px; padding: 18px 20px; background: #fff; border: 1px solid #e0dccf; border-radius: 14px; animation: ex-in .4s ease both; }
+.ex-speech small { color: var(--ac); font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+.ex-speech p { margin: 8px 0 0; font-family: Georgia, 'Times New Roman', serif; font-size: 18px; line-height: 1.65; }
+.ex-speech mark { padding: 0 4px; border-radius: 4px; background: #e6dcf6; color: #4b2a85; }
+.ex-pop { animation: ex-pop-in .5s cubic-bezier(.3, 1.4, .5, 1) both; transform-box: fill-box; transform-origin: center; }
+@keyframes ex-pop-in { from { opacity: 0; transform: scale(.6); } }
+.ex-drive { animation: ex-drive 5s linear infinite; }
+.ex-drive-slow { animation: ex-drive 11s linear infinite; }
+@keyframes ex-drive { from { transform: translateX(-10px); } to { transform: translateX(360px); } }
+@media (max-width: 620px) {
+  .ex-comic { grid-template-columns: 1fr; gap: 18px; }
+  .ex-story p { font-size: 17px; }
+  .ex-big-line { font-size: 19px !important; }
+}
+@media (prefers-reduced-motion: reduce) { .ex-v, .ex-adj, .ex-doer, .ex-comic > div, .ex-report, .ex-speech, .ex-pop, .ex-drive, .ex-drive-slow { animation: none !important; } }
+.lite .ex-drive, .lite .ex-drive-slow { animation: none; }

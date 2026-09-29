@@ -58,7 +58,7 @@
   const EX = [
     /* ---------- Maths ---------- */
     {
-      id: 'pizza', subject: 'maths', band: '3-5', cls: 'Class 4', featured: true,
+      id: 'pizza', subject: 'maths', band: '3-5', cls: 'Class 4',
       title: 'Share the pizza fairly', hook: 'Is 1/8 of a pizza more than 1/4?',
       ask: 'An activity for Class 4 fractions: a pizza shared between 2 to 8 friends, where students eat slices and see the fraction.',
       steps: ['Checked that every slice is exactly equal, because unequal parts are not fractions.', 'Asked for the pizza to show when a fraction simplifies, like 2/4 = 1/2.', 'Added the question on the card, so the class predicts before touching anything.'],
@@ -192,7 +192,7 @@
       read: s => { const d = s.to - s.from; return `From <b>${s.from}</b> to <b>${s.to}</b>: ${s.to} − (${s.from}) = <b>${d}</b>. The lift goes ${d > 0 ? 'up' : d < 0 ? 'down' : 'nowhere'}${d ? ` ${Math.abs(d)} floor${Math.abs(d) === 1 ? '' : 's'}` : ''}.`; },
     },
     {
-      id: 'fare', subject: 'maths', band: '9-10', cls: 'Class 9', featured: true,
+      id: 'fare', subject: 'maths', band: '9-10', cls: 'Class 9', featured: 2,
       title: 'Why is the auto fare a straight line?', hook: 'A starting charge, then a rate per km.',
       ask: 'A Class 9 linear equations activity: an auto-rickshaw fare graph where students change the trip, the starting charge and the rate per km.',
       steps: ['Used an auto fare, because students pay one every week.', 'Wrote the equation in the y = mx + c form next to the graph.', 'Checked the numbers stay realistic for a town trip.'],
@@ -238,7 +238,7 @@
       read: s => { const h2 = s.len ** 2 - s.foot ** 2; return `It reaches <b>${r2(Math.sqrt(h2))} m</b> up the wall. Height² = ${s.len}² − ${s.foot}² = ${r2(h2)}.`; },
     },
     {
-      id: 'dice', subject: 'maths', band: '9-10', cls: 'Class 10', featured: true,
+      id: 'dice', subject: 'maths', band: '9-10', cls: 'Class 10',
       title: 'Roll a thousand dice', hook: 'Does a six really come up 1 time in 6?',
       ask: 'A Class 10 probability activity: roll a die 10, 100 or 1,000 times and watch the results settle towards 1 in 6.',
       steps: ['Added the 1 in 6 line so students compare the bars with theory.', 'Made the rolls animate, so the settling is visible.'],
@@ -334,7 +334,7 @@
       read: s => { const th = Math.PI * (s.t - 6) / 12, e = Math.sin(th) * 80 * Math.PI / 180; return `At ${clock(s.t)}, the shadow is <b>${r1(1 / Math.tan(e))} times</b> the stick’s height. Low Sun, long shadow. It always points away from the Sun.`; },
     },
     {
-      id: 'circuit', subject: 'science', band: '6-8', cls: 'Class 6', featured: true,
+      id: 'circuit', subject: 'science', band: '6-8', cls: 'Class 6', featured: 3,
       title: 'One bulb breaks. What goes dark?', hook: 'Series or parallel: which keeps the lights on?',
       ask: 'A Class 6 electricity activity: three bulbs wired in one loop or in branches, with a button that breaks one bulb.',
       steps: ['Showed the current moving along the wire, so a broken loop is visible.', 'Matched the symbols to the ones in the textbook.'],
@@ -422,7 +422,7 @@
 
     /* ---------- Social Science ---------- */
     {
-      id: 'monsoon', subject: 'social', band: '9-10', cls: 'Class 9', featured: true,
+      id: 'monsoon', subject: 'social', band: '9-10', cls: 'Class 9', featured: 5,
       title: 'Why does Mangalore get so much rain?', hook: 'Follow the monsoon winds over the Western Ghats.',
       ask: 'A Class 9 geography activity: a side view of the coast, the Western Ghats and the plateau, with the summer and winter winds.',
       steps: ['Used our own coast, so students can place their town on it.', 'Labelled the rain shadow, the term in the chapter.'],
@@ -504,6 +504,128 @@
       read: s => `${s.cm} cm on the map × ${s.k} km = <b>${r1(s.cm * s.k)} km</b> on the ground.`,
     },
 
+    {
+      id: 'dandi', subject: 'social', band: '6-8', cls: 'Class 8', featured: 1,
+      title: 'Walk the Dandi March', hook: '24 days, 385 km, one fistful of salt. Where were they on day 10?',
+      ask: 'A Class 8 history activity: the Dandi March on a map, with a slider for the day that moves the marchers and tells what happened, like a diary.',
+      steps: ['Checked every date and distance against the textbook chapter.', 'Wrote each stage as a short diary entry, so it reads like a story.', 'Made the crowd grow along the road, because that is the point of the march.'],
+      use: 'Skip a stage and ask students to write that day’s diary entry. Then show the real one.',
+      init: () => ({ day: 1 }), smooth: ['day'],
+      controls: [{ type: 'range', key: 'day', label: 'Day of the march', min: 1, max: 26, step: 1, fmt: v => dandiDate(v) }],
+      art: v => {
+        const P = [[262, 30], [248, 60], [224, 86], [198, 106], [162, 126], [126, 146], [96, 164], [80, 178]], n = P.length - 1;
+        const at = t => { const x = clamp(t, 0, 1) * n, i = Math.min(n - 1, Math.floor(x)), f = x - i; return [P[i][0] + (P[i + 1][0] - P[i][0]) * f, P[i][1] + (P[i + 1][1] - P[i][1]) * f]; };
+        const t = clamp((v.day - 1) / 24, 0, 1), [gx, gy] = at(t), people = Math.min(46, 4 + Math.round(v.day * 1.7));
+        let walked = `M${P[0][0]} ${P[0][1]}`;
+        for (let k = 1; k <= 40; k++) { const [x, y] = at(t * k / 40); walked += `L${r1(x)} ${r1(y)}`; }
+        let crowd = '';
+        for (let k = 1; k < people; k++) { const [x, y] = at(t - k * 0.009); crowd += `<circle cx="${r1(x + ((k * 7) % 9) - 4)}" cy="${r1(y + ((k * 5) % 9) - 4)}" r="2.6" fill="${['#7a5230', '#b0561f', '#5d4a3a', '#8b6a4a'][k % 4]}"/>`; }
+        return svg('The route of the Dandi March from Sabarmati to Dandi', `<rect width="320" height="200" fill="#f1e4c6"/><path d="M0 0H64Q52 60 84 118Q58 150 70 200H0Z" fill="#9cc7d6"/>` + T(10, 150, 'Arabian', 'font-size="10" fill="#3f6f86"') + T(10, 162, 'Sea', 'font-size="10" fill="#3f6f86"') +
+          `<path d="M${P.map(p => p.join(' ')).join('L')}" fill="none" stroke="#b9a78a" stroke-width="3" stroke-dasharray="3 5"/><path d="${walked}" fill="none" stroke="#bd2934" stroke-width="3.5" stroke-linecap="round"/>` +
+          `<circle cx="262" cy="30" r="5" fill="#252b25"/>` + T(254, 22, 'Sabarmati Ashram', 'text-anchor="end" font-size="11" font-weight="600"') + `<circle cx="80" cy="178" r="5" fill="#252b25"/>` + T(90, 192, 'Dandi', 'font-size="11" font-weight="700"') +
+          crowd + `<circle cx="${r1(gx)}" cy="${r1(gy)}" r="5" fill="#fff" stroke="#252b25" stroke-width="2"/>` +
+          (v.day >= 25.5 ? `<g class="ex-pop"><path d="M72 172l4-6 4 6 4-6 4 6" fill="#fff" stroke="#9aa" /></g>` + T(96, 172, 'SALT', 'font-size="12" font-weight="800" fill="#bd2934"') : '') +
+          T(300, 150, dandiDate(Math.round(v.day)), 'text-anchor="end" font-size="16" font-weight="700"') + T(300, 168, `${Math.round(385 * t)} km walked`, 'text-anchor="end" font-size="12" fill="#62685f"') + T(300, 184, `${people > 45 ? 'Thousands' : people * 2 + ' and growing'}`, 'text-anchor="end" font-size="11" fill="#b0561f"'));
+      },
+      read: s => {
+        const d = s.day, e = d <= 3 ? 'Gandhi and 78 followers leave Sabarmati Ashram at dawn. They will walk about 16 km a day.' : d <= 9 ? 'Villages along the road welcome the marchers. At every stop, Gandhi speaks about the unfair tax on salt.' : d <= 17 ? 'Newspapers across India and abroad report the march. More people join every day.' : d <= 24 ? 'The crowd has grown into thousands. The police watch, but do not stop the march.' : d === 25 ? 'They reach Dandi on the coast, after 24 days and about 385 km.' : 'Gandhi picks up a lump of salt from the shore. The salt law is broken, and people across India follow.';
+        return `<b>${dandiDate(d)}.</b> ${e}`;
+      },
+    },
+    {
+      id: 'estates', subject: 'social', band: '9-10', cls: 'Class 9',
+      title: 'Who paid the taxes in 1789?', hook: '98% of France had one vote out of three. Would you have waited?',
+      ask: 'A Class 9 history activity on the French Revolution: the three estates, shown as shares of the people, the taxes paid and the votes in the Estates General.',
+      steps: ['Used the figures from the chapter and dropped the ones historians argue about.', 'Kept the vote view for last, because that is where the anger comes from.'],
+      use: 'Show the people view, then taxes, then votes. Ask the Third Estate half of the class what they would do.',
+      init: () => ({ view: 'people', p1: 0.5, p2: 1.5, p3: 98 }), smooth: ['p1', 'p2', 'p3'],
+      controls: [{ type: 'choice', key: 'view', label: 'Show', options: [['people', 'Share of people'], ['tax', 'Who paid taxes'], ['vote', 'Votes in 1789']] }],
+      fix: s => { Object.assign(s, { people: { p1: 0.5, p2: 1.5, p3: 98 }, tax: { p1: 0, p2: 0, p3: 100 }, vote: { p1: 33.3, p2: 33.3, p3: 33.3 } }[s.view]); },
+      art: v => {
+        const cols = [['Clergy', 'p1', '#7a6aa8', `<path d="M-9-14L0-30L9-14Z" fill="#f3e6a8" stroke="#b39a45"/>`], ['Nobles', 'p2', '#2f6db0', `<path d="M-16-12Q0-24 16-12Z" fill="#252b25"/><path d="M8-22l8-10" stroke="#e0843a" stroke-width="3"/>`], ['Everyone else', 'p3', '#bd2934', `<path d="M-11-12Q-8-30 10-22L11-12Z" fill="#bd2934"/>`]];
+        let out = '';
+        cols.forEach(([n, k, c, hat], i) => {
+          const x = 60 + i * 100, h = v[k] * 1.05;
+          out += `<g transform="translate(${x} 44)"><circle r="11" fill="#f1c9a5"/>${hat}<path d="M-14 12H14L18 34H-18Z" fill="${c}"/></g>` + T(x, 96, n, `${mid} font-size="11" font-weight="700"`);
+          out += `<rect x="${x - 26}" y="${r1(186 - h)}" width="52" height="${r1(Math.max(h, 1.5))}" rx="4" fill="${c}" opacity=".85"/>` + T(x, 180 - Math.min(h, 70), `${r1(v[k])}%`, `${mid} font-size="14" font-weight="700" fill="${h > 70 ? '#fff' : c}"`);
+        });
+        return svg('The three estates of France compared', out);
+      },
+      read: s => ({ people: 'The Third Estate was about <b>98% of France</b>: peasants, workers, merchants and lawyers.', tax: 'Only the Third Estate paid taxes to the state. <b>Clergy and nobles paid none.</b>', vote: 'Yet each estate had <b>one vote</b> in the Estates General. 98% of the people could be outvoted two to one. In June 1789, the Third Estate walked out.' })[s.view],
+    },
+    {
+      id: 'harappa', subject: 'social', band: '6-8', cls: 'Class 6',
+      title: 'Plan a Harappan city', hook: 'What did they build 4,500 years ago that many towns still lack?',
+      ask: 'A Class 6 history activity: build a Harappan city piece by piece (streets, drains, citadel, the Great Bath, storehouses) and learn why each one matters.',
+      steps: ['Checked each feature against the chapter on the earliest cities.', 'Wrote "perhaps granaries", because historians still debate it.'],
+      use: 'Before adding the drains, ask how our town handles rainwater. Then add them.',
+      init: () => ({ grid: false, drains: false, citadel: false, bath: false, store: false, last: '' }),
+      controls: [{ type: 'buttons', items: [['grid', 'Streets in a grid'], ['drains', 'Covered drains'], ['citadel', 'A citadel'], ['bath', 'The Great Bath'], ['store', 'Storehouses']].map(([k, n]) => ({ label: n, pressed: s => s[k], run: s => { s[k] = !s[k]; s.last = s[k] ? k : ''; } })) }],
+      art: (v, s) => {
+        let out = `<rect width="320" height="200" fill="#ead6ad"/>`;
+        if (s.citadel) out += `<path d="M8 40L112 30V178L8 186Z" fill="#cfa86e" stroke="#a9834b" stroke-width="2" class="ex-pop"/>` + T(60, 24, 'Citadel', `${mid} font-size="11" font-weight="700"`);
+        if (s.bath) out += `<g class="ex-pop"><rect x="28" y="56" width="62" height="40" rx="2" fill="#b07a4a"/><rect x="36" y="63" width="46" height="26" fill="#5fa3c7"/><path d="M36 66h46M36 72h46" stroke="#8cc4de"/></g>` + T(59, 110, 'Great Bath', `${mid} font-size="10" font-weight="600"`);
+        if (s.store) out += `<g class="ex-pop">${[0, 1, 2].map(i => `<rect x="${24 + i * 24}" y="126" width="20" height="36" fill="#a8743f"/><path d="M${27 + i * 24} 132v24M${34 + i * 24} 132v24M${41 + i * 24} 132v24" stroke="#7a5230"/>`).join('')}</g>` + T(59, 176, 'Storehouses', `${mid} font-size="10" font-weight="600"`);
+        const houses = [];
+        for (let r = 0; r < 3; r++) for (let c = 0; c < 4; c++) houses.push(s.grid ? [128 + c * 46, 22 + r * 56, 0] : [128 + c * 46 + ((r * 3 + c) % 3) * 9 - 9, 22 + r * 56 + ((c * 5 + r) % 4) * 7 - 8, ((r + c) % 3 - 1) * 12]);
+        if (s.grid) out += `<path d="M120 76H312M120 132H312M166 12V190M212 12V190M258 12V190" stroke="#f3e6c9" stroke-width="10"/>`;
+        if (s.drains) out += `<path class="ex-pop" d="${s.grid ? 'M120 80H312M120 136H312M170 12V190M216 12V190M262 12V190' : 'M120 82Q200 70 312 90M120 140Q210 126 312 146'}" stroke="#4d8fb8" stroke-width="3" stroke-dasharray="${s.grid ? '10 3' : '0'}"/>`;
+        houses.forEach(([x, y, a]) => { out += `<g transform="translate(${x + 18} ${y + 22}) rotate(${a})"><rect x="-18" y="-20" width="36" height="40" fill="#b8653f" stroke="#8b4c2a"/><rect x="-8" y="-8" width="16" height="14" fill="#e3c08f"/></g>`; });
+        return svg('A Harappan city being planned', out + T(216, 196, 'Lower town', `${mid} font-size="10" font-weight="600" fill="#5d4a2a"`));
+      },
+      read: s => {
+        const n = ['grid', 'drains', 'citadel', 'bath', 'store'].filter(k => s[k]).length;
+        const why = { grid: 'Streets met at right angles. Someone planned this city before it was built.', drains: 'Drains ran along the streets, covered with bricks, and houses connected to them.', citadel: 'The western part was built higher, on a raised platform.', bath: 'A large brick tank, made watertight with a layer of natural tar.', store: 'Big storehouses, perhaps for grain. Historians still debate what they held.' }[s.last];
+        return `<b>${n} of 5</b> features found at Mohenjodaro. ${why || 'Add a feature to see why it mattered.'}`;
+      },
+    },
+    {
+      id: 'street', subject: 'social', band: '3-5', cls: 'Class 4',
+      title: 'One street, 100 years', hook: 'What did your street look like when your great-grandparents were young?',
+      ask: 'A Class 4 then-and-now activity: one town street from 1925 to 2025, with a slider for the year.',
+      steps: ['Picked things students can spot on their own street today.', 'Kept the houses in the same place, so only time changes.'],
+      use: 'Students ask grandparents what their street had in 1975, then check the picture.',
+      init: () => ({ y: 1925 }),
+      controls: [{ type: 'range', key: 'y', label: 'Year', min: 1925, max: 2025, step: 25 }],
+      art: v => {
+        const e = (v.y - 1925) / 25, sky = ['#f3e2c0', '#e6e9d8', '#d7e6ee', '#cfe3f2', '#c6e2f6'][e];
+        let out = `<rect width="320" height="200" fill="${sky}"/><rect y="150" width="320" height="50" fill="${e ? '#8c8c8c' : '#c9ad7a'}"/>` + (e ? `<path d="M0 175H320" stroke="#f1f1f1" stroke-width="3" stroke-dasharray="16 12"/>` : '');
+        const tall = [0, 0, 18, 40, 60][e];
+        out += `<rect x="20" y="${100 - tall}" width="80" height="${50 + tall}" fill="${e > 2 ? '#e6d3b3' : '#e9c48f'}"/><path d="M14 ${100 - tall}L60 ${72 - tall}L106 ${100 - tall}Z" fill="${e > 1 ? '#9aa295' : '#b5532f'}"/><rect x="50" y="122" width="18" height="28" fill="#6b4a2f"/>`;
+        out += `<rect x="200" y="${96 - tall}" width="96" height="${54 + tall}" fill="${e > 2 ? '#d9d4ea' : '#f0d9a8'}"/>` + (e < 2 ? `<path d="M194 96L248 70L302 96Z" fill="#b5532f"/>` : '') + `<rect x="236" y="120" width="22" height="30" fill="#6b4a2f"/>`;
+        if (e >= 2) out += `<rect x="212" y="${104 - tall}" width="14" height="12" fill="#fff"/><rect x="270" y="${104 - tall}" width="14" height="12" fill="#fff"/>`;
+        if (e === 3) out += `<ellipse cx="282" cy="${88 - tall}" rx="10" ry="6" fill="#ddd" stroke="#999"/>`;
+        if (e === 4) out += `<path d="M204 ${92 - tall}l18-10h26l-18 10z" fill="#2f6db0"/><path d="M160 26V150M150 36h20M152 50h16" stroke="#6b705f" stroke-width="3"/>`;
+        out += e === 0 ? `<path d="M140 150V104" stroke="#5a3a1a" stroke-width="3"/><rect x="134" y="96" width="12" height="10" fill="#ffd34d" opacity=".8"/>` : `<path d="M140 150V70H156" stroke="#555" stroke-width="3" fill="none"/><path d="M0 64Q70 74 140 70T320 66" stroke="#444" fill="none"/><circle cx="156" cy="74" r="4" fill="${e === 4 ? '#e8f7ff' : '#ffd34d'}"/>`;
+        const V = [
+          `<g class="ex-drive-slow"><rect x="-44" y="146" width="36" height="16" rx="2" fill="#a0703f"/><circle cx="-36" cy="166" r="8" fill="none" stroke="#5a3a1a" stroke-width="3"/><ellipse cx="0" cy="150" rx="16" ry="9" fill="#e8e2d6"/><path d="M8 140l6-6" stroke="#bbb" stroke-width="3"/></g>`,
+          `<g class="ex-drive"><circle cx="-20" cy="168" r="8" fill="none" stroke="#252b25" stroke-width="2.5"/><circle cx="4" cy="168" r="8" fill="none" stroke="#252b25" stroke-width="2.5"/><path d="M-20 168L-8 156L4 168M-8 156L-2 150" stroke="#2f6db0" stroke-width="3" fill="none"/></g>`,
+          `<g class="ex-drive"><rect x="-24" y="154" width="30" height="12" rx="6" fill="#3f8a4f"/><circle cx="-18" cy="168" r="6" fill="#252b25"/><circle cx="2" cy="168" r="6" fill="#252b25"/><circle cx="-4" cy="142" r="6" fill="#f1c9a5"/></g>`,
+          `<g class="ex-drive"><path d="M-30 168V148Q-30 138 -16 138H6L14 168Z" fill="#ffd34d" stroke="#252b25"/><rect x="-26" y="144" width="18" height="12" fill="#1f2622"/><circle cx="-22" cy="170" r="6" fill="#252b25"/><circle cx="8" cy="170" r="6" fill="#252b25"/></g>`,
+          `<g class="ex-drive"><rect x="-24" y="154" width="30" height="12" rx="6" fill="#0f6f73"/><circle cx="-18" cy="168" r="6" fill="#252b25"/><circle cx="2" cy="168" r="6" fill="#252b25"/><path d="M-12 150l4-6h4l-4 6h4l-8 10 2-7z" fill="#ffd34d"/></g>`,
+        ][e];
+        return svg(`A town street in ${v.y}`, out + V + T(160, 22, v.y, `${mid} font-size="20" font-weight="800" fill="#252b25"`));
+      },
+      read: s => ({ 1925: '<b>1925:</b> bullock carts, tiled roofs and oil lamps. Most people walked.', 1950: '<b>1950:</b> bicycles, and electric poles reach the street.', 1975: '<b>1975:</b> scooters, taller buildings and a radio in most homes.', 2000: '<b>2000:</b> auto-rickshaws, cable TV dishes and more floors.', 2025: '<b>2025:</b> electric scooters, solar panels, a mobile tower and a phone in every pocket.' })[s.y],
+    },
+    {
+      id: 'onion', subject: 'social', band: '11-12', cls: 'Class 12',
+      title: 'Why do onion prices jump?', hook: 'The harvest falls a little. Why does the price shoot up?',
+      ask: 'A Class 12 economics activity: supply and demand for onions, with sliders for the size of the harvest and for demand, and the market price shown where the lines cross.',
+      steps: ['Made demand steep, because people buy onions whatever the price.', 'Kept the numbers illustrative and said so.'],
+      use: 'Show a normal year. Then halve the harvest and ask the class to guess the new price before moving the slider.',
+      init: () => ({ h: 100, d: 100 }), smooth: ['h', 'd'],
+      controls: [{ type: 'range', key: 'h', label: 'Harvest (% of a normal year)', min: 40, max: 140, step: 10 }, { type: 'range', key: 'd', label: 'Demand (% of normal)', min: 70, max: 140, step: 10 }],
+      art: v => {
+        const A = 110 * v.d / 100, k = 0.4 * 100 / v.h, Q = (A - 5) / (1.4 + k), P = A - 1.4 * Q, X = q => 46 + q * 2.5, Y = p => 176 - p * 1.4;
+        const qd = Math.min(100, A / 1.4), qs = Math.min(100, (110 - 5) / k);
+        return svg('Supply and demand for onions', `<path d="M46 16V176H300" fill="none" stroke="#252b25" stroke-width="1.5"/>` + T(40, 16, '₹/kg', 'text-anchor="end" font-size="10" fill="#62685f"') + T(300, 192, 'Onions sold', 'text-anchor="end" font-size="10" fill="#62685f"') +
+          `<path d="M${X(0)} ${r1(Y(A))}L${r1(X(qd))} ${r1(Y(A - 1.4 * qd))}" stroke="#2f6db0" stroke-width="3.5"/><path d="M${X(0)} ${r1(Y(5))}L${r1(X(qs))} ${r1(Y(5 + k * qs))}" stroke="#3f8a4f" stroke-width="3.5"/>` +
+          T(X(qd) - 4, Y(A - 1.4 * qd) - 8, 'Demand', 'text-anchor="end" font-size="11" font-weight="700" fill="#2f6db0"') + T(X(qs) - 4, Y(5 + k * qs) + 16, 'Supply', 'text-anchor="end" font-size="11" font-weight="700" fill="#3f8a4f"') +
+          `<path d="M${r1(X(Q))} 176V${r1(Y(P))}H46" fill="none" stroke="#bd2934" stroke-dasharray="4 4"/><circle cx="${r1(X(Q))}" cy="${r1(Y(P))}" r="6" fill="#bd2934"/>` + T(X(Q) + 10, Y(P) - 8, `₹${Math.round(P)}`, 'font-size="15" font-weight="800" fill="#bd2934"'));
+      },
+      read: s => { const A = 110 * s.d / 100, k = 40 / s.h, Q = (A - 5) / (1.4 + k), P = Math.round(A - 1.4 * Q); return `Price about <b>₹${P} a kg</b> (illustrative).` + (s.h < 100 ? ' A smaller harvest, and people still need onions, so the price jumps.' : s.h > 100 ? ' A big harvest brings the price down: good for buyers, hard on farmers.' : '') + (s.d > 100 ? ' Festival demand pushes it higher still.' : ''); },
+    },
     /* ---------- English ---------- */
     {
       id: 'sentence', subject: 'english', band: '3-5', cls: 'Class 3',
@@ -526,7 +648,7 @@
       read: s => { const f = [['walked', 'walks', 'will walk'], ['sang', 'sings', 'will sing'], ['slept', 'sleeps', 'will sleep']][s.did]; return `The <b>doing word</b> changes with time: ${f[0]}, ${f[1]}, ${f[2]}.`; },
     },
     {
-      id: 'comma', subject: 'english', band: '6-8', cls: 'Class 6', featured: true,
+      id: 'comma', subject: 'english', band: '6-8', cls: 'Class 6',
       title: 'One comma, a different meaning', hook: '“Let’s eat Grandma!” Who is dinner?',
       ask: 'A Class 6 punctuation activity: sentences that change meaning when a comma is added, with a picture of each meaning.',
       steps: ['Chose examples that make the class laugh, so the rule sticks.', 'Put the comma in red, so it is the first thing students see.'],
@@ -566,6 +688,74 @@
       read: s => ({ rude: 'A demand, with no greeting and nothing for the reader. <b>How would the Principal feel?</b>', plain: 'Clear and polite, but no subject line, no greeting and no proper close.', formal: '<b>Formal letter:</b> address, subject, greeting, the reason, a promise and a proper close.' })[s.tone],
     },
 
+    {
+      id: 'tenses', subject: 'english', band: '6-8', cls: 'Class 7', featured: 4,
+      title: 'Tell the story in another time', hook: 'Same story, three times. What changes?',
+      ask: 'A Class 7 grammar activity: a short story about a kite, retold in the past, present and future, with every verb that changes highlighted.',
+      steps: ['Wrote a story with a small moment of danger, so students want to read it.', 'Highlighted only the verbs, so the pattern jumps out.'],
+      use: 'Read the past version aloud. Ask students to retell it as if it is happening now, then check.',
+      init: () => ({ t: 0 }),
+      controls: [{ type: 'choice', key: 't', label: 'Tell it in the', options: [[0, 'Past'], [1, 'Present'], [2, 'Future']] }],
+      thumb: () => svg('A kite stuck in a tree', `<rect width="320" height="200" fill="#dcecf3"/><rect x="150" y="100" width="18" height="100" fill="#7a5230"/><circle cx="160" cy="84" r="54" fill="#5fa35a"/><path d="M196 44l18-16 14 20-18 14z" fill="#bd2934"/><path d="M210 62q-10 30 4 60" fill="none" stroke="#252b25"/>`),
+      art: v => {
+        const V = [['climbed', 'climbs', 'will climb'], ['was', 'is', 'will be'], ['reached', 'reaches', 'will reach'], ['cracked', 'cracks', 'will crack'], ['held', 'holds', 'will hold'], ['saved', 'saves', 'will save']].map(f => `<span class="ex-v">${f[v.t]}</span>`);
+        return `<div class="ex-story" data-k="${v.t}">${svg('A girl climbing a mango tree for her kite', `<rect width="320" height="200" fill="#dcecf3"/><rect x="150" y="96" width="20" height="104" fill="#7a5230"/><circle cx="160" cy="80" r="58" fill="#5fa35a"/><path d="M200 38l18-16 14 20-18 14z" fill="#bd2934"/><path d="M214 56q-10 30 4 56" fill="none" stroke="#252b25"/><circle cx="150" cy="120" r="8" fill="#f1c9a5"/><path d="M150 128v18M150 134l12-8M150 134l-10 6" stroke="#6a3fb0" stroke-width="4" stroke-linecap="round"/>`).replace('viewBox="0 0 320 200"', 'viewBox="0 30 320 120"')}<p>Asha ${V[0]} the mango tree. Her kite ${V[1]} stuck on a high branch. She ${V[2]} out slowly. The branch ${V[3]}, but she ${V[4]} on and ${V[5]} the kite.</p></div>`;
+      },
+      read: s => `Only the <b>six verbs</b> changed. The story moved to the <b>${['past', 'present', 'future'][s.t]}</b>.` + (s.t === 2 ? ' In the future, every verb needs <b>will</b>.' : ''),
+    },
+    {
+      id: 'mood', subject: 'english', band: '3-5', cls: 'Class 5',
+      title: 'Change the words, change the mood', hook: 'Can five words turn a happy house into a haunted one?',
+      ask: 'A Class 5 activity on describing words: one short story, where students switch the describing words and the picture changes with them.',
+      steps: ['Kept the nouns the same, so only the describing words change the feeling.', 'Made the picture follow the words, so younger students see the effect.'],
+      use: 'Students write the same three sentences with their own describing words, then read them in a spooky voice.',
+      init: () => ({ m: 'spooky' }),
+      controls: [{ type: 'choice', key: 'm', label: 'Mood', options: [['spooky', 'Spooky'], ['cheerful', 'Cheerful']] }],
+      thumb: () => moodArt(true),
+      art: v => {
+        const k = v.m === 'spooky', W = k ? ['dark', 'creaking', 'empty', 'cold', 'broken'] : ['bright', 'smiling', 'busy', 'warm', 'open'], w = x => `<span class="ex-adj">${x}</span>`;
+        return `<div class="ex-story">${moodArt(k)}<p>It was a ${w(W[0])} evening. The ${w(W[1])} old house stood at the end of the ${w(W[2])} lane. A ${w(W[3])} wind blew through its ${w(W[4])} windows.</p></div>`;
+      },
+      read: s => (s.m === 'spooky' ? 'Five describing words, and the house turned <b>scary</b>. The nouns never changed.' : 'The same story feels <b>welcoming</b> now. Describing words set the mood.'),
+    },
+    {
+      id: 'passive', subject: 'english', band: '6-8', cls: 'Class 8',
+      title: 'Who stole the mango?', hook: 'One sentence can hide the thief. Which one?',
+      ask: 'A Class 8 grammar activity on the passive voice: the same sentence in the active, the passive, and the passive without the doer, with a picture that hides the thief.',
+      steps: ['Used a mystery, so students care who did it.', 'Added the version without "by", because that is the passive they meet in news.'],
+      use: 'After the hidden version, ask where they have heard sentences like "Mistakes were made."',
+      init: () => ({ v: 'active' }),
+      controls: [{ type: 'choice', key: 'v', label: 'Say it in the', options: [['active', 'Active'], ['passive', 'Passive'], ['hidden', 'Passive, no doer']] }],
+      thumb: () => mangoArt('active'),
+      art: v => `<div class="ex-story">${mangoArt(v.v)}<p class="ex-big-line">${{ active: '<span class="ex-doer">A monkey</span> stole the mango.', passive: 'The mango was stolen by <span class="ex-doer">a monkey</span>.', hidden: 'The mango was stolen.' }[v.v]}</p></div>`,
+      read: s => ({ active: 'Active: the doer comes first. <b>A monkey</b> did it.', passive: 'Passive: the mango comes first. The doer moves to the end, after <b>by</b>.', hidden: 'The passive can <b>hide the doer</b> completely. That is why excuses love it: "The window was broken."' })[s.v],
+    },
+    {
+      id: 'reported', subject: 'english', band: '9-10', cls: 'Class 10',
+      title: 'What did she say?', hook: 'Turn a comic into a report. Four things change.',
+      ask: 'A Class 10 grammar activity: a two-panel comic in direct speech, which turns into reported speech with every change highlighted.',
+      steps: ['Kept it to one exchange, so each change is easy to spot.', 'Highlighted the pronoun, tense, time word and modal separately.'],
+      use: 'Show the comic. Students write the report first, then compare with the highlighted version.',
+      init: () => ({ v: 'direct' }),
+      controls: [{ type: 'choice', key: 'v', label: 'Show', options: [['direct', 'The comic'], ['reported', 'Reported speech']] }],
+      thumb: () => svg('Two speech bubbles', `<rect width="320" height="200" fill="#f4f0fa"/><path d="M30 30h140v60H70l-20 18V90H30z" fill="#fff" stroke="#6a3fb0" stroke-width="3"/><path d="M150 110h140v60H250l-20 18v-18h-80z" fill="#fff" stroke="#6a3fb0" stroke-width="3"/>`),
+      art: v => (v.v === 'direct'
+        ? `<div class="ex-comic"><div><b>Ravi</b><p>“I am going to the match tomorrow.”</p></div><div><b>Mother</b><p>“You must finish your homework first.”</p></div></div>`
+        : `<div class="ex-report"><p>Ravi said that <mark>he</mark> <mark>was</mark> going to the match <mark>the next day</mark>.</p><p>His mother told him that he <mark>had to</mark> finish <mark>his</mark> homework first.</p></div>`),
+      read: s => (s.v === 'direct' ? 'Direct speech: the exact words, inside quotation marks.' : 'Four things change: <b>I → he</b>, <b>am → was</b>, <b>tomorrow → the next day</b>, <b>must → had to</b>.'),
+    },
+    {
+      id: 'appeal', subject: 'english', band: '11-12', cls: 'Class 11',
+      title: 'Win the argument three ways', hook: 'Facts, feelings or trust: which one moves the principal?',
+      ask: 'A Class 11 writing activity on persuasion: one proposal, to plant 100 trees on campus, argued with facts, with feelings and with trust.',
+      steps: ['Kept the proposal the same, so only the kind of appeal changes.', 'Checked the facts version uses numbers students could look up.'],
+      use: 'Groups argue for a school change using all three appeals, then the class votes.',
+      init: () => ({ a: 'facts' }),
+      controls: [{ type: 'choice', key: 'a', label: 'Appeal to', options: [['facts', 'Facts'], ['feelings', 'Feelings'], ['trust', 'Trust']] }],
+      thumb: () => svg('A speaker at a podium', `<rect width="320" height="200" fill="#f4f0fa"/><circle cx="160" cy="60" r="18" fill="#f1c9a5"/><path d="M130 180V120q0-24 30-24t30 24v60z" fill="#6a3fb0"/><path d="M120 130h80l-10 60h-60z" fill="#8b5a2b"/>`),
+      art: v => `<div class="ex-speech"><small>Proposal: plant 100 trees on our campus</small><p>${{ facts: 'A grown tree can cool the air around it by a few degrees. <mark>Our classrooms reach 34°C in April.</mark> 100 trees would shade the east wall by the time today’s Class 6 finish school.', feelings: 'Think of the Class 1 children waiting for the bus <mark>in the April sun</mark>. Imagine them under a tree they helped to plant, with their names on it.', trust: 'Our eco club has kept <mark>every sapling alive</mark> for three years. The gardener has offered to help. We have done this before, and we will do it well.' }[v.a]}</p></div>`,
+      read: s => ({ facts: '<b>Logos:</b> numbers and reasons. Strong with people who need proof.', feelings: '<b>Pathos:</b> a picture the listener can feel. Strong with people who care.', trust: '<b>Ethos:</b> why you can be trusted to do it. Strong with people who decide.' })[s.a],
+    },
     /* ---------- Computers ---------- */
     {
       id: 'robot', subject: 'computing', band: '3-5', cls: 'Class 4',
@@ -617,6 +807,65 @@
       },
       read: s => `${s.n} square${s.n > 1 ? 's' : ''}: <b>${3 * s.n + 1} sticks</b>. Each new square needs 3 more. The rule: <b>3 × squares + 1</b>.`,
     },
+    {
+      id: 'binary', subject: 'computing', band: '9-10', cls: 'Class 9',
+      title: 'Write your initial in binary', hook: 'Eight switches can spell any letter. Can you spell yours?',
+      ask: 'A Class 9 activity on binary numbers: eight switches with their place values, showing the number and the letter it stands for.',
+      steps: ['Showed the place value under each switch, so students add instead of memorising.', 'Linked the number to a letter, because spelling a name is more fun than a sum.'],
+      use: 'Each student makes their initial, then a partner reads it back from the switches alone.',
+      init: () => ({ b: [0, 1, 0, 0, 0, 0, 0, 1] }),
+      controls: [
+        { type: 'buttons', items: [128, 64, 32, 16, 8, 4, 2, 1].map((n, i) => ({ label: String(n), pressed: s => !!s.b[i], run: s => { s.b[i] = s.b[i] ? 0 : 1; } })) },
+        { type: 'buttons', items: [{ label: 'Clear', run: s => { s.b = [0, 0, 0, 0, 0, 0, 0, 0]; } }, { label: 'Make "P"', run: s => { s.b = [0, 1, 0, 1, 0, 0, 0, 0]; } }] },
+      ],
+      art: v => {
+        const n = v.b.reduce((a, x, i) => a + x * 2 ** (7 - i), 0), ch = (n >= 65 && n <= 90) || (n >= 97 && n <= 122) ? String.fromCharCode(n) : '';
+        let out = '';
+        v.b.forEach((x, i) => { const cx = 34 + i * 36; out += (x ? `<circle cx="${cx}" cy="58" r="20" fill="#ffe27a" opacity=".5" class="ex-glow"/>` : '') + `<circle cx="${cx}" cy="58" r="13" fill="${x ? '#ffd34d' : '#e3e6e3'}" stroke="#6b705f" stroke-width="2"/>` + T(cx, 98, x, `${mid} font-size="18" font-weight="800" fill="${x ? '#0f6f73' : '#9aa295'}"`) + T(cx, 116, 2 ** (7 - i), `${mid} font-size="10" fill="#62685f"`); });
+        out += T(90, 170, `= ${n}`, `${mid} font-size="30" font-weight="800"`) + T(230, 176, ch || '?', `${mid} font-size="46" font-weight="800" fill="${ch ? '#0f6f73' : '#c9c5b8'}"`);
+        return svg('Eight binary switches and the letter they make', out);
+      },
+      read: s => { const n = s.b.reduce((a, x, i) => a + x * 2 ** (7 - i), 0), ch = (n >= 65 && n <= 90) || (n >= 97 && n <= 122) ? String.fromCharCode(n) : ''; return `<b>${s.b.join('')}</b> = ${n}. ` + (ch ? `In ASCII, ${n} is the letter <b>${ch}</b>.` : 'Capitals are 65 to 90. Small letters are 97 to 122.'); },
+    },
+    {
+      id: 'password', subject: 'computing', band: '9-10', cls: 'Class 10', featured: 6,
+      title: 'How long to crack your password?', hook: 'Is "mango123" safe? Try it.',
+      ask: 'A Class 10 cyber safety activity: choose a password’s length and what kinds of characters it uses, and see how long a fast computer would take to guess it.',
+      steps: ['Stated the guessing speed, so the answer is honest about its assumption.', 'Used a log scale for the meter, because the times grow so fast.'],
+      use: 'Students guess which matters more, length or symbols. Then test both.',
+      init: () => ({ len: 8, up: false, dig: true, sym: false }),
+      controls: [
+        { type: 'range', key: 'len', label: 'Length', min: 4, max: 16, step: 1 },
+        { type: 'buttons', items: [['up', 'A to Z'], ['dig', '0 to 9'], ['sym', 'Symbols !@#']].map(([k, n]) => ({ label: n, pressed: s => s[k], run: s => { s[k] = !s[k]; } })) },
+      ],
+      art: v => {
+        const pool = 26 + (v.up ? 26 : 0) + (v.dig ? 10 : 0) + (v.sym ? 32 : 0), lg = v.len * Math.log10(pool) - Math.log10(2e10), f = clamp((lg + 4) / 26, 0, 1);
+        return svg('A password strength meter', `<rect x="120" y="22" width="80" height="62" rx="10" fill="none" stroke="#6b705f" stroke-width="10"/><rect x="104" y="60" width="112" height="84" rx="12" fill="#0f6f73"/><circle cx="160" cy="96" r="10" fill="#fff"/><path d="M160 100v20" stroke="#fff" stroke-width="6" stroke-linecap="round"/>` +
+          `<rect x="30" y="156" width="260" height="14" rx="7" fill="#e3e6e3"/><rect x="30" y="156" width="${r1(260 * Math.max(0.03, f))}" height="14" rx="7" fill="hsl(${Math.round(120 * f)} 60% 45%)"/>` + T(160, 192, crack(lg), `${mid} font-size="15" font-weight="800" fill="hsl(${Math.round(120 * f)} 55% 32%)"`));
+      },
+      read: s => { const pool = 26 + (s.up ? 26 : 0) + (s.dig ? 10 : 0) + (s.sym ? 32 : 0), lg = s.len * Math.log10(pool) - Math.log10(2e10); return `${pool} possible characters, ${s.len} long. If a computer tries 10 billion guesses a second: <b>${crack(lg)}</b>. Each extra character multiplies the time by ${pool}.`; },
+    },
+    {
+      id: 'bubble', subject: 'computing', band: '11-12', cls: 'Class 11',
+      title: 'Watch bubble sort think', hook: 'How many comparisons does it take to sort 8 bars?',
+      ask: 'A Class 11 computer science activity: bubble sort on eight bars, one comparison at a time or all the way, counting comparisons and swaps.',
+      steps: ['Coloured the pair being compared, and the sorted end in green.', 'Showed the count, so students can link it to n²/2.'],
+      use: 'Students predict the number of comparisons for 8 bars before running it. Then ask about 1,000 bars.',
+      init: () => ({ a: [5, 2, 8, 1, 7, 3, 6, 4], i: 0, j: 0, hi: -1, cmp: 0, sw: 0, done: false, auto: false, acc: 0, round: 0 }),
+      controls: [{ type: 'buttons', items: [
+        { label: 'Next step', run: s => { s.auto = false; bubbleStep(s); } },
+        { label: 'Run to the end', primary: true, run: s => { if (!s.done) { s.auto = true; s.acc = 200; } } },
+        { label: 'Shuffle', run: s => { const orders = [[5, 2, 8, 1, 7, 3, 6, 4], [8, 7, 6, 5, 4, 3, 2, 1], [3, 1, 2, 5, 4, 8, 6, 7], [2, 6, 1, 8, 3, 7, 4, 5]]; Object.assign(s, { a: [...orders[++s.round % 4]], i: 0, j: 0, hi: -1, cmp: 0, sw: 0, done: false, auto: false }); } },
+      ] }],
+      tick: (s, dt) => { if (!s.auto || s.done) return false; s.acc += dt; if (s.acc < 220) return true; s.acc = 0; bubbleStep(s); if (s.done) { s.auto = false; return false; } return true; },
+      art: v => {
+        const n = v.a.length;
+        let out = T(20, 22, `Comparisons ${v.cmp} · Swaps ${v.sw}`, 'font-size="13" font-weight="700"');
+        v.a.forEach((x, k) => { const sorted = v.done || k >= n - v.i, on = k === v.hi || k === v.hi + 1; out += `<rect x="${24 + k * 36}" y="${176 - x * 17}" width="28" height="${x * 17}" rx="4" fill="${on ? '#bd2934' : sorted ? '#3f8a4f' : '#0f6f73'}"/>` + T(38 + k * 36, 192, x, `${mid} font-size="11" font-weight="600"`); });
+        return svg('Bars being sorted by bubble sort', out);
+      },
+      read: s => (s.done ? `<b>Sorted</b> after ${s.cmp} comparisons and ${s.sw} swaps. Bubble sort needs about n²/2 comparisons: fine for 8 bars, far too slow for a million.` : s.hi < 0 ? 'Press <b>Next step</b> to compare the first two bars, or run it to the end.' : `Pass ${s.i + 1}. The biggest unsorted bar bubbles to the right end each pass.`),
+    },
   ];
 
   const EX_BY = Object.fromEntries(EX.map(e => [e.id, e]));
@@ -632,6 +881,41 @@
     out += `<g transform="translate(${r1(75 + v.x * 34 + 16)} ${r1(15 + v.y * 34 + 16)}) rotate(${r1(v.rot)})"><circle r="12" fill="#0f6f73"/><path d="M0-15L6-5H-6Z" fill="#bd2934"/><circle cx="-4" cy="1" r="2.2" fill="#fff"/><circle cx="4" cy="1" r="2.2" fill="#fff"/></g>`;
     return svg('A robot on a grid, with walls and a book', out);
   }
+  function dandiDate(d) { const day = 11 + Math.round(d); return day <= 31 ? `${day} March 1930` : `${day - 31} April 1930`; }
+  function crack(lg) {
+    const s = 10 ** lg, n = (x, w) => `About ${Math.round(x).toLocaleString('en-IN')} ${w}${Math.round(x) === 1 ? '' : 's'}`;
+    if (lg < 0) return 'Cracked instantly';
+    if (s < 60) return n(s, 'second');
+    if (s < 3600) return n(s / 60, 'minute');
+    if (s < 86400) return n(s / 3600, 'hour');
+    if (s < 3.15e7) return n(s / 86400, 'day');
+    const y = s / 3.15e7;
+    if (y < 1e3) return n(y, 'year');
+    if (y < 1e6) return `About ${Math.round(y / 1e3).toLocaleString('en-IN')} thousand years`;
+    if (y < 1.4e10) return `About ${Math.round(y / 1e6).toLocaleString('en-IN')} million years`;
+    return 'Longer than the age of the universe';
+  }
+  function bubbleStep(s) {
+    if (s.done) return;
+    const n = s.a.length;
+    if (s.j >= n - 1 - s.i) { s.i++; s.j = 0; if (s.i >= n - 1) { s.done = true; s.hi = -1; return; } }
+    s.hi = s.j; s.cmp++;
+    if (s.a[s.j] > s.a[s.j + 1]) { [s.a[s.j], s.a[s.j + 1]] = [s.a[s.j + 1], s.a[s.j]]; s.sw++; }
+    s.j++;
+  }
+  function moodArt(k) {
+    return svg(k ? 'A spooky old house at night' : 'A cheerful house in the evening sun', `<rect width="320" height="200" fill="${k ? '#2b2540' : '#ffdcaa'}"/>` +
+      (k ? `<circle cx="262" cy="42" r="20" fill="#f4efd8"/><circle cx="271" cy="37" r="17" fill="#2b2540"/><path d="M40 170V110M40 130l-18-18M40 120l16-20M40 142l14-8" stroke="#141220" stroke-width="5" stroke-linecap="round"/>` : `<circle cx="262" cy="48" r="22" fill="#ffb347"/><circle cx="36" cy="162" r="6" fill="#e0527a"/><circle cx="54" cy="166" r="6" fill="#ffd34d"/><circle cx="72" cy="162" r="6" fill="#e0527a"/>`) +
+      `<path d="M0 170H320V200H0Z" fill="${k ? '#1d1a2b' : '#8fc27a'}"/><rect x="110" y="96" width="100" height="76" fill="${k ? '#4a4458' : '#f6e7c8'}"/><path d="M100 98L160 56L220 98Z" fill="${k ? '#3a3448' : '#c8553d'}"/>` +
+      [126, 172].map(x => (k ? `<rect x="${x}" y="110" width="22" height="20" fill="#11101a"/><path d="M${x} 110l9 8 4-6 9 10" stroke="#8a84a0" fill="none"/>` : `<rect x="${x}" y="110" width="22" height="20" fill="#ffe27a"/><path d="M${x + 11} 110v20M${x} 120h22" stroke="#c8553d"/>`)).join('') +
+      `<rect x="150" y="138" width="20" height="34" fill="${k ? '#231f30' : '#8b5a2b'}"/>`);
+  }
+  function mangoArt(v) {
+    const hidden = v === 'hidden';
+    return svg(hidden ? 'A mango tree and a mystery thief' : 'A monkey holding a stolen mango', `<rect width="320" height="200" fill="#e8f3df"/><rect x="60" y="80" width="18" height="120" fill="#7a5230"/><circle cx="70" cy="66" r="50" fill="#5fa35a"/><path d="M104 44v10" stroke="#3f6b2f" stroke-width="3"/>` +
+      (hidden ? `<g transform="translate(210 132)"><circle r="28" fill="#3b3b3b"/><circle cy="-38" r="19" fill="#3b3b3b"/>${T(0, -30, '?', `${mid} font-size="22" font-weight="800" fill="#fff"`)}</g>`
+        : `<g transform="translate(210 132)"><ellipse rx="26" ry="30" fill="#8b5a2b"/><circle cy="-38" r="20" fill="#8b5a2b"/><ellipse cy="-34" rx="13" ry="11" fill="#e9c9a0"/><circle cx="-5" cy="-38" r="2.5"/><circle cx="5" cy="-38" r="2.5"/><path d="M-5-28q5 4 10 0" stroke="#5a3a1a" fill="none" stroke-width="2"/><ellipse cx="30" cy="-6" rx="11" ry="14" fill="#f2b632"/><path d="M-22 20q-24 10-16 34" stroke="#8b5a2b" stroke-width="6" fill="none"/></g>`));
+  }
   function clock(t) { const h = Math.floor(t), m = t % 1 ? '30' : '00', hh = h > 12 ? h - 12 : h; return h === 12 && m === '00' ? '12 noon' : `${hh}:${m} ${h >= 12 ? 'pm' : 'am'}`; }
 
   /* ---------- The working activity ---------- */
@@ -639,7 +923,7 @@
   function controlHTML(c, i, s) {
     if (c.type === 'range') return `<label class="ex-range"><span>${c.label}<output data-ex-out="${i}"></output></span><input type="range" min="${c.min}" max="${c.max}" step="${c.step}" data-ex-c="${i}"></label>`;
     if (c.type === 'choice') return `<div class="ex-choice"><span class="ex-clabel">${c.label}</span><div role="group" aria-label="${esc(c.label)}">${c.options.map((o, k) => `<button type="button" data-ex-c="${i}" data-ex-k="${k}" aria-pressed="false">${o[1]}</button>`).join('')}</div></div>`;
-    return `<div class="ex-buttons">${c.items.map((b, j) => `<button type="button" class="ex-btn${b.primary ? ' is-primary' : ''}" data-ex-c="${i}" data-ex-b="${j}">${labelOf(b.label, s)}</button>`).join('')}</div>`;
+    return `<div class="ex-buttons">${c.items.map((b, j) => `<button type="button" class="ex-btn${b.primary ? ' is-primary' : ''}" data-ex-c="${i}" data-ex-b="${j}"${b.pressed ? ` aria-pressed="${!!b.pressed(s)}"` : ''}>${labelOf(b.label, s)}</button>`).join('')}</div>`;
   }
   function mount(ex, host) {
     const s = ex.init(), view = { ...s }, smooth = calm.matches ? [] : ex.smooth || [];
@@ -654,7 +938,7 @@
       ex.controls.forEach((c, i) => {
         if (c.type === 'range') { const inp = $(`input[data-ex-c="${i}"]`, host); if (+inp.value !== s[c.key]) inp.value = s[c.key]; $(`[data-ex-out="${i}"]`, host).textContent = c.fmt ? c.fmt(s[c.key]) : s[c.key]; }
         else if (c.type === 'choice') $$(`[data-ex-c="${i}"]`, host).forEach(b => b.setAttribute('aria-pressed', String(c.options[+b.dataset.exK][0] === s[c.key])));
-        else $$(`[data-ex-c="${i}"]`, host).forEach(b => { const t = labelOf(c.items[+b.dataset.exB].label, s); if (b.textContent !== t) b.textContent = t; });
+        else $$(`[data-ex-c="${i}"]`, host).forEach(b => { const it = c.items[+b.dataset.exB], t = labelOf(it.label, s); if (b.textContent !== t) b.textContent = t; if (it.pressed) b.setAttribute('aria-pressed', String(!!it.pressed(s))); });
       });
     };
     const frame = t => {
@@ -731,6 +1015,7 @@
   }
   function library(root) {
     const limit = +root.dataset.limit || 0, allHref = root.dataset.allHref || '';
+    const phone = matchMedia('(max-width: 620px)'), few = () => (phone.matches && root.dataset.limitPhone ? +root.dataset.limitPhone : limit);
     const q = new URLSearchParams(location.search);
     let subj = SUBJECTS[q.get('subject')] ? q.get('subject') : 'all', band = BANDS[q.get('class')] ? q.get('class') : 'all', shown = [];
     const chips = (name, all, map) => `<div class="ex-chips" role="group" aria-label="${name}">${[['all', all], ...Object.entries(map).map(([k, v]) => [k, v.name || v])].map(([k, l]) => `<button type="button" data-ex-${name.toLowerCase()}="${k}" aria-pressed="false">${l}</button>`).join('')}</div>`;
@@ -741,9 +1026,10 @@
       $$('[data-ex-subject]', root).forEach(b => b.setAttribute('aria-pressed', String(b.dataset.exSubject === subj)));
       $$('[data-ex-class]', root).forEach(b => b.setAttribute('aria-pressed', String(b.dataset.exClass === band)));
       const match = EX.filter(e => (subj === 'all' || e.subject === subj) && (band === 'all' || e.band === band));
-      shown = limit ? [...match].sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0)).slice(0, limit) : match;
+      const lim = few();
+      shown = lim ? [...match].sort((a, b) => (a.featured || 99) - (b.featured || 99)).slice(0, lim) : match;
       grid.innerHTML = shown.map(card).join('') || '<p class="ex-empty">Nothing for this pair yet. Try another class.</p>';
-      $('[data-ex-count]', root).textContent = limit && match.length > shown.length ? `Showing ${shown.length} of ${match.length}` : `${match.length} example${match.length === 1 ? '' : 's'}`;
+      $('[data-ex-count]', root).textContent = lim && match.length > shown.length ? `Showing ${shown.length} of ${match.length}` : `${match.length} example${match.length === 1 ? '' : 's'}`;
       const all = $('[data-ex-all]', root);
       if (all) { const p = new URLSearchParams(); if (subj !== 'all') p.set('subject', subj); if (band !== 'all') p.set('class', band); all.href = allHref + (p.toString() ? `?${p}` : ''); }
       if (!limit && history.replaceState) { const p = new URLSearchParams(); if (subj !== 'all') p.set('subject', subj); if (band !== 'all') p.set('class', band); history.replaceState(null, '', location.pathname + (p.toString() ? `?${p}` : '') + location.hash); }
@@ -755,6 +1041,7 @@
       if (op) open(op.dataset.exOpen, shown);
     });
     render();
+    if (root.dataset.limitPhone && phone.addEventListener) phone.addEventListener('change', render);
     const id = location.hash.replace('#ex-', '');
     if (!limit && byId(id)) open(id, shown);
   }
