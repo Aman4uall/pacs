@@ -107,3 +107,16 @@ h2 { font-size:clamp(1.9rem,1.2rem + 2.1vw,2.8rem); line-height:1.12; letter-spa
 .tap-clip { position:absolute; inset:0; overflow:hidden; border-radius:inherit; pointer-events:none; z-index:2; }
 .click-ring { position:absolute; width:16px; height:16px; margin:-8px; border:1.5px solid currentColor; border-radius:50%; opacity:.6; pointer-events:none; animation:click-ring .6s ease-out both; }
 @keyframes click-ring { to { transform:scale(24); opacity:0; } }
+
+/* Home, "What will you learn next?": the link sits under the heading on phones, on one line */
+#skills .px-section-head .link{white-space:nowrap}
+@media(max-width:620px){#skills .px-section-head{flex-direction:column;align-items:flex-start;gap:10px}}
+
+/* Home: a slim band for principals, linking to the schools page */
+.home-schools-band{padding:34px 0;background:#161a17;color:#fff}
+.home-schools-band .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px 40px}
+.home-schools-band .eyebrow{color:#ff8a92}
+.home-schools-band h2{max-width:34ch;margin:8px 0 0;color:#fff;font-size:clamp(1.3rem,1rem + 1.3vw,1.9rem);line-height:1.25;letter-spacing:-.03em}
+.home-schools-band h2 span{color:#bdb8ae}
+.home-schools-band .btn{flex:none}
+@media(max-width:720px){.home-schools-band .wrap{flex-direction:column;align-items:flex-start}.home-schools-band .btn{width:100%}}

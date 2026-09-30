@@ -1,6 +1,5 @@
 /* Page-scoped presentation for Beyond the Blackboard. */
 .school-page{--bb-ink:#252b25;--bb-muted:#62685f;--bb-red:#bd2934;--bb-paper:#faf9f4;--bb-line:#dadcd1;background:var(--bb-paper);color:var(--bb-ink)}
-.school-page .nav-secondary,.school-page .menu-song{display:none}
 .bb{font-family:Inter,Arial,sans-serif;font-size:15px;line-height:1.6}
 .bb *{box-sizing:border-box}
 .bb h1,.bb h2,.bb h3,.bb h4,.bb p,.bb blockquote{margin:0}

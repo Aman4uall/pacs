@@ -154,4 +154,10 @@
   }));
   render();
   if (current.project) requestAnimationFrame(()=>panel?.scrollIntoView({block:'start',behavior:'instant'}));
+
+  // Phones: the goal filters stick just under the site header (see learn.css), so measure the header once it is drawn.
+  const siteHeader = document.querySelector('.site-header');
+  if (siteHeader && 'ResizeObserver' in window) new ResizeObserver(() => {
+    document.documentElement.style.setProperty('--px-sticky-top', `${Math.round((parseFloat(getComputedStyle(siteHeader).top) || 0) + siteHeader.offsetHeight)}px`);
+  }).observe(siteHeader, {box:'border-box'});
 })();

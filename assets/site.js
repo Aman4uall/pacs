@@ -77,7 +77,7 @@ const SITE = {
     // Phones: the open menu ends with a WhatsApp button and the Song Challenge (hidden on laptops)
     const extra = document.createElement("li");
     extra.className = "menu-extra";
-    extra.innerHTML = `<a class="menu-cta" href="${waLink("Hi PACS AI, I'd like to know more about your courses.")}" target="_blank" rel="noopener">Talk to us</a>`
+    extra.innerHTML = `<a class="menu-cta" href="${waLink("Hi PACS AI, I'd like to know more about your courses.")}" target="_blank" rel="noopener">WhatsApp us</a>`
       + `<a class="menu-song" href="song-challenge.html"><b>1 in 10 wins ₹500</b><span>AI Song Challenge · Class 8–12</span></a>`;
     links.append(extra);
     const setOpen = (open) => {

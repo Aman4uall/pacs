@@ -76,3 +76,50 @@
  .px-basket-dialog{width:calc(100% - 20px);max-height:calc(100dvh - 20px);padding:20px;border-radius:13px}.px-basket-dialog h2{font-size:26px}.px-basket-dialog .px-enquiry-form>.px-button{font-size:12px;padding:12px 13px;width:100%;gap:8px}.px-basket-list li{font-size:13px;gap:9px}.px-basket-list button{font-size:10px}.px-detail-more,.px-catalog-end{display:block;font-size:12px}.px-detail-more .px-text-button,.px-catalog-end .px-text-button{display:block;margin-top:4px}.px-more-projects{padding:18px;margin-top:20px}.px-more-projects a{font-size:11px}.px-showcase-section .outcome-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media(max-width:350px){.projects-page #project-grid>.px-card{grid-template-columns:75px minmax(0,1fr);gap:10px}.projects-page #project-grid .px-card-info h3{font-size:17px}.projects-page .px-route strong{font-size:10px}.px-basket-bar{padding-inline:14px}.px-basket-dialog .px-detail-heading{gap:12px}.px-basket-dialog h2{font-size:24px}}
+
+/* ---------- The five projects added on 2026-09-29 ---------- */
+.px-song-art,.px-app-art,.px-film-art,.px-game-art,.px-agent-art{position:relative;overflow:hidden;padding:8%}
+.px-song-art>small,.px-app-art>small,.px-film-art>small,.px-game-art>small,.px-agent-art>small{display:block;font-size:1.8cqw;letter-spacing:.15em;position:relative;z-index:1}
+.px-song-art>strong,.px-app-art>strong,.px-film-art>strong,.px-game-art>strong,.px-agent-art>strong{display:block;margin-top:6%;font-size:7.6cqw;font-weight:550;line-height:1.06;letter-spacing:-.045em;position:relative;z-index:1}
+.px-song-art{background:#2a1740;color:#f4e9ff}.px-song-art>small{color:#cdb4ef}
+.px-eq{display:flex;align-items:flex-end;gap:1.2cqw;height:16cqw;margin-top:5%}
+.px-eq i{flex:1;height:var(--h);border-radius:1cqw 1cqw 0 0;background:linear-gradient(#ff8fb1,#b36bff);transform-origin:bottom;animation:px-eq 1.1s ease-in-out var(--d) infinite alternate}
+@keyframes px-eq{from{transform:scaleY(.3)}}
+.px-song-meta{display:block;margin-top:3%;font-size:1.9cqw;color:#cdb4ef}
+.px-app-art{background:#12324a;color:#e8f3ff}.px-app-art>small{color:#9cc3e6}.px-app-art>strong{max-width:58%}
+.px-phone{position:absolute;right:7%;top:14%;width:28%;aspect-ratio:.52;display:grid;align-content:center;justify-items:center;gap:1.2cqw;padding:3cqw 2cqw;background:#fff;border:1.3cqw solid #0b1d2b;border-radius:4cqw;color:#12324a;text-align:center;font-size:1.9cqw;box-shadow:0 3cqw 6cqw rgb(0 0 0/.35);animation:px-float 3.4s ease-in-out infinite}
+.px-phone b{font-size:2.2cqw}.px-phone span{color:#6a86a0}.px-phone i{font-style:normal;color:#6a86a0}
+.px-phone em{font-style:normal;font-size:10cqw;font-weight:800;line-height:1;color:#e0483d}
+.px-phone em.is-new{animation:px-token .5s cubic-bezier(.3,1.5,.5,1)}
+@keyframes px-token{from{transform:scale(1.6);color:#25a162}}
+@keyframes px-float{50%{transform:translateY(-1.5cqw) rotate(-1.5deg)}}
+.px-film-art{background:#141414;color:#f5f0e6}.px-film-art>small{color:#bdb6a8}
+.px-strip{display:flex;gap:2cqw;width:max-content;margin-top:6%;padding:2cqw;background:#262626;border-block:1.4cqw dotted #5a5a5a;animation:px-roll 10s linear infinite}
+.px-strip span{flex:none;width:17cqw;aspect-ratio:1.5;border-radius:1cqw;background:linear-gradient(160deg,var(--c),#1b1b1b 130%)}
+@keyframes px-roll{to{transform:translateX(-50%)}}
+.px-game-art{background:#1e2a6b;color:#fff5d6}.px-game-art>small{color:#aeb9ff}
+.px-game-art svg{position:absolute;left:0;right:0;bottom:0;width:100%;height:auto}
+.px-game-art>strong{font-size:7cqw}
+.px-jumper{animation:px-hop 1.6s cubic-bezier(.3,0,.4,1) infinite}
+.px-jumper.is-jumping{animation:px-hop .7s cubic-bezier(.3,0,.4,1) 1}
+@keyframes px-hop{0%,60%,100%{transform:translateY(0)}78%{transform:translateY(-40px)}}
+.px-score{position:absolute;top:8%;right:8%;padding:1cqw 2cqw;border-radius:1.5cqw;background:#0f1540;font-size:2cqw;letter-spacing:.1em;color:#ffd84d}
+.px-agent-art{background:#0f1e2e;color:#e9f4ff}.px-agent-art>small{color:#8fb3d6}
+.px-flow{display:flex;align-items:center;gap:1.4cqw;margin-top:8%}
+.px-flow span{flex:none;padding:1.6cqw 2.2cqw;border:.3cqw solid #3b5575;border-radius:2cqw;background:#152a40;font-size:2.1cqw;transition:background-color .3s,border-color .3s,color .3s}
+.px-flow span.is-done{background:#1d6b4f;border-color:#7cf0c0;color:#fff}
+.px-flow i{position:relative;flex:1;height:.5cqw;background:#3b5575}
+.px-flow i::after{content:'';position:absolute;top:50%;left:0;width:1.8cqw;height:1.8cqw;margin-top:-.9cqw;border-radius:50%;background:#7cf0c0;animation:px-dot 1.8s linear infinite}
+@keyframes px-dot{to{left:100%}}
+@media(prefers-reduced-motion:reduce){.px-eq i,.px-phone,.px-strip,.px-jumper,.px-flow i::after{animation:none!important}}
+.lite .px-eq i,.lite .px-phone,.lite .px-strip,.lite .px-jumper,.lite .px-flow i::after{animation:none}
+
+/* ---------- Phones: the goal filters stay in reach while you scroll the projects ---------- */
+@media(max-width:760px){
+  .px-route-grid{position:sticky;top:var(--px-sticky-top,64px);z-index:20;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:14px -20px 12px;padding:10px 20px;background:rgb(251 250 247/.96);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid var(--px-line)}
+  .px-route-grid::-webkit-scrollbar{display:none}
+  .px-route{flex:none;min-height:42px;padding:8px 16px!important;border-radius:999px!important;background:#fff}
+  .px-route small,.px-route>span[aria-hidden]{display:none}
+  .px-route strong{font-size:15px}
+  .px-route[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+}
