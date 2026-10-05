@@ -13,6 +13,15 @@ This is a plain static website. There's no build step, no server code and no dat
 - **Domain:** point the subdomain `pacsai.pacsglobal.in` at the host (usually a CNAME record at whoever manages `pacsglobal.in`), and turn on HTTPS.
 - **If the address changes,** update it in the `<link rel="canonical">` and `og:` tags of every page, in `robots.txt` and in `sitemap.xml`. The QR code on the printed flyer also points to `https://pacsai.pacsglobal.in/song-challenge.html`.
 
+## Counting visits
+
+The printed flyer's QR code opens `song-challenge.html` with nothing added to the address, so the site works out a flyer scan by itself: no tag and no referring website means the visitor came from the flyer, not from our own top bar, Instagram or WhatsApp.
+
+- **One line per visit** goes to the **Visits** tab of the Song Challenge sheet, and the **Visit summary** tab adds it up, including flyer scans day by day. Full steps, and the tagged links to use on Instagram and WhatsApp: `../song-challenge-backend/SETUP.md`.
+- **The script must be redeployed** before any of it lands. The website starts sending visits as soon as you upload it, but the old script ignores them.
+- **Nothing personal is sent:** no name, no phone number, no IP address, nothing that follows anyone to another website. The `visits:` line in `assets/site.js` turns the whole thing off when emptied.
+- **Your own editing is never counted.** A local preview sends nothing unless you add `?count=1` to the address.
+
 ## Slow connections and offline
 
 The site is built to open well on slow or patchy mobile data, without cutting any demo.
@@ -37,7 +46,9 @@ The site is built to open well on slow or patchy mobile data, without cutting an
 3. Open https://pacsai.pacsglobal.in/meetup.html and register once. It should appear in the
    "PACS AI Meetup registrations" Google Sheet (see `../meetup-backend/SETUP.md`). Delete the
    test row afterwards.
-4. Work through "Getting found on Google" below.
+4. Open https://pacsai.pacsglobal.in/song-challenge.html on your phone. A line should appear in
+   the **Visits** tab of the same sheet, saying "Flyer QR (likely)". Delete the test line afterwards.
+5. Work through "Getting found on Google" below.
 
 ## The meetup dates look after themselves
 

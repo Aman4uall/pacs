@@ -14,7 +14,7 @@
   const $ = (root, sel) => root.querySelector(sel);
   const $$ = (root, sel) => [...root.querySelectorAll(sel)];
   // Change this whenever terms.html changes, so the sheet records which version each entry agreed to
-  const TERMS_VERSION = "2026-09-23-v2";
+  const TERMS_VERSION = "2026-10-03-v3";
 
   /* ---------- Step 1: the idea machine ---------- */
   const TOPICS = {
@@ -226,6 +226,8 @@
       consentTerms: v("consentTerms"),
       consentUpdates: v("consentUpdates"),
       termsVersion: TERMS_VERSION,
+      // Optional, and only ever a cross-check on the visit count in the sheet
+      heardFrom: v("heardFrom"),
       website: v("website"),
     };
   }
@@ -239,8 +241,9 @@
       `Made with: ${d.tool}. Words by: ${d.lyricsBy}`,
       `About: ${d.about}`,
       `Contact: ${d.parentName}, ${d.parentPhone}`,
+      d.heardFrom && `Saw it: ${d.heardFrom}`,
       `We agree to the Terms and Conditions (${d.termsVersion}). Course news: ${d.consentUpdates ? "Yes" : "No"}.`,
-    ].join("\n");
+    ].filter(Boolean).join("\n");
   }
   const openWhatsApp = (d) => window.open(`https://wa.me/${cfg.whatsapp}?text=${encodeURIComponent(whatsappText(d))}`, "_blank", "noopener");
 
@@ -310,7 +313,7 @@
   // Send a better version: keep the student and parent, clear the song and the ticks
   document.querySelector("[data-again]")?.addEventListener("click", () => {
     ["songTitle", "songLink", "toolOther", "about"].forEach((n) => { form.elements.namedItem(n).value = ""; });
-    ["tool", "lyricsBy"].forEach((n) => $$(form, `input[name="${n}"]`).forEach((r) => { r.checked = false; }));
+    ["tool", "lyricsBy", "heardFrom"].forEach((n) => $$(form, `input[name="${n}"]`).forEach((r) => { r.checked = false; }));
     ["consentTerms", "consentUpdates"].forEach((n) => { form.elements.namedItem(n).checked = false; });
     otherInput.hidden = true;
     otherInput.required = false;

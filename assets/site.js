@@ -20,6 +20,10 @@ const SITE = {
   // to your Google Sheet (it ends in /exec). See song-challenge-backend/SETUP.md.
   // While it's empty, entries are handed to WhatsApp instead.
   songEntries: "https://script.google.com/macros/s/AKfycbw4eXH_1CNAstVAli2ljb_cNBKWXn1S-xfACfnXYOLx0cUgzeZuETjmPFl2xArt3Lk5xA/exec",
+  // Counting visits: the SAME address as songEntries above. One line per visit goes into
+  // the "Visits" tab of that sheet, and the "Visit summary" tab adds it up, so you can see
+  // how many people the printed flyer's QR code brings in. Empty this line to stop counting.
+  visits: "https://script.google.com/macros/s/AKfycbw4eXH_1CNAstVAli2ljb_cNBKWXn1S-xfACfnXYOLx0cUgzeZuETjmPFl2xArt3Lk5xA/exec",
   // Skill lists (AI for everyone page and the home page's "Help me choose"): a SEPARATE
   // Apps Script web app that copies the WhatsApp message into its own sheet. It ends in /exec.
   // See learn-requests-backend/SETUP.md. While it's empty, lists only go to WhatsApp.
@@ -297,4 +301,51 @@ document.addEventListener("click", (e) => {
   };
   addEventListener("scroll", () => { if (!queued) { queued = true; requestAnimationFrame(check); } }, { passive: true });
   requestAnimationFrame(check);
+})();
+
+/* Counting visits. One line per visit goes to the Google Sheet (SITE.visits), so the
+   "Visit summary" tab can answer one question: how many people did the printed flyer bring?
+   The flyer's QR code opens song-challenge.html with nothing added to the address, and a
+   phone camera passes on no referring site, so a scan is recognisable without changing the
+   print. Links we paste ourselves carry ?s=ig, ?s=wa and so on.
+   Nothing personal is sent: no name, no phone number, no address, nothing that follows
+   anyone to another website. See song-challenge-backend/SETUP.md. */
+(function () {
+  const url = typeof SITE !== "undefined" ? SITE.visits : "";
+  const q = new URLSearchParams(location.search);
+  const local = ["localhost", "127.0.0.1"].includes(location.hostname) || location.protocol === "file:";
+  // A local preview is never counted, so your own editing never shows up as visits.
+  // Add ?count=1 to the address to try the counting out on a local preview.
+  if (!url || (local && !q.has("count"))) return;
+  const page = location.pathname.split("/").pop() || "index.html";
+  // One line per visit, not per refresh: opening the page again in the same tab is the same visit
+  try {
+    if (sessionStorage.getItem("pacs-counted-" + page)) return;
+    sessionStorage.setItem("pacs-counted-" + page, "1");
+  } catch (e) { /* private browsing: count it anyway, a few extra lines beat none */ }
+  let first = "";
+  try {
+    first = localStorage.getItem("pacs-been-here") ? "No" : "Yes";
+    localStorage.setItem("pacs-been-here", "1");
+  } catch (e) { /* can't tell, and the summary ignores a blank */ }
+  const body = JSON.stringify({
+    kind: "visit",
+    page,
+    tag: q.get("s") || q.get("src") || q.get("utm_source") || "",
+    ref: document.referrer || "",
+    device: innerWidth < 700 ? "Phone" : innerWidth < 1100 ? "Tablet" : "Computer",
+    first,
+  });
+  const send = () => {
+    // A beacon is handed to the browser and forgotten, so it survives the visitor
+    // leaving the page and costs the page itself nothing
+    try {
+      if (navigator.sendBeacon && navigator.sendBeacon(url, new Blob([body], { type: "text/plain;charset=utf-8" }))) return;
+    } catch (e) { /* older phones: the plain send below does the same job */ }
+    fetch(url, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body, keepalive: true }).catch(() => {});
+  };
+  // Only once the page is drawn and settled, so counting never slows a visit down
+  const later = () => setTimeout(send, 800);
+  if (document.readyState === "complete") later();
+  else addEventListener("load", later, { once: true });
 })();
