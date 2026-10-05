@@ -313,10 +313,12 @@ document.addEventListener("click", (e) => {
 (function () {
   const url = typeof SITE !== "undefined" ? SITE.visits : "";
   const q = new URLSearchParams(location.search);
-  const local = ["localhost", "127.0.0.1"].includes(location.hostname) || location.protocol === "file:";
-  // A local preview is never counted, so your own editing never shows up as visits.
-  // Add ?count=1 to the address to try the counting out on a local preview.
-  if (!url || (local && !q.has("count"))) return;
+  // A local preview and the Vercel test copy are never counted, so your own editing and
+  // testing never show up as visits, and above all never as flyer scans.
+  // Add ?count=1 to the address to try the counting out; those lines arrive tagged "test".
+  const testing = ["localhost", "127.0.0.1"].includes(location.hostname)
+    || location.protocol === "file:" || /\.vercel\.app$/.test(location.hostname);
+  if (!url || (testing && !q.has("count"))) return;
   const page = location.pathname.split("/").pop() || "index.html";
   // One line per visit, not per refresh: opening the page again in the same tab is the same visit
   try {
@@ -331,7 +333,7 @@ document.addEventListener("click", (e) => {
   const body = JSON.stringify({
     kind: "visit",
     page,
-    tag: q.get("s") || q.get("src") || q.get("utm_source") || "",
+    tag: testing ? "test" : (q.get("s") || q.get("src") || q.get("utm_source") || ""),
     ref: document.referrer || "",
     device: innerWidth < 700 ? "Phone" : innerWidth < 1100 ? "Tablet" : "Computer",
     first,

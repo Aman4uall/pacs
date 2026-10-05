@@ -20,7 +20,7 @@ The printed flyer's QR code opens `song-challenge.html` with nothing added to th
 - **One line per visit** goes to the **Visits** tab of the Song Challenge sheet, and the **Visit summary** tab adds it up, including flyer scans day by day. Full steps, and the tagged links to use on Instagram and WhatsApp: `../song-challenge-backend/SETUP.md`.
 - **The script must be redeployed** before any of it lands. The website starts sending visits as soon as you upload it, but the old script ignores them.
 - **Nothing personal is sent:** no name, no phone number, no IP address, nothing that follows anyone to another website. The `visits:` line in `assets/site.js` turns the whole thing off when emptied.
-- **Your own editing is never counted.** A local preview sends nothing unless you add `?count=1` to the address.
+- **Your own editing and testing are never counted.** A local preview and the Vercel test copy send nothing unless you add `?count=1` to the address, and those lines arrive tagged `test`, so they can never be mistaken for flyer scans.
 
 ## Slow connections and offline
 
