@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Opening the game…</title>
+<meta name="robots" content="noindex, nofollow">
+<!--
+  The address printed on the standees, the turf banner and the table tents is
+  https://pacsai.pacsglobal.in/p?s=t1&g=cricket
+
+  "/p" rather than "/play.html" keeps the address short, which means fewer and
+  therefore bigger squares in the QR code, which is what lets it scan from across
+  a room instead of at arm's length.
+
+  THIS FILE EXISTS SO THAT NOTHING ON THE SERVER HAS TO BE CONFIGURED FOR THAT TO
+  WORK. There is a rewrite rule in .htaccess that does the same job faster, but
+  .htaccess starts with a dot, so upload tools hide it and people forget it, and
+  some hosts ignore it anyway. A printed QR code cannot be fixed afterwards: if
+  /p ever 404s, every board that has been put up is dead paper. So /p is also a
+  real folder with a real page in it, which works on any web host alive.
+
+  It carries ?s= (which board was scanned) and ?g= (which game to open) straight
+  through to play.html. Keep this file as close to empty as possible: it sits
+  between a person and the thing they scanned for.
+-->
+<link rel="canonical" href="https://pacsai.pacsglobal.in/play.html">
+<script>
+  // Hand the whole query string on, exactly as it arrived
+  location.replace("../play.html" + (location.search || "") + (location.hash || ""));
+</script>
+<!-- If the script is blocked, this does the same a moment later -->
+<noscript><meta http-equiv="refresh" content="0; url=../play.html"></noscript>
+<style>
+  html, body { height: 100%; margin: 0; background: #fff; }
+  body { display: grid; place-content: center; gap: .6rem; padding: 24px;
+         font: 500 1rem/1.5 system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+         color: #5C5F63; text-align: center; }
+  a { color: #111; font-weight: 700; }
+</style>
+</head>
+<body>
+  <p>Opening the game…</p>
+  <p><a href="../play.html">Tap here if it does not open by itself</a></p>
+</body>
+</html>

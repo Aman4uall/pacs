@@ -1314,3 +1314,31 @@ svg.br-tile { width: 100%; height: auto; padding: 14%; box-sizing: border-box; b
   :root .hg-shop small, :root .fx-bar small, :root .cl-metrics small, :root .cap-stats small, :root .app-count { font-size: .75rem; }
   :root .ws-quote small, :root .ws-bar span, :root .iv-who i, :root .cr-score small, :root .ls-score small, :root .ls-stars small { font-size: .6875rem; }
 }
+
+/* ---------- The squat counter (gym boards) ----------
+   The depth bar is the point of the screen: it shows the machine deciding, live,
+   whether this rep is going to count. Everything else is read after the set. */
+.sq-top { display: flex; align-items: stretch; gap: 1rem; }
+.sq-score { flex: 1 1 auto; display: flex; align-items: baseline; gap: .5rem; }
+.sq-score b { font-size: 3.4rem; font-weight: 900; letter-spacing: -.04em; line-height: 1; color: var(--ink); font-variant-numeric: tabular-nums; }
+.sq-score span { font-size: 1rem; font-weight: 700; color: var(--muted); }
+.sq-score span i { font-style: normal; color: var(--ink); font-variant-numeric: tabular-nums; }
+.sq-meter { flex: none; width: 46px; display: flex; flex-direction: column; align-items: center; gap: .35rem; }
+.sq-tube { position: relative; width: 100%; height: 86px; background: var(--grey); border-radius: 10px; overflow: hidden; display: flex; align-items: flex-end; }
+.sq-tube i { display: block; width: 100%; background: var(--red); transition: height .12s linear; }
+.sq-tube i[data-deep="true"] { background: var(--ok); }
+/* the line the rep has to cross to be counted */
+.sq-tube::after { content: ""; position: absolute; left: 0; right: 0; bottom: 100%; height: 0; border-top: 2px dashed rgb(17 17 17 / .35); transform: translateY(0); }
+.sq-meter small { font-size: .66rem; font-weight: 800; color: var(--muted); letter-spacing: .02em; font-variant-numeric: tabular-nums; }
+.sq-state {
+  margin-top: .8rem; padding: .6rem .8rem; background: var(--grey); border-radius: 10px;
+  font-size: .9rem; font-weight: 700; line-height: 1.35; color: var(--ink);
+}
+.sq-state[data-kind="down"] { background: #FDECEC; color: var(--red-deep); }
+.sq-state[data-kind="up"] { background: var(--ok-tint); color: var(--ok); }
+.sq-state[data-kind="done"] { background: var(--ink); color: #fff; }
+.sq-log { display: grid; gap: .3rem; margin-top: .7rem; }
+.sq-log li { display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: .5rem; align-items: baseline; font-size: .8rem; line-height: 1.35; }
+.sq-log li b { font-weight: 800; color: var(--muted); font-variant-numeric: tabular-nums; }
+.sq-log li.ok span { color: var(--ok); font-weight: 700; }
+.sq-log li.fix span { color: var(--muted); }

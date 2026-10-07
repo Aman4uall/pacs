@@ -22,8 +22,8 @@ const CORE = [
 ];
 const LATER = [
   "assets/learn.css", "assets/project-data.js", "assets/project-previews.js", "assets/project-learn.js", "assets/monsoon-campaign.png",
-  "class-8-12.html", "schools.html", "examples.html", "bba.html", "learn.html", "demos.html", "contact.html", "meetup.html", "song-challenge.html", "terms.html",
-  "assets/schools.css", "assets/schools.js", "assets/examples.css", "assets/examples.js", "assets/live.js", "assets/skills.js", "assets/learn.js", "assets/meetup.js", "assets/challenge.js", "assets/song.css", "assets/songplayer.js", "assets/fonts/playfair-italic.woff2", "assets/apple-touch-icon.png",
+  "class-8-12.html", "schools.html", "examples.html", "bba.html", "learn.html", "demos.html", "contact.html", "meetup.html", "song-challenge.html", "terms.html", "play.html",
+  "assets/schools.css", "assets/schools.js", "assets/examples.css", "assets/examples.js", "assets/live.js", "assets/skills.js", "assets/learn.js", "assets/meetup.js", "assets/challenge.js", "assets/song.css", "assets/songplayer.js", "assets/play.css", "assets/play.js", "assets/fonts/playfair-italic.woff2", "assets/apple-touch-icon.png",
 ];
 // Files from other sites that never change once published, so the saved copy is always right
 const LIB_HOSTS = ["fonts.gstatic.com", "cdn.jsdelivr.net", "storage.googleapis.com"];

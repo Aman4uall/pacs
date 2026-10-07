@@ -42,6 +42,11 @@ const SITE = {
   // sheet (it ends in /exec). See meetup-backend/SETUP.md.
   // While it's empty, registrations are handed to WhatsApp instead.
   meetupRsvps: "https://script.google.com/macros/s/AKfycbwaAVmwiorP8rLMYOIk96gg5mmv2ZTzQKsDTUpYh8HCm_DNrYDpWJQBSJXEKEjEojFXJA/exec",
+  // Standee games (play.html): a SEPARATE Apps Script web app that saves the name and
+  // number someone leaves after playing, with the board they scanned. It ends in /exec.
+  // See play-backend/SETUP.md. While it's empty, leads only go to WhatsApp, which loses
+  // everyone who fills the form and then doesn't tap through.
+  playLeads: "https://script.google.com/macros/s/AKfycbzD1ORIpMvfbTw-ckj8WykyGqZZ47FDZ0prR3fWAgyDEBDl8_BAvkTkKiVXi7wXYETG/exec",
 };
 
 (function () {

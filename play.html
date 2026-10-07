@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Beat the AI | PACS AI Mangalore</title>
+  <!-- A landing page for the printed standees, not for search. The games all live on
+       demos.html, which is the page we want Google to show. -->
+  <meta name="robots" content="noindex, follow">
+  <meta name="description" content="Four AI games you can play standing up. Beat the AI, train your own, or get your cricket shot scored. Free, on your own phone.">
+  <meta name="theme-color" content="#111111">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="preload" href="assets/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
+  <!-- The model files live on these two hosts. Warming the connections here saves a
+       second or two before a single byte of the AI has been asked for. -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="preconnect" href="https://storage.googleapis.com" crossorigin>
+  <link rel="stylesheet" href="assets/styles.css?v=20260926t">
+  <link rel="stylesheet" href="assets/refresh.css?v=20260929f">
+  <link rel="stylesheet" href="assets/demos.css?v=20261007">
+  <link rel="stylesheet" href="assets/play.css?v=20261007">
+</head>
+<body class="play-body">
+<a class="skip" href="#play">Skip to the game</a>
+
+<header class="play-top">
+  <a href="index.html" class="play-brand" aria-label="PACS AI home">
+    <picture>
+      <source srcset="assets/logo-horizontal.webp" type="image/webp">
+      <img src="assets/logo-horizontal.png" alt="PACS AI" width="104" height="26" fetchpriority="high">
+    </picture>
+  </a>
+  <span class="play-where" data-play-venue hidden></span>
+</header>
+
+<main id="play" class="play-main">
+
+  <!-- ================= 1. Pick a game ================= -->
+  <section class="scr is-on" data-scr="pick" aria-labelledby="pick-h">
+    <p class="play-kicker">You scanned the board</p>
+    <h1 id="pick-h">Four games. The AI wins most of them.</h1>
+    <p class="play-sub">All four run on your own phone, on your own camera. Nothing is recorded, nothing is sent anywhere. Pick one and it starts.</p>
+
+    <ul class="pick-list" data-pick-list>
+      <li>
+        <button type="button" class="pick" data-pick="rps">
+          <span class="pick-face" aria-hidden="true">&#9994;</span>
+          <span class="pick-text">
+            <b>Beat the AI at Rock, Paper, Scissors</b>
+            <small>It watches your hand through the camera, learns your habits, then plays the move that beats you. Most people lose by round seven.</small>
+            <em class="pick-meta">90 seconds &middot; needs the camera &middot; 20 MB to load</em>
+          </span>
+          <span class="pick-go" aria-hidden="true">&rarr;</span>
+        </button>
+      </li>
+      <li>
+        <button type="button" class="pick" data-pick="cricket">
+          <span class="pick-face" aria-hidden="true">&#127951;</span>
+          <span class="pick-text">
+            <b>Get your cover drive scored out of 10</b>
+            <small>Prop the phone up, play the shot. The AI tracks 33 points on your body and measures the angles a coach watches for.</small>
+            <em class="pick-meta">2 minutes &middot; stand back from the phone &middot; 20 MB to load</em>
+          </span>
+          <span class="pick-go" aria-hidden="true">&rarr;</span>
+        </button>
+      </li>
+      <li>
+        <button type="button" class="pick" data-pick="squat">
+          <span class="pick-face" aria-hidden="true">&#127947;</span>
+          <span class="pick-text">
+            <b>Squat, and the AI only counts the good ones</b>
+            <small>Ten reps. It measures the angle at your knee and throws out everything above 100 degrees, however hard you worked.</small>
+            <em class="pick-meta">2 minutes &middot; stand back from the phone &middot; 20 MB to load</em>
+          </span>
+          <span class="pick-go" aria-hidden="true">&rarr;</span>
+        </button>
+      </li>
+      <li>
+        <button type="button" class="pick" data-pick="trainer">
+          <span class="pick-face" aria-hidden="true">&#129504;</span>
+          <span class="pick-text">
+            <b>Train your own AI in 30 seconds</b>
+            <small>Teach it three hand signs of your own, then watch it name them back to you. This is exactly how every AI on earth learns.</small>
+            <em class="pick-meta">1 minute &middot; needs the camera &middot; 20 MB to load</em>
+          </span>
+          <span class="pick-go" aria-hidden="true">&rarr;</span>
+        </button>
+      </li>
+      <li>
+        <button type="button" class="pick pick-light" data-pick="haggle">
+          <span class="pick-face" aria-hidden="true">&#8377;</span>
+          <span class="pick-text">
+            <b>Haggle an AI shopkeeper down</b>
+            <small>Raju has a leather jacket at &#8377;4,000 and three units of patience. Get him under &#8377;2,000 without walking out empty-handed.</small>
+            <em class="pick-meta">1 minute &middot; no camera &middot; starts instantly</em>
+          </span>
+          <span class="pick-go" aria-hidden="true">&rarr;</span>
+        </button>
+      </li>
+    </ul>
+
+    <p class="play-foot">Standing somewhere with bad signal? The last one needs nothing but this page.</p>
+  </section>
+
+  <!-- ================= 2. While the AI downloads ================= -->
+  <section class="scr scr-load" data-scr="load" aria-labelledby="load-h">
+    <div class="load-head">
+      <h2 id="load-h" data-load-title>Bringing the AI onto your phone</h2>
+      <p data-load-note>A real model, about 20 MB. It runs on your phone after this, not on our server, which is why it has to come down once.</p>
+      <div class="load-bar"><i data-load-bar></i></div>
+      <p class="load-pct"><b data-load-pct>0%</b> <span data-load-stage>starting</span></p>
+    </div>
+
+    <!-- The wait is the only time a stranger reads anything we write, so this is where
+         the pitch goes. One card at a time, every few seconds. -->
+    <div class="load-cards" data-load-cards aria-live="polite">
+      <article class="lc is-on">
+        <span class="lc-tag">While you wait</span>
+        <p><b>This is not a toy.</b> The model coming down your line right now is the same one Google ships to engineers. Your phone is about to run it with no internet help at all.</p>
+      </article>
+      <article class="lc">
+        <span class="lc-tag">What changed this year</span>
+        <p><b>CBSE has made AI compulsory.</b> Classes 3 to 8 from 2026-27, Class 9 the year after. The first board paper with AI in it is 2029. Most schools in this city have no one to teach it yet.</p>
+      </article>
+      <article class="lc">
+        <span class="lc-tag">What a student builds here</span>
+        <p><b>Sixteen hours.</b> A trained AI model, a working app on their own phone, and a short film made from one sentence they wrote. Not slides about AI. Things that run.</p>
+      </article>
+      <article class="lc">
+        <span class="lc-tag">Who we teach</span>
+        <p><b>Class 8 to 12, and their teachers.</b> Small batches in Mangalore. A student who finishes can sit down at any laptop and make something work.</p>
+      </article>
+      <article class="lc">
+        <span class="lc-tag">Free, and we mean free</span>
+        <p><b>The Saturday open lab.</b> Bring your child, they build something real in two hours, you pay nothing and nobody asks you for a cheque at the end.</p>
+      </article>
+      <article class="lc">
+        <span class="lc-tag">For the adults</span>
+        <p><b>Alternate Saturdays, 3 to 5 pm.</b> The Innovators and Hustlers Meetup at our Mangalore office. People building things, in a room, free.</p>
+      </article>
+      <article class="lc">
+        <span class="lc-tag">Nearly there</span>
+        <p><b>Everything you are about to do happens on your phone.</b> No video leaves it, no frame is stored, no account, no sign-up. That is a design decision, not a promise.</p>
+      </article>
+    </div>
+
+    <button type="button" class="btn btn-dark load-go" data-load-go hidden>The AI is ready. Start the camera <span aria-hidden="true">&rarr;</span></button>
+    <p class="load-slow" data-load-slow hidden>This is taking a while on your connection. <button type="button" class="linkish" data-load-switch>Play the one that needs no download instead</button></p>
+    <button type="button" class="linkish load-back" data-back="pick">Pick a different game</button>
+  </section>
+
+  <!-- ================= 3. The games ================= -->
+  <section class="scr scr-game" data-scr="game" aria-labelledby="game-h">
+    <h2 id="game-h" class="scr-h" data-game-title>Beat the AI</h2>
+
+    <div class="build game-mount" data-game="rps" hidden>
+      <div class="rps live-demo" data-rps>
+        <div class="cam">
+          <video playsinline muted aria-hidden="true"></video>
+          <canvas aria-hidden="true"></canvas>
+          <span class="cam-badge" data-rps-seen>Show me your hand</span>
+          <span class="cam-count" data-rps-count aria-live="assertive"></span>
+          <div class="cam-cover"><button type="button" class="pm-tool pm-publish" data-cam-start>Start camera</button><small>Runs on your device. Nothing is recorded or sent.</small><p class="cam-status" data-cam-status role="status"></p></div>
+          <button type="button" class="cam-stop" data-cam-stop aria-label="Stop camera">&#10005;</button>
+        </div>
+        <div class="live-side">
+          <div class="rps-board">
+            <div><small>You</small><span class="rps-move" data-rps-you>?</span><b data-rps-you-score>0</b></div>
+            <span class="rps-vs">vs</span>
+            <div><small>AI</small><span class="rps-move" data-rps-ai>?</span><b data-rps-ai-score>0</b></div>
+          </div>
+          <p class="rps-verdict" data-rps-verdict aria-live="polite">Press Play, then show &#9994; &#9995; or &#9996; on &ldquo;Shoot!&rdquo;</p>
+          <button type="button" class="pm-tool pm-publish" data-rps-play>Play a round <span aria-hidden="true">&rarr;</span></button>
+          <p class="rps-brain" data-rps-brain aria-live="polite">The AI is watching your moves. After 5 rounds it starts reading you.</p>
+          <div class="rps-tap"><span>No camera? Tap:</span><button type="button" data-rps-tap="rock" aria-label="Rock">&#9994;</button><button type="button" data-rps-tap="paper" aria-label="Paper">&#9995;</button><button type="button" data-rps-tap="scissors" aria-label="Scissors">&#9996;</button><button type="button" class="rps-reset" data-rps-reset>New game</button></div>
+        </div>
+      </div>
+      <p class="build-hint">The AI learns your habits, then plays the move that beats them.</p>
+    </div>
+
+    <div class="build game-mount" data-game="cricket" hidden>
+      <div class="cricket live-demo" data-cricket>
+        <div class="cam">
+          <video playsinline muted aria-hidden="true"></video>
+          <canvas aria-hidden="true"></canvas>
+          <span class="cam-count" data-cr-count aria-live="assertive"></span>
+          <div class="cam-cover"><button type="button" class="pm-tool pm-publish" data-cam-start>Start camera</button><small>Prop your phone up and step back. Runs on your device. Nothing is recorded or sent.</small><p class="cam-status" data-cam-status role="status"></p></div>
+          <button type="button" class="cam-stop" data-cam-stop aria-label="Stop camera">&#10005;</button>
+        </div>
+        <div class="live-side">
+          <div class="chip-row" data-cr-shot role="group" aria-label="Choose a shot">
+            <button class="chip" type="button" data-v="drive" aria-pressed="true">Cover drive</button>
+            <button class="chip" type="button" data-v="pull" aria-pressed="false">Pull shot</button>
+            <button class="chip" type="button" data-v="defence" aria-pressed="false">Forward defence</button>
+          </div>
+          <button type="button" class="chip cr-hand" data-cr-hand aria-pressed="false">Right-handed batter</button>
+          <div class="cr-result"><div class="cr-score" data-cr-score><b>&ndash;</b><small>/10</small></div><p class="cr-tip" data-cr-tip aria-live="polite">Stand 2 to 3 metres from the camera so it can see you from head to toe.</p></div>
+          <ul class="cr-checks" data-cr-checks></ul>
+          <div class="cr-actions"><button type="button" class="pm-tool pm-publish" data-cr-freeze>Freeze my shot</button><button type="button" class="pm-tool" data-cr-sample>No camera? Try a sample batter</button></div>
+        </div>
+      </div>
+      <p class="build-hint">33 points on your body, measured against the angles a coach watches.</p>
+    </div>
+
+    <div class="build game-mount" data-game="squat" hidden>
+      <div class="squat live-demo" data-squat>
+        <div class="cam">
+          <video playsinline muted aria-hidden="true"></video>
+          <canvas aria-hidden="true"></canvas>
+          <div class="cam-cover"><button type="button" class="pm-tool pm-publish" data-cam-start>Start camera</button><small>Prop your phone against something and step back. Runs on your device. Nothing is recorded or sent.</small><p class="cam-status" data-cam-status role="status"></p></div>
+          <button type="button" class="cam-stop" data-cam-stop aria-label="Stop camera">&#10005;</button>
+        </div>
+        <div class="live-side">
+          <div class="sq-top">
+            <p class="sq-score"><b data-sq-good>0</b><span>counted of <i data-sq-total>0</i></span></p>
+            <div class="sq-meter">
+              <div class="sq-tube"><i data-sq-bar style="height:0%"></i></div>
+              <small data-sq-depth>&ndash;</small>
+            </div>
+          </div>
+          <p class="sq-state" data-sq-state aria-live="polite">Stand back so your feet and your head are both in the picture.</p>
+          <ul class="sq-log" data-sq-log></ul>
+          <button type="button" class="pm-tool" data-sq-reset>Start the set again <span aria-hidden="true">&#8635;</span></button>
+        </div>
+      </div>
+      <p class="build-hint">It is not counting movements. It is measuring the angle at your knee and throwing out anything above 100 degrees.</p>
+    </div>
+
+    <div class="build game-mount" data-game="trainer" hidden>
+      <div class="trainer live-demo" data-trainer>
+        <div class="cam">
+          <video playsinline muted aria-hidden="true"></video>
+          <canvas aria-hidden="true"></canvas>
+          <span class="tr-out is-dim" data-train-out aria-live="polite"></span>
+          <div class="cam-cover"><button type="button" class="pm-tool pm-publish" data-cam-start>Start camera</button><small>Runs on your device. Nothing is recorded or sent.</small><p class="cam-status" data-cam-status role="status"></p></div>
+          <button type="button" class="cam-stop" data-cam-stop aria-label="Stop camera">&#10005;</button>
+        </div>
+        <div class="live-side">
+          <p class="tr-hint" data-train-hint aria-live="polite"></p>
+          <div class="tr-classes">
+            <div class="tr-class" data-class data-color="#F51E2B" style="--c: #F51E2B"><span class="tr-num" aria-hidden="true">1</span><span class="tr-name"><input type="text" data-label value="Hello" maxlength="14" spellcheck="false" autocomplete="off" aria-label="Name of sign 1"><small data-count>0 examples</small></span><button type="button" class="tr-rec" data-rec>&#9679; Hold to record</button><span class="tr-conf"><i data-conf="0"></i></span></div>
+            <div class="tr-class" data-class data-color="#2D6CDF" style="--c: #2D6CDF"><span class="tr-num" aria-hidden="true">2</span><span class="tr-name"><input type="text" data-label value="Stop" maxlength="14" spellcheck="false" autocomplete="off" aria-label="Name of sign 2"><small data-count>0 examples</small></span><button type="button" class="tr-rec" data-rec>&#9679; Hold to record</button><span class="tr-conf"><i data-conf="1"></i></span></div>
+            <div class="tr-class" data-class data-color="#1B7A45" style="--c: #1B7A45"><span class="tr-num" aria-hidden="true">3</span><span class="tr-name"><input type="text" data-label value="Yes" maxlength="14" spellcheck="false" autocomplete="off" aria-label="Name of sign 3"><small data-count>0 examples</small></span><button type="button" class="tr-rec" data-rec>&#9679; Hold to record</button><span class="tr-conf"><i data-conf="2"></i></span></div>
+          </div>
+          <button type="button" class="pm-tool" data-train-reset>Start over <span aria-hidden="true">&#8635;</span></button>
+        </div>
+      </div>
+      <p class="build-hint">This is how AI learns: from examples. You just gave it some.</p>
+    </div>
+
+    <div class="build game-mount" data-game="haggle" hidden>
+      <div class="haggle" data-haggle>
+        <div class="chip-row" data-hg-item role="group" aria-label="Choose what to buy">
+          <button class="chip" type="button" data-v="jacket" aria-pressed="true">Leather jacket</button>
+          <button class="chip" type="button" data-v="phone" aria-pressed="false">Old phone</button>
+          <button class="chip" type="button" data-v="lamp" aria-pressed="false">Brass lamp</button>
+        </div>
+        <div class="hg-shop"><span class="hg-mood"><b data-hg-mood aria-hidden="true">&#9679;&#9679;&#9679;</b><small>Patience</small></span><span><small>Raju&rsquo;s price now</small><b data-hg-price>&#8377;4,000</b></span></div>
+        <div class="hg-chat" data-hg-chat aria-live="polite"></div>
+        <div class="hg-actions" data-hg-actions>
+          <label class="hg-offer" for="hg-range">Your offer <output data-hg-offer for="hg-range">&#8377;0</output></label>
+          <input type="range" id="hg-range" data-hg-range>
+          <div class="hg-buttons"><button type="button" class="pm-tool pm-publish" data-hg-send>Make offer</button><button type="button" class="pm-tool" data-hg-accept>Accept his price</button></div>
+          <div class="chip-row hg-tactics"><button class="chip" type="button" data-hg-tactic="flaw">Point out a flaw</button><button class="chip" type="button" data-hg-tactic="cash">Offer cash now</button><button class="chip" type="button" data-hg-tactic="walk">Walk away</button></div>
+        </div>
+      </div>
+      <p class="build-hint">He reads your offers. Lowball him twice and he stops listening.</p>
+    </div>
+
+    <div class="game-bar">
+      <button type="button" class="btn btn-primary" data-finish>I&rsquo;m done, score me <span aria-hidden="true">&rarr;</span></button>
+      <button type="button" class="linkish" data-back="pick">Try another game</button>
+    </div>
+  </section>
+
+  <!-- ================= 4. The score ================= -->
+  <section class="scr scr-score" data-scr="score" aria-labelledby="score-h">
+    <p class="play-kicker" data-score-kicker>Your result</p>
+    <h2 id="score-h" class="score-big" data-score-big>&mdash;</h2>
+    <p class="score-line" data-score-line></p>
+    <div class="score-note" data-score-note></div>
+    <button type="button" class="btn btn-dark" data-to="who">Carry on <span aria-hidden="true">&rarr;</span></button>
+    <button type="button" class="linkish" data-back="pick">Play another one</button>
+  </section>
+
+  <!-- ================= 5. One tap, and we know who you are ================= -->
+  <section class="scr" data-scr="who" aria-labelledby="who-h">
+    <h2 id="who-h">One tap and we&rsquo;ll stop guessing.</h2>
+    <p class="play-sub">Whatever you pick, you get something back. No form yet, no email, nothing left on your phone.</p>
+    <div class="who-grid">
+      <button type="button" class="who" data-who="parent">
+        <b>I have a child in Class 8 to 12</b>
+        <small>There is a free Saturday lab. They build something real in two hours.</small>
+      </button>
+      <button type="button" class="who" data-who="student">
+        <b>I am in school or college myself</b>
+        <small>A song contest is running right now. 1 in 10 entries wins &#8377;500.</small>
+      </button>
+      <button type="button" class="who" data-who="teacher">
+        <b>I teach, or I run a school</b>
+        <small>CBSE made AI compulsory. We train teachers in your own staff room.</small>
+      </button>
+      <button type="button" class="who" data-who="adult">
+        <b>I was just curious</b>
+        <small>Come to the meetup. Alternate Saturdays, 3 to 5 pm, free.</small>
+      </button>
+    </div>
+    <button type="button" class="linkish" data-back="score">Back</button>
+  </section>
+
+  <!-- ================= 6. The ask ================= -->
+  <section class="scr scr-ask" data-scr="ask" aria-labelledby="ask-h">
+    <h2 id="ask-h" data-ask-h>Where should we send it?</h2>
+    <p class="play-sub" data-ask-sub></p>
+    <form class="ask-form" data-ask-form novalidate>
+      <label class="fld"><span>Your name</span>
+        <input type="text" name="name" autocomplete="name" maxlength="60" required>
+      </label>
+      <label class="fld"><span>WhatsApp number</span>
+        <input type="tel" name="phone" inputmode="numeric" autocomplete="tel" maxlength="10" placeholder="10 digits" required>
+      </label>
+      <label class="fld fld-class" data-ask-class hidden><span data-ask-class-label>Which class?</span>
+        <select name="klass">
+          <option value="">Pick one</option>
+          <option value="8">Class 8</option>
+          <option value="9">Class 9</option>
+          <option value="10">Class 10</option>
+          <option value="11">Class 11</option>
+          <option value="12">Class 12</option>
+        </select>
+      </label>
+      <!-- Only something automated fills this in -->
+      <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <p class="ask-err" data-ask-err role="alert" hidden></p>
+      <button type="submit" class="btn btn-primary" data-ask-send>Send it to me on WhatsApp</button>
+      <p class="ask-fine">Your number is used to send you this one thing and to answer you. It is not sold, not added to any list you did not ask for, and never shown on this site.</p>
+    </form>
+    <button type="button" class="linkish" data-back="who">That is not me</button>
+  </section>
+
+  <!-- ================= 7. Done ================= -->
+  <section class="scr scr-done" data-scr="done" aria-labelledby="done-h">
+    <span class="done-tick" aria-hidden="true">&#10003;</span>
+    <h2 id="done-h" data-done-h>Done.</h2>
+    <p class="play-sub" data-done-sub></p>
+    <div class="done-links">
+      <a class="btn btn-dark" data-done-wa target="_blank" rel="noopener">Open WhatsApp <span aria-hidden="true">&rarr;</span></a>
+      <a class="btn btn-outline" href="demos.html">All 19 demos, free to play</a>
+      <a class="linkish" data-done-second href="index.html">PACS AI home</a>
+    </div>
+    <p class="done-call">Or just ring us: <a data-phone href="#">+91 88672 40600</a></p>
+  </section>
+
+</main>
+
+<footer class="play-end">
+  <p><b>PACS AI</b>, Mangalore. <span data-address>PACS Office, 4th Floor, PVS Sadan, Kodialbail, Mangalore, Karnataka 575003</span></p>
+  <p><a href="index.html">The whole site</a> &middot; <a href="demos.html">Every demo</a> &middot; <a data-phone href="#">+91 88672 40600</a></p>
+</footer>
+
+<script defer src="assets/site.js?v=20261007"></script>
+<script defer src="assets/live.js?v=20261007"></script>
+<script defer src="assets/play.js?v=20261007"></script>
+</body>
+</html>

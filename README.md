@@ -152,8 +152,40 @@ in a way that matters.
 | Search data: titles, descriptions, canonicals, structured data | in the `<head>` of every page |
 | Crawling and listing | `robots.txt`, `sitemap.xml` |
 | The old Class 8–10 address | `class-8-10.html`, which forwards to `class-8-12.html` |
+| The standee funnel: pick a game, the pitch while the AI downloads, the score, who-are-you and the lead form | `play.html`, with `assets/play.js` and `assets/play.css` |
 
-Song Challenge entries, Learn requests and meetup registrations are each saved by their own Google Apps Script in the PACS AI Google account, writing to their own sheet. Nothing needs to be installed on the web host for any of them.
+Song Challenge entries, Learn requests, meetup registrations and standee leads are each saved by their own Google Apps Script in the PACS AI Google account, writing to their own sheet. Nothing needs to be installed on the web host for any of them.
+
+## The standee funnel (`play.html`)
+
+The page the printed standees in gyms, hotels and waiting rooms point at. It is `noindex`
+on purpose: `demos.html` is the page we want Google to show, and this one is a funnel.
+
+- **One screen at a time**, no navigation, nothing to wander off into. Pick a game, play,
+  see a score, say who you are in one tap, leave a number.
+- **The four games are the ones on `demos.html`**, running from `assets/live.js`. `play.js`
+  does not touch `live.js`: scores are read back out of the demo's own markup with a
+  `MutationObserver`, so nothing here can break the demos page. Three need the camera; the
+  haggle one needs no download, for bad signal.
+- **The 20 MB wait is the pitch.** While the MediaPipe model comes down, `play.js` fetches
+  the same files `live.js` will ask for, so the progress bar counts real bytes, and rotates
+  seven cards about what PACS AI does. The browser and the service worker keep the files,
+  so the demo starts immediately afterwards. Edit the cards in `play.html` under
+  `[data-load-cards]`. After 25 seconds on a slow line the page offers the no-download game
+  instead.
+- **One QR per board.** `https://pacsai.pacsglobal.in/p?s=t1&g=cricket`. `?s=` is the board
+  and `?g=` opens one game with no menu in between. `assets/site.js` already counts every
+  `?s=` tag into the **Visits** tab of the Song Challenge sheet, so scans per board need no
+  new code. Name the board in the `VENUES` list at the top of `assets/play.js` and the page
+  greets whoever scanned it with the room's name. `/p` is a rewrite in `.htaccess`: a shorter
+  address means fewer, bigger squares in the QR, which scans from further away. The boards
+  themselves, and why each venue gets a different game, are in `../standee/README.md`.
+- **Leads** go to their own sheet first and to WhatsApp second, so a lead who fills the form
+  and never taps through is still ours. See `../play-backend/SETUP.md`. Until
+  `playLeads` is set in `assets/site.js`, leads only reach WhatsApp.
+- **The two numbers to read together:** scans per board (Visits tab, Song Challenge sheet)
+  and leads per board (Which board is working tab, standee sheet). Scans with no leads means
+  the board is in the wrong room; neither means the wrong building.
 
 Project choices stay in the browser's local storage under `pacs.ai.project-basket.v1` and survive reloads. Only project IDs are stored there; the optional note is not persisted. A copy of the combined WhatsApp message, with its enquiry reference, is sent to the separate PACS AI Learn requests sheet only when the visitor explicitly continues from the basket to WhatsApp. The site opens a draft; the visitor sends the message in WhatsApp. No booking or payment is completed by these buttons.
 

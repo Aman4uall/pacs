@@ -434,6 +434,125 @@
     render(null, false);
   });
 
+  /* ---------------- 3b. The squat counter that only counts the good ones ----------------
+     Built for the gym boards. Same pose model as the cricket coach, so on a phone that
+     has already played one of them the other starts instantly.
+
+     It watches the angle at the knee, hip to knee to ankle. Standing is about 170
+     degrees, a parallel squat about 90. A rep is a trip from standing, past the "down"
+     line, and back up again. The rep is only COUNTED if it was deep enough and the back
+     stayed upright enough, which is the whole point of the demo: the machine is not
+     counting movements, it is judging them against a rule somebody wrote down. */
+  // down: shallow enough that a half rep still REGISTERS as an attempt, so the machine
+  // can be seen rejecting it. A rep that never registers teaches nobody anything.
+  const SQ = { down: 125, up: 145, deep: 100, lean: 55 };
+  // up is 145, not 170, because almost nobody locks their knees out between reps: a
+  // relaxed stance measures about 150. Set it any higher and a person squatting
+  // perfectly well never returns to "up", so nothing they do is ever counted, which is
+  // the one failure this demo cannot survive. The 20 degrees between down and up are
+  // the hysteresis that stops a shiver being counted as a rep.
+  document.querySelectorAll("[data-squat]").forEach((root) => {
+    const goodEl = $(root, "[data-sq-good]");
+    const totalEl = $(root, "[data-sq-total]");
+    const stateEl = $(root, "[data-sq-state]");
+    const depthEl = $(root, "[data-sq-depth]");
+    const barEl = $(root, "[data-sq-bar]");
+    const logEl = $(root, "[data-sq-log]");
+    const target = 10;
+    let good = 0, total = 0, phase = "up", minKnee = 180, maxLean = 0, lastUi = 0, done = false;
+
+    const angle = (A, B, C) => {
+      const v1 = Math.atan2(A.y - B.y, A.x - B.x), v2 = Math.atan2(C.y - B.y, C.x - B.x);
+      const d = Math.abs(v1 - v2) * 180 / Math.PI;
+      return d > 180 ? 360 - d : d;
+    };
+    // Both sides averaged: one knee is often half hidden by the other
+    function read(pts, w, h) {
+      const P = (i) => ({ x: pts[i].x * w, y: pts[i].y * h });
+      const knee = (angle(P(23), P(25), P(27)) + angle(P(24), P(26), P(28))) / 2;
+      const sh = { x: (P(11).x + P(12).x) / 2, y: (P(11).y + P(12).y) / 2 };
+      const hip = { x: (P(23).x + P(24).x) / 2, y: (P(23).y + P(24).y) / 2 };
+      // How far the back is off vertical. Some forward lean is correct in a squat;
+      // folding over at the hips is not.
+      const lean = Math.abs(Math.atan2(sh.x - hip.x, hip.y - sh.y) * 180 / Math.PI);
+      return { knee, lean };
+    }
+    const seen = (pts) => [11, 12, 23, 24, 25, 26, 27, 28].every((i) => pts[i] && (pts[i].visibility == null || pts[i].visibility > 0.4));
+
+    function say(text, kind) {
+      stateEl.textContent = text;
+      stateEl.dataset.kind = kind || "";
+    }
+    function note(ok, text) {
+      const li = document.createElement("li");
+      li.className = ok ? "ok" : "fix";
+      li.innerHTML = `<b>${total}</b><span>${text}</span>`;
+      logEl.prepend(li);
+      while (logEl.children.length > 5) logEl.lastChild.remove();
+    }
+    function reset() {
+      good = 0; total = 0; phase = "up"; minKnee = 180; maxLean = 0; done = false;
+      goodEl.textContent = "0"; totalEl.textContent = "0";
+      logEl.innerHTML = "";
+      barEl.style.height = "0%";
+      depthEl.textContent = "–";
+      say("Stand back so your feet and your head are both in the picture.");
+    }
+
+    function finishRep() {
+      total += 1;
+      const deep = minKnee <= SQ.deep;
+      const upright = maxLean <= SQ.lean;
+      if (deep && upright) {
+        good += 1;
+        note(true, `Counted. ${Math.round(minKnee)}&deg; at the knee.`);
+        buzz(18);
+      } else if (!deep) {
+        note(false, `Not deep enough. ${Math.round(minKnee)}&deg;, needs ${SQ.deep}&deg; or less.`);
+      } else {
+        note(false, `Too far forward. ${Math.round(maxLean)}&deg; of lean.`);
+      }
+      goodEl.textContent = String(good);
+      totalEl.textContent = String(total);
+      minKnee = 180; maxLean = 0;
+      if (total >= target) {
+        done = true;
+        say(good >= 8 ? `${good} of ${total}. The machine is satisfied.`
+          : good >= 5 ? `${good} of ${total} counted. It threw out the rest.`
+          : `${good} of ${total}. It threw out most of them.`, "done");
+      }
+    }
+
+    camera(root, "pose", (res, canvas) => {
+      const pts = res.landmarks && res.landmarks[0];
+      draw(canvas, pts, BODY, "#F51E2B");
+      if (done) return;
+      if (!pts || !seen(pts)) {
+        if (performance.now() - lastUi > 500) { say("Step back until your feet and your head are both in the picture."); lastUi = performance.now(); }
+        return;
+      }
+      const m = read(pts, canvas.width, canvas.height);
+      if (m.knee < minKnee) minKnee = m.knee;
+      if (phase === "down" && m.lean > maxLean) maxLean = m.lean;
+
+      // 170 degrees standing down to 90 at parallel, shown as a 0 to 100 bar
+      const pct = Math.max(0, Math.min(100, (170 - m.knee) / (170 - SQ.deep) * 100));
+      barEl.style.height = pct.toFixed(0) + "%";
+      barEl.dataset.deep = String(m.knee <= SQ.deep);
+      depthEl.textContent = Math.round(m.knee) + "°";
+
+      if (phase === "up" && m.knee < SQ.down) { phase = "down"; maxLean = m.lean; say("Down. Go lower.", "down"); }
+      else if (phase === "down" && m.knee > SQ.up) { phase = "up"; finishRep(); if (!done) say("Up. Next one.", "up"); }
+      else if (performance.now() - lastUi > 600) {
+        if (phase === "up") say(`Squat when you're ready. ${target - total} to go.`);
+        lastUi = performance.now();
+      }
+    }, (s) => { if (s === "live" && total === 0) reset(); });
+
+    $(root, "[data-sq-reset]").addEventListener("click", () => { buzz(); reset(); });
+    reset();
+  });
+
   /* ---------------- 4. Wave to change slides ---------------- */
   document.querySelectorAll("[data-wave]").forEach((root) => {
     const slides = $$(root, ".wave-slide");

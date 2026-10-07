@@ -31,6 +31,11 @@
   RewriteCond %{HTTPS} !=on
   RewriteCond %{HTTP:X-Forwarded-Proto} !https
   RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # The printed standees' QR codes. "/p" instead of "/play.html" keeps the address
+  # short, which means fewer squares in the QR, which means it scans from across a
+  # room instead of at arm's length. The ?s= and ?g= parts are passed straight on.
+  RewriteRule ^p/?$ /play.html [QSA,L]
 </IfModule>
 
 ErrorDocument 404 /404.html

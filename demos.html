@@ -432,6 +432,32 @@
           </div>
           <p class="build-hint">The AI tracks 33 points on your body and measures the angles a coach watches.</p>
         </article>
+        <article class="build span-2" id="try-squat">
+          <header class="build-head"><span class="build-tag">Live AI on your camera</span><h3>Squat, and the AI only counts the good ones</h3></header>
+          <div class="build-demo">
+            <div class="squat live-demo" data-squat>
+              <div class="cam">
+                <video playsinline muted aria-hidden="true"></video>
+                <canvas aria-hidden="true"></canvas>
+                <div class="cam-cover"><button type="button" class="pm-tool pm-publish" data-cam-start>Start camera</button><small>Prop your phone against something and step back. Runs on your device. Nothing is recorded or sent.</small><p class="cam-status" data-cam-status role="status"></p></div>
+                <button type="button" class="cam-stop" data-cam-stop aria-label="Stop camera">&#10005;</button>
+              </div>
+              <div class="live-side">
+                <div class="sq-top">
+                  <p class="sq-score"><b data-sq-good>0</b><span>counted of <i data-sq-total>0</i></span></p>
+                  <div class="sq-meter">
+                    <div class="sq-tube"><i data-sq-bar style="height:0%"></i></div>
+                    <small data-sq-depth>&ndash;</small>
+                  </div>
+                </div>
+                <p class="sq-state" data-sq-state aria-live="polite">Stand back so your feet and your head are both in the picture.</p>
+                <ul class="sq-log" data-sq-log></ul>
+                <button type="button" class="pm-tool" data-sq-reset>Start the set again <span aria-hidden="true">&#8635;</span></button>
+              </div>
+            </div>
+          </div>
+          <p class="build-hint">Nobody told it what a squat is. It measures the angle at your knee and throws out everything above 100 degrees, however hard the rep felt.</p>
+        </article>
         <article class="build span-2" id="try-mango">
           <header class="build-head"><span class="build-tag">Session 1</span><h3>An AI that sorts mangoes</h3></header>
           <div class="build-demo">
