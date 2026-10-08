@@ -1,6 +1,6 @@
 /* =========================================================================
    PACS AI – play.html: the standee funnel
-   One screen at a time: pick a game, read our pitch while the AI downloads,
+   One screen at a time: pick a game, read our pitch while it gets ready,
    play, see a score, say who you are in one tap, leave a number.
 
    The games themselves are the ones on demos.html, running from live.js.
@@ -187,6 +187,9 @@
   // Rough sizes, used only to keep the bar moving when a server sends no length
   const GUESS = { bundle: 320e3, wasmjs: 120e3, wasm: 10.2e6, gesture: 8.3e6, pose: 5.5e6 };
 
+  // Never name the size or say where it runs. A number in megabytes makes a person
+  // think about their data plan instead of the game, and nobody scanned a board to
+  // learn where a model is executed. A bar and a percentage say everything needed.
   const bar = $("[data-load-bar]");
   const pct = $("[data-load-pct]");
   const stage = $("[data-load-stage]");
@@ -225,7 +228,7 @@
     downloading = true;
     goBtn.hidden = true;
     slowNote.hidden = true;
-    stage.textContent = "connecting";
+    stage.textContent = "loading";
     setProgress(0, 1);
 
     const parts = [
@@ -240,8 +243,6 @@
       const a = got.reduce((s, n) => s + n, 0);
       const b = size.reduce((s, n) => s + n, 0);
       setProgress(a, b);
-      if (a / b > .55) stage.textContent = "the model itself";
-      else if (a / b > .1) stage.textContent = "the engine";
     };
 
     // Tell them honestly when their connection is the problem, and offer a way out
@@ -293,9 +294,6 @@
     const g = GAMES[key];
     picked = key;
     if (!g.kind) { openGame(key); return; }   // nothing to download
-    $("[data-load-title]").textContent = g.kind === "pose"
-      ? "Bringing the body-tracking AI onto your phone"
-      : "Bringing the hand-tracking AI onto your phone";
     show("load");
     startCards();
     download(g.kind);

@@ -144,7 +144,7 @@
       if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
         setState("error"); say("This browser can't open the camera here. Try Chrome or Safari on a phone or laptop."); return;
       }
-      setState("loading"); say("Loading the AI model. About 8 MB, once…");
+      setState("loading"); say("Loading…");
       try {
         const [det, s] = await Promise.all([
           task(kind),

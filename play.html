@@ -18,8 +18,8 @@
   <link rel="preconnect" href="https://storage.googleapis.com" crossorigin>
   <link rel="stylesheet" href="assets/styles.css?v=20260926t">
   <link rel="stylesheet" href="assets/refresh.css?v=20260929f">
-  <link rel="stylesheet" href="assets/demos.css?v=20261007">
-  <link rel="stylesheet" href="assets/play.css?v=20261007">
+  <link rel="stylesheet" href="assets/demos.css?v=20261008">
+  <link rel="stylesheet" href="assets/play.css?v=20261008">
 </head>
 <body class="play-body">
 <a class="skip" href="#play">Skip to the game</a>
@@ -49,7 +49,7 @@
           <span class="pick-text">
             <b>Beat the AI at Rock, Paper, Scissors</b>
             <small>It watches your hand through the camera, learns your habits, then plays the move that beats you. Most people lose by round seven.</small>
-            <em class="pick-meta">90 seconds &middot; needs the camera &middot; 20 MB to load</em>
+            <em class="pick-meta">60 seconds &middot; uses your camera</em>
           </span>
           <span class="pick-go" aria-hidden="true">&rarr;</span>
         </button>
@@ -60,7 +60,7 @@
           <span class="pick-text">
             <b>Get your cover drive scored out of 10</b>
             <small>Prop the phone up, play the shot. The AI tracks 33 points on your body and measures the angles a coach watches for.</small>
-            <em class="pick-meta">2 minutes &middot; stand back from the phone &middot; 20 MB to load</em>
+            <em class="pick-meta">2 minutes &middot; stand back from the phone</em>
           </span>
           <span class="pick-go" aria-hidden="true">&rarr;</span>
         </button>
@@ -71,7 +71,7 @@
           <span class="pick-text">
             <b>Squat, and the AI only counts the good ones</b>
             <small>Ten reps. It measures the angle at your knee and throws out everything above 100 degrees, however hard you worked.</small>
-            <em class="pick-meta">2 minutes &middot; stand back from the phone &middot; 20 MB to load</em>
+            <em class="pick-meta">2 minutes &middot; stand back from the phone</em>
           </span>
           <span class="pick-go" aria-hidden="true">&rarr;</span>
         </button>
@@ -82,7 +82,7 @@
           <span class="pick-text">
             <b>Train your own AI in 30 seconds</b>
             <small>Teach it three hand signs of your own, then watch it name them back to you. This is exactly how every AI on earth learns.</small>
-            <em class="pick-meta">1 minute &middot; needs the camera &middot; 20 MB to load</em>
+            <em class="pick-meta">1 minute &middot; uses your camera</em>
           </span>
           <span class="pick-go" aria-hidden="true">&rarr;</span>
         </button>
@@ -103,11 +103,10 @@
     <p class="play-foot">Standing somewhere with bad signal? The last one needs nothing but this page.</p>
   </section>
 
-  <!-- ================= 2. While the AI downloads ================= -->
+  <!-- ================= 2. The wait, which is where the pitch lives ================= -->
   <section class="scr scr-load" data-scr="load" aria-labelledby="load-h">
     <div class="load-head">
-      <h2 id="load-h" data-load-title>Bringing the AI onto your phone</h2>
-      <p data-load-note>A real model, about 20 MB. It runs on your phone after this, not on our server, which is why it has to come down once.</p>
+      <h2 id="load-h" data-load-title>Getting it ready</h2>
       <div class="load-bar"><i data-load-bar></i></div>
       <p class="load-pct"><b data-load-pct>0%</b> <span data-load-stage>starting</span></p>
     </div>
@@ -117,7 +116,7 @@
     <div class="load-cards" data-load-cards aria-live="polite">
       <article class="lc is-on">
         <span class="lc-tag">While you wait</span>
-        <p><b>This is not a toy.</b> The model coming down your line right now is the same one Google ships to engineers. Your phone is about to run it with no internet help at all.</p>
+        <p><b>This is not a toy.</b> The AI about to look at you is the same one Google puts in the hands of its own engineers. In a moment a 14-year-old could be taking it apart.</p>
       </article>
       <article class="lc">
         <span class="lc-tag">What changed this year</span>
@@ -141,12 +140,12 @@
       </article>
       <article class="lc">
         <span class="lc-tag">Nearly there</span>
-        <p><b>Everything you are about to do happens on your phone.</b> No video leaves it, no frame is stored, no account, no sign-up. That is a design decision, not a promise.</p>
+        <p><b>Nothing you do here leaves your phone.</b> No video, no pictures, no account, no sign-up. We never see it and we never keep it.</p>
       </article>
     </div>
 
     <button type="button" class="btn btn-dark load-go" data-load-go hidden>The AI is ready. Start the camera <span aria-hidden="true">&rarr;</span></button>
-    <p class="load-slow" data-load-slow hidden>This is taking a while on your connection. <button type="button" class="linkish" data-load-switch>Play the one that needs no download instead</button></p>
+    <p class="load-slow" data-load-slow hidden>Slow line today. <button type="button" class="linkish" data-load-switch>Play the one that starts instantly instead</button></p>
     <button type="button" class="linkish load-back" data-back="pick">Pick a different game</button>
   </section>
 
@@ -359,8 +358,8 @@
   <p><a href="index.html">The whole site</a> &middot; <a href="demos.html">Every demo</a> &middot; <a data-phone href="#">+91 88672 40600</a></p>
 </footer>
 
-<script defer src="assets/site.js?v=20261007"></script>
-<script defer src="assets/live.js?v=20261007"></script>
-<script defer src="assets/play.js?v=20261007"></script>
+<script defer src="assets/site.js?v=20261008"></script>
+<script defer src="assets/live.js?v=20261008"></script>
+<script defer src="assets/play.js?v=20261008"></script>
 </body>
 </html>
