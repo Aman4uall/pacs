@@ -142,31 +142,33 @@
         };
       },
     },
-    haggle: {
-      title: "Haggle an AI shopkeeper down",
+    fantasy: {
+      title: "Your fantasy XI against the AI's",
       kind: null,
-      watch: "[data-hg-chat]",
-      ready(root) { return $("[data-hg-actions]", root).hidden; },
+      watch: "[data-fx-out]",
       score(root) {
-        const actions = $("[data-hg-actions]", root);
-        if (!actions.hidden) return null; // still haggling
-        const msgs = $$(".hg-msg.coach", root);
-        const last = msgs.length ? msgs[msgs.length - 1].textContent : "";
-        const m = last.match(/(\d+)\/10/);
-        if (!m) {
+        const vs = $(".fx-vs", root);
+        if (!vs) return null;                      // the AI has not been asked yet
+        const nums = [...vs.querySelectorAll("b")].map((b) => b.textContent.trim());
+        const ai = parseInt(nums[0], 10);
+        const you = parseInt(nums[1], 10);         // "Not complete" if they never filled the XI
+        if (isNaN(ai)) return null;
+        if (isNaN(you)) {
           return {
             ok: true,
-            big: "No deal",
-            line: "He walked out. You pushed past what he could take.",
-            note: "<b>He was reading you the whole time.</b> Every offer moved a patience counter you could not see, and two insults ended it. That is a model of a person, built out of a few numbers. Our BBA students build negotiation and pricing models like this one.",
+            big: "Unfinished",
+            line: `You never completed an XI. The AI's best was ${ai} points.`,
+            note: "<b>It did not guess either.</b> It built all 4,368 legal teams, scored every one of them and kept the best. That is brute force, and a phone is fast enough to make it look like intuition. Knowing when you can just try everything is half of this job.",
           };
         }
-        const n = +m[1];
+        const gap = ai - you;
         return {
           ok: true,
-          big: `${n}<small>/10</small>`,
-          line: n >= 8 ? "You took him to the floor." : n >= 5 ? "A fair deal. He kept some of his margin." : "He saw you coming.",
-          note: "<b>He was reading you the whole time.</b> Your first number anchored him, every lowball cost you his patience, and walking away moved him more than any argument. Our BBA students build pricing and negotiation models exactly like this one, then run their own numbers through them.",
+          big: `${you}<small> v ${ai}</small>`,
+          line: gap <= 0 ? "You matched the machine. Almost nobody does."
+            : gap <= 20 ? `${gap} points behind. That is close.`
+            : `${gap} points behind.`,
+          note: "<b>It did not guess.</b> It built all 4,368 legal teams, scored every one and kept the best, in a few thousandths of a second. That is brute force, and a phone is fast enough to make it look like intuition. Knowing when a problem is small enough to just try everything is half of this job, and it is the half nobody teaches.",
         };
       },
     },
@@ -309,7 +311,7 @@
     if (start) start.click();
   });
 
-  $("[data-load-switch]").addEventListener("click", () => { buzz(); openGame("haggle"); });
+  $("[data-load-switch]").addEventListener("click", () => { buzz(); openGame("fantasy"); });
 
   /* ---------------- Reading the score back out of the demo ----------------
      A MutationObserver on the demo's own output, so live.js needs no changes
@@ -328,8 +330,6 @@
     };
     watcher = new MutationObserver(read);
     watcher.observe(target, { childList: true, characterData: true, subtree: true, attributes: true });
-    // The haggle demo signals the end by hiding its controls, not by changing text
-    if (key === "haggle") watcher.observe($("[data-hg-actions]", mount), { attributes: true });
     read();
   }
 
@@ -452,20 +452,27 @@
     sendBtn.setAttribute("aria-busy", "true");
     sendBtn.textContent = "Sending…";
     if (cfg.playLeads) {
-      try {
-        const ctrl = new AbortController();
-        const timer = setTimeout(() => ctrl.abort(), 12000);
-        // Plain text keeps this a "simple" request, which Google Apps Script accepts
-        await fetch(cfg.playLeads, {
-          method: "POST",
-          headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify(row),
-          signal: ctrl.signal,
-        });
-        clearTimeout(timer);
-      } catch (e2) {
-        // The sheet is our copy, not theirs. A failure here must never stop the
-        // WhatsApp hand-off, which is the part that actually reaches us.
+      // Google's web app address answers with a 404 now and then, roughly one call in
+      // a few, for no reason to do with us. One quiet retry turns most of those misses
+      // into a saved lead, and a lead is the only thing on this page worth anything.
+      for (let attempt = 0; attempt < 2; attempt++) {
+        try {
+          const ctrl = new AbortController();
+          const timer = setTimeout(() => ctrl.abort(), 12000);
+          // Plain text keeps this a "simple" request, which Google Apps Script accepts
+          const res = await fetch(cfg.playLeads, {
+            method: "POST",
+            headers: { "Content-Type": "text/plain;charset=utf-8" },
+            body: JSON.stringify(row),
+            signal: ctrl.signal,
+          });
+          clearTimeout(timer);
+          if (res.ok) break;
+        } catch (e2) {
+          // The sheet is our copy, not theirs. A failure here must never stop the
+          // WhatsApp hand-off, which is the part that actually reaches us.
+        }
+        if (attempt === 0) await new Promise((r) => setTimeout(r, 900));
       }
     }
     sendBtn.removeAttribute("aria-busy");

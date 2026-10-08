@@ -18,8 +18,8 @@
   <link rel="preconnect" href="https://storage.googleapis.com" crossorigin>
   <link rel="stylesheet" href="assets/styles.css?v=20260926t">
   <link rel="stylesheet" href="assets/refresh.css?v=20260929f">
-  <link rel="stylesheet" href="assets/demos.css?v=20261008">
-  <link rel="stylesheet" href="assets/play.css?v=20261008">
+  <link rel="stylesheet" href="assets/demos.css?v=20261008c">
+  <link rel="stylesheet" href="assets/play.css?v=20261008c">
 </head>
 <body class="play-body">
 <a class="skip" href="#play">Skip to the game</a>
@@ -88,12 +88,12 @@
         </button>
       </li>
       <li>
-        <button type="button" class="pick pick-light" data-pick="haggle">
-          <span class="pick-face" aria-hidden="true">&#8377;</span>
+        <button type="button" class="pick pick-light" data-pick="fantasy">
+          <span class="pick-face" aria-hidden="true">&#127951;</span>
           <span class="pick-text">
-            <b>Haggle an AI shopkeeper down</b>
-            <small>Raju has a leather jacket at &#8377;4,000 and three units of patience. Get him under &#8377;2,000 without walking out empty-handed.</small>
-            <em class="pick-meta">1 minute &middot; no camera &middot; starts instantly</em>
+            <b>Pick a fantasy XI the AI cannot beat</b>
+            <small>11 players, 88 credits. Then it checks all 4,368 possible teams in a few milliseconds and shows you the one you should have picked.</small>
+            <em class="pick-meta">2 minutes &middot; no camera &middot; starts instantly</em>
           </span>
           <span class="pick-go" aria-hidden="true">&rarr;</span>
         </button>
@@ -248,23 +248,20 @@
       <p class="build-hint">This is how AI learns: from examples. You just gave it some.</p>
     </div>
 
-    <div class="build game-mount" data-game="haggle" hidden>
-      <div class="haggle" data-haggle>
-        <div class="chip-row" data-hg-item role="group" aria-label="Choose what to buy">
-          <button class="chip" type="button" data-v="jacket" aria-pressed="true">Leather jacket</button>
-          <button class="chip" type="button" data-v="phone" aria-pressed="false">Old phone</button>
-          <button class="chip" type="button" data-v="lamp" aria-pressed="false">Brass lamp</button>
+    <div class="build game-mount" data-game="fantasy" hidden>
+      <div class="fantasy" data-fantasy>
+        <div class="fx-bar">
+          <span><small>Players</small><b data-fx-n>0/11</b></span>
+          <span><small>Credits</small><b data-fx-cr>0 / 88</b></span>
+          <span><small>Projected points</small><b data-fx-pts>0</b></span>
+          <button type="button" class="pm-tool pm-publish" data-fx-ai>Let the AI pick <span aria-hidden="true">&rarr;</span></button>
+          <button type="button" class="pm-tool" data-fx-clear>Clear</button>
         </div>
-        <div class="hg-shop"><span class="hg-mood"><b data-hg-mood aria-hidden="true">&#9679;&#9679;&#9679;</b><small>Patience</small></span><span><small>Raju&rsquo;s price now</small><b data-hg-price>&#8377;4,000</b></span></div>
-        <div class="hg-chat" data-hg-chat aria-live="polite"></div>
-        <div class="hg-actions" data-hg-actions>
-          <label class="hg-offer" for="hg-range">Your offer <output data-hg-offer for="hg-range">&#8377;0</output></label>
-          <input type="range" id="hg-range" data-hg-range>
-          <div class="hg-buttons"><button type="button" class="pm-tool pm-publish" data-hg-send>Make offer</button><button type="button" class="pm-tool" data-hg-accept>Accept his price</button></div>
-          <div class="chip-row hg-tactics"><button class="chip" type="button" data-hg-tactic="flaw">Point out a flaw</button><button class="chip" type="button" data-hg-tactic="cash">Offer cash now</button><button class="chip" type="button" data-hg-tactic="walk">Walk away</button></div>
-        </div>
+        <p class="fx-rules">Pick 11 players within 88 credits: at least 1 wicketkeeper, 3 batters, 1 all-rounder and 3 bowlers. Your top scorer is captain and scores double.</p>
+        <div class="fx-grid" data-fx-grid></div>
+        <div class="fx-out" data-fx-out aria-live="polite"></div>
       </div>
-      <p class="build-hint">He reads your offers. Lowball him twice and he stops listening.</p>
+      <p class="build-hint">Made-up players. The AI checks every possible team before it answers.</p>
     </div>
 
     <div class="game-bar">
@@ -358,8 +355,8 @@
   <p><a href="index.html">The whole site</a> &middot; <a href="demos.html">Every demo</a> &middot; <a data-phone href="#">+91 88672 40600</a></p>
 </footer>
 
-<script defer src="assets/site.js?v=20261008"></script>
-<script defer src="assets/live.js?v=20261008"></script>
-<script defer src="assets/play.js?v=20261008"></script>
+<script defer src="assets/site.js?v=20261008c"></script>
+<script defer src="assets/live.js?v=20261008c"></script>
+<script defer src="assets/play.js?v=20261008c"></script>
 </body>
 </html>

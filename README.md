@@ -142,7 +142,7 @@ in a way that matters.
 | Card journeys, entrances, flip cards, hover lighting, BBA portfolio, reading progress and mobile enquiry bar | `assets/motion.js` (native browser APIs; no external animation libraries) |
 | Examples: 8 Class 8–12 demos, 7 BBA demos, four teacher examples and seven adult project samples | `demos.html` |
 | Existing teacher examples and legacy skill demo controls | `assets/skills.js` |
-| The live demos on that page: Rock Paper Scissors vs AI, Train your own AI, Cricket shot coach, Present without a clicker (camera, using Google's MediaPipe from jsDelivr, downloaded in the background once a camera demo is close on screen; nothing leaves the device), Live subtitles (the browser's speech recognition), Pitch to the AI Sharks, Fantasy XI analyst, Haggle, Brand in 10 seconds | `assets/live.js` |
+| The live demos on that page: Rock Paper Scissors vs AI, Train your own AI, Cricket shot coach, Present without a clicker (camera, using Google's MediaPipe from jsDelivr, downloaded in the background once a camera demo is close on screen; nothing leaves the device), Live subtitles (the browser's speech recognition), Pitch to the AI Sharks, Fantasy XI analyst, Brand in 10 seconds, the squat counter | `assets/live.js` |
 | The working demos (mango sorter, study coach, Python game, revision app, film storyboard, campaign post, break-even, pitch deck) and the home page Class 8–12 / BBA demo tabs | `assets/builds.js` |
 | The Song Challenge idea machine and entry form | `assets/challenge.js` |
 | The Song Challenge's playable card (play, pause, skip, seek) and Step 1's "Hear this style": music made on the device with the Web Audio API, six styles, no audio files | `assets/songplayer.js`, styled in `assets/song.css` |
@@ -166,7 +166,7 @@ on purpose: `demos.html` is the page we want Google to show, and this one is a f
 - **The four games are the ones on `demos.html`**, running from `assets/live.js`. `play.js`
   does not touch `live.js`: scores are read back out of the demo's own markup with a
   `MutationObserver`, so nothing here can break the demos page. Three need the camera; the
-  haggle one needs no download, for bad signal.
+  fantasy XI one needs nothing but the page, for bad signal.
 - **The 20 MB wait is the pitch.** While the MediaPipe model comes down, `play.js` fetches
   the same files `live.js` will ask for, so the progress bar counts real bytes, and rotates
   seven cards about what PACS AI does. The browser and the service worker keep the files,
