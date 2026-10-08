@@ -676,6 +676,11 @@ html:has(.demos-page) { scroll-padding-top: 150px; }
 /* The camera box */
 .cam { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: radial-gradient(circle at 50% 35%, #2a2a2a, #0b0b0b); border-radius: 18px; box-shadow: 0 24px 44px -28px rgb(17 17 17 / .6); isolation: isolate; }
 .cam video, .cam canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1); }
+/* The selfie view is mirrored because that is how people expect to see themselves.
+   The back camera points at the world, where a mirror would be simply wrong, so it
+   is shown the right way round. The video and the drawn skeleton always flip
+   together, so the overlay keeps sitting on the body either way. */
+.cam[data-facing="environment"] video, .cam[data-facing="environment"] canvas { transform: none; }
 .cam video { opacity: 0; transition: opacity .4s ease; }
 .cam[data-state="live"] video { opacity: 1; }
 .cam canvas { z-index: 1; pointer-events: none; }
@@ -690,6 +695,14 @@ html:has(.demos-page) { scroll-padding-top: 150px; }
 .cam[data-state="live"] .cam-cover, .cam[data-state="sample"] .cam-cover { opacity: 0; pointer-events: none; }
 .cam-stop { position: absolute; z-index: 4; top: 10px; right: 10px; display: none; width: 36px; height: 36px; place-items: center; background: rgb(0 0 0 / .55); border: 1px solid rgb(255 255 255 / .25); border-radius: 50%; color: #fff; font-weight: 800; cursor: pointer; }
 .cam[data-state="live"] .cam-stop { display: grid; }
+/* Sits beside the stop button, and only appears once a camera is running on a device
+   that has more than one. Wide enough to hit with a thumb mid-set. */
+.cam-flip { position: absolute; z-index: 4; top: 10px; left: 10px; display: none; align-items: center; gap: .35rem;
+  min-height: 36px; padding: 0 .7rem; background: rgb(0 0 0 / .55); border: 1px solid rgb(255 255 255 / .25);
+  border-radius: 999px; color: #fff; font-size: .76rem; font-weight: 700; letter-spacing: -.01em; cursor: pointer; }
+.cam-flip:hover { background: rgb(0 0 0 / .75); }
+.cam-flip:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.cam[data-state="live"] .cam-flip:not([hidden]) { display: inline-flex; }
 .cam-badge { position: absolute; z-index: 2; left: 10px; bottom: 10px; padding: .35rem .7rem; background: rgb(0 0 0 / .6); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); border-radius: 999px; color: #fff; font-size: .8rem; font-weight: 700; opacity: 0; transition: opacity .3s ease; }
 .cam[data-state="live"] .cam-badge { opacity: 1; }
 .cam-count { position: absolute; z-index: 2; inset: 0; display: grid; place-items: center; color: #fff; font-size: clamp(2.2rem, 8cqi, 4.2rem); font-weight: 900; letter-spacing: -.04em; text-shadow: 0 6px 30px rgb(0 0 0 / .6); pointer-events: none; }

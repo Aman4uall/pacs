@@ -93,6 +93,51 @@
     const setState = (s) => { box.dataset.state = s; if (onState) onState(s); };
     setState("idle");
 
+    /* ---- front or back camera ----
+       The front camera is the default: for the shot coach and the squat counter the
+       phone is propped up facing you, and you want to watch the skeleton while you move.
+       The back camera is there because it is the better lens: wider, so a whole body
+       fits in from closer, and better in poor light, which is most gyms in the evening
+       and every turf after six. It also lets a friend film you.
+
+       The button is built here rather than written into the markup, so every camera demo
+       on every page gets one and none of them can be forgotten.
+
+       Mirroring: a selfie view is mirrored because that is what people expect of
+       themselves. The back camera points at the world, where mirroring would be plain
+       wrong, so .cam carries data-facing and the stylesheet un-mirrors it. The landmark
+       numbers are unaffected either way: MediaPipe names them from the subject's own
+       body, not from the picture, so left stays left. */
+    let facing = "user";
+    const flip = document.createElement("button");
+    flip.type = "button";
+    flip.className = "cam-flip";
+    flip.hidden = true;
+    box.dataset.facing = facing;
+    const labelFlip = () => {
+      flip.innerHTML = '<span aria-hidden="true">⇄</span> ' + (facing === "user" ? "Back camera" : "Front camera");
+      flip.setAttribute("aria-label", facing === "user" ? "Switch to the back camera" : "Switch to the front camera");
+    };
+    labelFlip();
+    box.appendChild(flip);
+
+    // Only worth showing where there is more than one camera to switch to. The labels
+    // stay blank until permission is given, but the count is enough.
+    async function offerFlip() {
+      try {
+        const devices = await navigator.mediaDevices.enumerateDevices();
+        flip.hidden = devices.filter((d) => d.kind === "videoinput").length < 2;
+      } catch (e) { flip.hidden = true; }
+    }
+
+    flip.addEventListener("click", async () => {
+      buzz();
+      facing = facing === "user" ? "environment" : "user";
+      box.dataset.facing = facing;
+      labelFlip();
+      if (running) { stop(); await start(); }
+    });
+
     async function start() {
       if (activeCam && activeCam !== ctl) activeCam.stop();
       activeCam = ctl;
@@ -103,13 +148,16 @@
       try {
         const [det, s] = await Promise.all([
           task(kind),
-          navigator.mediaDevices.getUserMedia({ video: { facingMode: "user", width: { ideal: 640 }, height: { ideal: 480 } }, audio: false }),
+          // facingMode without "exact" is a preference, so a laptop with one camera
+          // still works instead of throwing
+          navigator.mediaDevices.getUserMedia({ video: { facingMode: facing, width: { ideal: 640 }, height: { ideal: 480 } }, audio: false }),
         ]);
         if (activeCam !== ctl) { s.getTracks().forEach((t) => t.stop()); return; }
         stream = s;
         video.srcObject = s; video.muted = true; video.playsInline = true;
         await video.play();
         running = true; setState("live"); say("");
+        offerFlip();
         const loop = () => {
           if (!running) return;
           if (video.readyState >= 2 && video.currentTime !== last) {
