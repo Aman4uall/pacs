@@ -7,7 +7,7 @@
   <!-- A landing page for the printed standees, not for search. The games all live on
        demos.html, which is the page we want Google to show. -->
   <meta name="robots" content="noindex, follow">
-  <meta name="description" content="Four AI games you can play standing up. Beat the AI, train your own, or get your cricket shot scored. Free, on your own phone.">
+  <meta name="description" content="Five AI games you can play standing up. Beat the AI, train your own, or get your cricket shot scored. Free, on your own phone.">
   <meta name="theme-color" content="#111111">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
@@ -19,7 +19,7 @@
   <link rel="stylesheet" href="assets/styles.css?v=20260926t">
   <link rel="stylesheet" href="assets/refresh.css?v=20260929f">
   <link rel="stylesheet" href="assets/demos.css?v=20261008c">
-  <link rel="stylesheet" href="assets/play.css?v=20261008c">
+  <link rel="stylesheet" href="assets/play.css?v=20261009c">
 </head>
 <body class="play-body">
 <a class="skip" href="#play">Skip to the game</a>
@@ -36,116 +36,81 @@
 
 <main id="play" class="play-main">
 
-  <!-- ================= 1. Pick a game ================= -->
+  <!-- ================= 1. Pick a game =================
+       A stranger standing in a gym gives this screen about two seconds. What it is,
+       that it is free, and what to do are all above the fold, and every game is one
+       tap away with no scrolling. Every sentence added here costs a player. -->
   <section class="scr is-on" data-scr="pick" aria-labelledby="pick-h">
-    <p class="play-kicker">You scanned the board</p>
-    <h1 id="pick-h">Four games. The AI wins most of them.</h1>
-    <p class="play-sub">All four run on your own phone, on your own camera. Nothing is recorded, nothing is sent anywhere. Pick one and it starts.</p>
+    <div class="pick-intro">
+      <p class="play-kicker">Free &middot; on your phone &middot; now</p>
+      <h1 id="pick-h">Can you beat the AI?</h1>
+      <p class="play-sub">Tap a game. It starts right here.</p>
+    </div>
 
     <ul class="pick-list" data-pick-list>
       <li>
-        <button type="button" class="pick" data-pick="rps">
+        <button type="button" class="ptile" data-pick="rps">
           <span class="pick-face" aria-hidden="true">&#9994;</span>
-          <span class="pick-text">
-            <b>Beat the AI at Rock, Paper, Scissors</b>
-            <small>It watches your hand through the camera, learns your habits, then plays the move that beats you. Most people lose by round seven.</small>
-            <em class="pick-meta">60 seconds &middot; uses your camera</em>
-          </span>
-          <span class="pick-go" aria-hidden="true">&rarr;</span>
+          <b>Rock, Paper, Scissors</b>
+          <small>It learns your habits</small>
+          <span class="pick-go">Play <span aria-hidden="true">&rarr;</span></span>
         </button>
       </li>
       <li>
-        <button type="button" class="pick" data-pick="cricket">
+        <button type="button" class="ptile" data-pick="cricket">
           <span class="pick-face" aria-hidden="true">&#127951;</span>
-          <span class="pick-text">
-            <b>Get your cover drive scored out of 10</b>
-            <small>Prop the phone up, play the shot. The AI tracks 33 points on your body and measures the angles a coach watches for.</small>
-            <em class="pick-meta">2 minutes &middot; stand back from the phone</em>
-          </span>
-          <span class="pick-go" aria-hidden="true">&rarr;</span>
+          <b>Cover drive</b>
+          <small>Scored out of 10</small>
+          <span class="pick-go">Play <span aria-hidden="true">&rarr;</span></span>
         </button>
       </li>
       <li>
-        <button type="button" class="pick" data-pick="squat">
+        <button type="button" class="ptile" data-pick="squat">
           <span class="pick-face" aria-hidden="true">&#127947;</span>
-          <span class="pick-text">
-            <b>Squat, and the AI only counts the good ones</b>
-            <small>Ten reps. It measures the angle at your knee and throws out everything above 100 degrees, however hard you worked.</small>
-            <em class="pick-meta">2 minutes &middot; stand back from the phone</em>
-          </span>
-          <span class="pick-go" aria-hidden="true">&rarr;</span>
+          <b>Squats</b>
+          <small>Only the deep ones count</small>
+          <span class="pick-go">Play <span aria-hidden="true">&rarr;</span></span>
         </button>
       </li>
       <li>
-        <button type="button" class="pick" data-pick="trainer">
+        <button type="button" class="ptile" data-pick="fantasy">
+          <span class="pick-face" aria-hidden="true">&#127942;</span>
+          <b>Fantasy XI</b>
+          <small>Beat the perfect team</small>
+          <span class="pick-go">Play <span aria-hidden="true">&rarr;</span></span>
+        </button>
+      </li>
+      <li class="pick-row">
+        <button type="button" class="ptile" data-pick="trainer">
           <span class="pick-face" aria-hidden="true">&#129504;</span>
-          <span class="pick-text">
-            <b>Train your own AI in 30 seconds</b>
-            <small>Teach it three hand signs of your own, then watch it name them back to you. This is exactly how every AI on earth learns.</small>
-            <em class="pick-meta">1 minute &middot; uses your camera</em>
-          </span>
-          <span class="pick-go" aria-hidden="true">&rarr;</span>
-        </button>
-      </li>
-      <li>
-        <button type="button" class="pick pick-light" data-pick="fantasy">
-          <span class="pick-face" aria-hidden="true">&#127951;</span>
-          <span class="pick-text">
-            <b>Pick a fantasy XI the AI cannot beat</b>
-            <small>11 players, 88 credits. Then it checks all 4,368 possible teams in a few milliseconds and shows you the one you should have picked.</small>
-            <em class="pick-meta">2 minutes &middot; no camera &middot; starts instantly</em>
-          </span>
-          <span class="pick-go" aria-hidden="true">&rarr;</span>
+          <b>Train an AI</b>
+          <small>Teach it three signs</small>
+          <span class="pick-go">Play <span aria-hidden="true">&rarr;</span></span>
         </button>
       </li>
     </ul>
-
-    <p class="play-foot">Standing somewhere with bad signal? The last one needs nothing but this page.</p>
   </section>
 
-  <!-- ================= 2. The wait, which is where the pitch lives ================= -->
+  <!-- ================= 2. The wait, which is where the pitch lives =================
+       A game loading screen, not a page: the whole thing sits in the middle of the
+       phone, the per cent is the hero, and the pitch is one short line at a time.
+       Long paragraphs were here once and nobody standing up reads those. -->
   <section class="scr scr-load" data-scr="load" aria-labelledby="load-h">
-    <div class="load-head">
-      <h2 id="load-h" data-load-title>Getting it ready</h2>
-      <div class="load-bar"><i data-load-bar></i></div>
-      <p class="load-pct"><b data-load-pct>0%</b> <span data-load-stage>starting</span></p>
-    </div>
+    <p class="load-game" data-load-game>Loading</p>
+    <h2 id="load-h" class="load-big"><span data-load-pct>0</span><i>%</i></h2>
+    <div class="load-bar"><i data-load-bar></i></div>
+    <p class="load-stage"><span data-load-stage>warming up</span></p>
 
-    <!-- The wait is the only time a stranger reads anything we write, so this is where
-         the pitch goes. One card at a time, every few seconds. -->
+    <!-- The only moment a stranger reads anything we wrote. One line, then the next. -->
     <div class="load-cards" data-load-cards aria-live="polite">
-      <article class="lc is-on">
-        <span class="lc-tag">While you wait</span>
-        <p><b>This is not a toy.</b> The AI about to look at you is the same one Google puts in the hands of its own engineers. In a moment a 14-year-old could be taking it apart.</p>
-      </article>
-      <article class="lc">
-        <span class="lc-tag">What changed this year</span>
-        <p><b>CBSE has made AI compulsory.</b> Classes 3 to 8 from 2026-27, Class 9 the year after. The first board paper with AI in it is 2029. Most schools in this city have no one to teach it yet.</p>
-      </article>
-      <article class="lc">
-        <span class="lc-tag">What a student builds here</span>
-        <p><b>Sixteen hours.</b> A trained AI model, a working app on their own phone, and a short film made from one sentence they wrote. Not slides about AI. Things that run.</p>
-      </article>
-      <article class="lc">
-        <span class="lc-tag">Who we teach</span>
-        <p><b>Class 8 to 12, and their teachers.</b> Small batches in Mangalore. A student who finishes can sit down at any laptop and make something work.</p>
-      </article>
-      <article class="lc">
-        <span class="lc-tag">Free, and we mean free</span>
-        <p><b>The Saturday open lab.</b> Bring your child, they build something real in two hours, you pay nothing and nobody asks you for a cheque at the end.</p>
-      </article>
-      <article class="lc">
-        <span class="lc-tag">For the adults</span>
-        <p><b>Alternate Saturdays, 3 to 5 pm.</b> The Innovators and Hustlers Meetup at our Mangalore office. People building things, in a room, free.</p>
-      </article>
-      <article class="lc">
-        <span class="lc-tag">Nearly there</span>
-        <p><b>Nothing you do here leaves your phone.</b> No video, no pictures, no account, no sign-up. We never see it and we never keep it.</p>
-      </article>
+      <article class="lc is-on"><p><b>This is the real thing.</b> The same AI Google hands its own engineers.</p></article>
+      <article class="lc"><p><b>CBSE made AI compulsory.</b> From Class 3. First board paper, 2029.</p></article>
+      <article class="lc"><p><b>You can learn to build this.</b> Class 8 to 12, small batches, in Mangalore.</p></article>
+      <article class="lc"><p><b>Free Saturday lab.</b> Your child builds something real in two hours.</p></article>
     </div>
 
-    <button type="button" class="btn btn-dark load-go" data-load-go hidden>The AI is ready. Start the camera <span aria-hidden="true">&rarr;</span></button>
-    <p class="load-slow" data-load-slow hidden>Slow line today. <button type="button" class="linkish" data-load-switch>Play the one that starts instantly instead</button></p>
+    <button type="button" class="btn btn-dark load-go" data-load-go hidden>Start the camera <span aria-hidden="true">&rarr;</span></button>
+    <p class="load-slow" data-load-slow hidden>Slow line today. <button type="button" class="linkish" data-load-switch>Play the one that starts instantly</button></p>
     <button type="button" class="linkish load-back" data-back="pick">Pick a different game</button>
   </section>
 
@@ -276,7 +241,8 @@
     <h2 id="score-h" class="score-big" data-score-big>&mdash;</h2>
     <p class="score-line" data-score-line></p>
     <div class="score-note" data-score-note></div>
-    <button type="button" class="btn btn-dark" data-to="who">Carry on <span aria-hidden="true">&rarr;</span></button>
+    <p class="score-cta"><b>Want to build things like this?</b> That is what we teach.</p>
+    <button type="button" class="btn btn-primary" data-to="who">Teach me how <span aria-hidden="true">&rarr;</span></button>
     <button type="button" class="linkish" data-back="pick">Play another one</button>
   </section>
 
@@ -345,6 +311,7 @@
       <a class="btn btn-outline" href="demos.html">All 19 demos, free to play</a>
       <a class="linkish" data-done-second href="index.html">PACS AI home</a>
     </div>
+    <p class="done-learn"><b>Learn to build these.</b> PACS AI teaches Class 8 to 12 in Mangalore, in small batches. Ask us anything on WhatsApp.</p>
     <p class="done-call">Or just ring us: <a data-phone href="#">+91 88672 40600</a></p>
   </section>
 
@@ -357,6 +324,6 @@
 
 <script defer src="assets/site.js?v=20261008c"></script>
 <script defer src="assets/live.js?v=20261008c"></script>
-<script defer src="assets/play.js?v=20261008c"></script>
+<script defer src="assets/play.js?v=20261009c"></script>
 </body>
 </html>

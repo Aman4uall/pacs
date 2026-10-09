@@ -57,6 +57,7 @@
     const h = screens[name].querySelector("h1, h2");
     if (h) { h.setAttribute("tabindex", "-1"); h.focus({ preventScroll: true }); }
     if (name !== "load") stopCards();
+    document.body.classList.toggle("is-loading", name === "load");
     // The back button should walk back through the funnel, not off the page
     try { history.replaceState({ scr: name }, "", location.pathname + location.search); } catch (e) { /* fine */ }
   }
@@ -64,7 +65,7 @@
   $$("[data-back]").forEach((b) => b.addEventListener("click", () => { buzz(); show(b.dataset.back); }));
   $$("[data-to]").forEach((b) => b.addEventListener("click", () => { buzz(); show(b.dataset.to); }));
 
-  /* ---------------- The four games ----------------
+  /* ---------------- The five games ----------------
      kind:    which MediaPipe model it needs, or none
      score:   reads the result straight out of the demo's own markup
      Each score returns { ok, big, line, note } or null while there is nothing to read. */
@@ -201,7 +202,7 @@
   function setProgress(done, total) {
     const p = Math.max(0, Math.min(100, Math.round(done / total * 100)));
     bar.style.width = p + "%";
-    pct.textContent = p + "%";
+    pct.textContent = p;
   }
 
   async function pull(url, weight, onBytes) {
@@ -230,7 +231,7 @@
     downloading = true;
     goBtn.hidden = true;
     slowNote.hidden = true;
-    stage.textContent = "loading";
+    stage.textContent = "getting it ready";
     setProgress(0, 1);
 
     const parts = [
@@ -257,7 +258,7 @@
     clearTimeout(slowTimer);
     downloading = false;
     setProgress(1, 1);
-    stage.textContent = "ready";
+    stage.textContent = "ready to play";
     slowNote.hidden = true;
     goBtn.hidden = false;
     goBtn.focus({ preventScroll: true });
@@ -275,7 +276,7 @@
       cards[cardAt].classList.remove("is-on");
       cardAt = (cardAt + 1) % cards.length;
       cards[cardAt].classList.add("is-on");
-    }, 5000);
+    }, 4000);
   }
   function stopCards() { if (cardTimer) { clearInterval(cardTimer); cardTimer = 0; } }
 
@@ -296,6 +297,9 @@
     const g = GAMES[key];
     picked = key;
     if (!g.kind) { openGame(key); return; }   // nothing to download
+    const short = $("b", b);
+    if (short) $("[data-load-game]").textContent = short.textContent;
+    stage.textContent = "warming up";
     show("load");
     startCards();
     download(g.kind);
